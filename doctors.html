@@ -1,0 +1,711 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Meet our team of board-certified specialists and experienced doctors dedicated to providing the highest quality healthcare.">
+    <title>Our Doctors | PremiumCare Clinic</title>
+    <link rel="icon" type="icon/png" href="./assets/img/favicon.ico.png">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clinic: {
+                            primary: '#0D9488', // Teal 600
+                            dark: '#0F766E',    // Teal 700
+                            light: '#F0FDFA',   // Teal 50
+                            mist: '#F9FAFB',    // Gray 50
+                            ink: '#1F2937',     // Gray 800
+                            accent: '#10B981',  // Emerald 500
+                            trust: '#1E3A8A',   // Blue 900
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="./src/css/style.css">
+</head>
+
+<body class="bg-white text-clinic-ink font-sans selection:bg-clinic-light selection:text-clinic-primary">
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 w-full z-50 transition-all duration-300 glass-nav border-b border-gray-100/50"
+        id="main-nav">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 lg:h-18 flex items-center justify-between gap-2">
+
+            <!-- Logo Section -->
+            <a href="index.html" class="flex items-center gap-2 shrink-0">
+                <img src="./assets/img/logo-full.svg" alt="PremiumCare Logo" class="h-7 lg:h-8 w-auto logo-img">
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center justify-center lg:gap-x-4 xl:gap-x-7 nav-links">
+                <a href="index.html"
+                    class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">Home</a>
+                <a href="home-2.html"
+                    class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">Home2</a>
+                <a href="services.html"
+                    class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">Services</a>
+                <a href="about.html"
+                    class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">About</a>
+                <a href="doctors.html"
+                    class="text-[13px] font-bold text-clinic-primary transition-all whitespace-nowrap">Doctors</a>
+                <a href="contact.html"
+                    class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">Contact</a>
+            </div>
+
+            <!-- Action Section -->
+            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                <!-- Profile Dropdown -->
+                <div class="relative" id="profile-dropdown-container">
+                    <button id="profile-btn" aria-haspopup="true" aria-expanded="false"
+                        class="w-9 h-9 rounded-full border border-gray-100 flex items-center justify-center hover:bg-clinic-mist transition-all bg-white shadow-sm">
+                        <i data-lucide="user" class="w-4.5 h-4.5 text-clinic-trust"></i>
+                    </button>
+                              <div id="profile-menu"
+            class="hidden absolute right-0 mt-3 w-52 bg-white border border-gray-100 rounded-2xl shadow-xl shadow-clinic-trust/5 py-2 z-[9999] opacity-0 transform -translate-y-2 transition-all duration-200"
+            style="min-width:200px;">
+            <!-- Login / Sign Up - single line -->
+            <a href="login.html"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-ink hover:bg-clinic-mist transition-colors font-semibold rounded-t-xl">
+              <i data-lucide="log-in" class="w-4 h-4 text-clinic-primary shrink-0"></i>
+              <span class="whitespace-nowrap">Login&nbsp;/&nbsp;Sign Up</span>
+            </a>
+            <div class="h-px bg-gray-100 mx-3"></div>
+            <!-- Admin Dashboard -->
+            <a href="admin-dashboard.html"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-trust hover:bg-clinic-mist transition-colors font-semibold">
+              <i data-lucide="shield" class="w-4 h-4 text-clinic-trust shrink-0"></i>
+              <span class="whitespace-nowrap">Admin Dashboard</span>
+            </a>
+            <!-- User Dashboard -->
+            <a href="user-dashboard.html"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-ink hover:bg-clinic-mist transition-colors font-semibold rounded-b-xl">
+              <i data-lucide="layout-dashboard" class="w-4 h-4 text-clinic-primary shrink-0"></i>
+              <span class="whitespace-nowrap">User Dashboard</span>
+            </a>
+          </div>
+                </div>
+
+                <a href="booking.html"
+                    class="bg-clinic-primary text-white px-4 py-2 lg:px-5 lg:py-2.5 rounded-full text-[12px] lg:text-[13px] font-extrabold hover:bg-clinic-dark transition-all shadow-md shadow-clinic-primary/10 flex items-center gap-2 whitespace-nowrap active:scale-95">
+                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Book Appointment</span>
+                    <span class="sm:hidden">Book</span>
+                </a>
+                <button
+                    class="lg:hidden text-clinic-ink p-2 menu-toggle flex items-center justify-center rounded-lg hover:bg-clinic-mist transition-all bg-clinic-mist/50"
+                    id="mobile-menu-btn" aria-label="Toggle menu">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="lg:hidden hidden bg-white/98 backdrop-blur-xl border-t border-gray-100 px-6 py-8 shadow-2xl absolute w-full left-0 top-16 z-40 h-[calc(100vh-4rem)] overflow-y-auto"
+            id="mobile-menu">
+            <div class="flex flex-col gap-2">
+                <a href="index.html"
+                    class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+                    <div
+                        class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+                        <i data-lucide="home" class="w-5 h-5"></i>
+                    </div>
+                    Home
+                </a>
+                <a href="home-2.html"
+                    class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+                    <div
+                        class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+                        <i data-lucide="zap" class="w-5 h-5"></i>
+                    </div>
+                    Home2
+                </a>
+                <a href="services.html"
+                    class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+                    <div
+                        class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+                        <i data-lucide="stethoscope" class="w-5 h-5"></i>
+                    </div>
+                    Services
+                </a>
+                <a href="about.html"
+                    class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+                    <div
+                        class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+                        <i data-lucide="info" class="w-5 h-5"></i>
+                    </div>
+                    About
+                </a>
+                <a href="doctors.html"
+                    class="flex items-center gap-4 text-base font-bold text-clinic-primary p-4 rounded-2xl bg-clinic-light transition-all group">
+                    <div
+                        class="w-10 h-10 bg-clinic-primary/10 rounded-xl flex items-center justify-center text-clinic-primary transition-all">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                    </div>
+                    Doctors
+                </a>
+                <a href="contact.html"
+                    class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+                    <div
+                        class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                    </div>
+                    Contact
+                </a>
+                <div class="h-px bg-gray-100 my-4"></div>
+                <div class="space-y-4">
+                    <a href="booking.html"
+                        class="flex items-center justify-center gap-3 bg-clinic-primary text-white px-6 py-4 rounded-2xl text-center text-base font-bold shadow-lg shadow-clinic-primary/20 hover:bg-clinic-dark transition-all active:scale-95">
+                        <i data-lucide="calendar" class="w-5 h-5"></i>
+                        Book Appointment
+                    </a>
+                    <div class="grid grid-cols-2 gap-4" id="mobile-auth-links">
+                        <a href="login.html"
+                            class="flex items-center justify-center gap-2 py-4 border border-gray-100 rounded-2xl text-sm font-bold text-clinic-trust bg-white shadow-sm">
+                            <i data-lucide="log-in" class="w-4 h-4"></i> Login
+                        </a>
+                        <a href="signup.html"
+                            class="flex items-center justify-center gap-2 py-4 border border-gray-100 rounded-2xl text-sm font-bold text-clinic-trust bg-white shadow-sm">
+                            <i data-lucide="user-plus" class="w-4 h-4"></i> Sign Up
+                        </a>
+                    </div>
+                    <div id="mobile-user-info" class="hidden space-y-4">
+                        <a href="user-dashboard.html"
+                            class="flex items-center justify-center gap-3 py-4 border border-gray-100 rounded-2xl text-sm font-bold text-clinic-trust bg-white shadow-sm"
+                            id="mobile-dashboard-link">
+                            <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+                        </a>
+                        <button
+                            class="w-full flex items-center justify-center gap-3 py-4 border border-red-100 rounded-2xl text-sm font-bold text-red-500 bg-red-50"
+                            id="mobile-logout-btn">
+                            <i data-lucide="log-out" class="w-4 h-4"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative bg-white overflow-hidden !pt-32 !pb-20 lg:!pt-48 lg:!pb-32">
+            <!-- Background Decorative Elements -->
+            <div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-40">
+                <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-clinic-light rounded-full blur-[120px]">
+                </div>
+                <div
+                    class="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-clinic-primary/10 rounded-full blur-[100px]">
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center space-y-8 animate-fade-in-up">
+                    <div
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-clinic-light text-clinic-primary rounded-full text-sm font-bold border border-clinic-primary/10">
+                        <i data-lucide="award" class="w-4 h-4"></i> World-Class Faculty
+                    </div>
+                    <h1 class="text-5xl lg:text-8xl font-black text-clinic-trust leading-[0.95] tracking-tighter">
+                        The Hands <br><span class="text-clinic-primary font-medium italic">of Expertise.</span>
+                    </h1>
+                    <p class="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
+                        Meet the surgeons, researchers, and physicians redefining contemporary healthcare with precision
+                        and pulse.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Doctor Grid -->
+        <section class="py-32 bg-clinic-mist doctors-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 doctors-grid">
+                    <!-- Doctor 1 -->
+                    <div class="group relative doctor-card">
+                        <div class="doctor-img-wrap shadow-2xl transition-all duration-700 group-hover:-translate-y-4">
+                            <img src="./assets/img/hero-doctor.png" alt="Dr. Sarah Johnson"
+                                class="scale-110 group-hover:scale-100 transition-transform duration-1000">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-clinic-trust/90 via-clinic-trust/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            </div>
+                            <div
+                                class="absolute bottom-10 left-10 right-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                <div class="flex gap-4">
+                                    <a href="booking.html"
+                                        class="flex-1 bg-white text-clinic-trust py-4 rounded-2xl font-black text-center shadow-xl hover:bg-clinic-primary hover:text-white transition-colors">Book
+                                        Visit</a>
+                                    <button
+                                        class="w-14 h-14 bg-white/20 backdrop-blur-md text-white rounded-2xl flex items-center justify-center hover:bg-white transition-colors">
+                                        <i data-lucide="share-2" class="w-6 h-6"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="doctor-info">
+                            <div class="doctor-name-row">
+                                <h3 class="text-3xl font-black text-clinic-trust">Dr. Sarah Johnson</h3>
+                                <span
+                                    class="doctor-badge px-4 py-1.5 bg-clinic-primary/10 text-clinic-primary rounded-full text-xs font-black uppercase tracking-widest">Chief</span>
+                            </div>
+                            <p class="doctor-specialty text-clinic-primary font-bold text-lg">Senior Cardiothoracic
+                                Surgeon</p>
+                            <p class="doctor-desc text-gray-500 font-medium">15+ years of pioneering minimally invasive
+                                heart bypass techniques.</p>
+                        </div>
+                    </div>
+
+                    <!-- Doctor 2 -->
+                    <div class="group relative doctor-card">
+                        <div class="doctor-img-wrap shadow-2xl transition-all duration-700 group-hover:-translate-y-4">
+                            <img src="./assets/img/doctor-male.png" alt="Dr. Michael Chen"
+                                class="scale-110 group-hover:scale-100 transition-transform duration-1000">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-clinic-trust/90 via-clinic-trust/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            </div>
+                            <div
+                                class="absolute bottom-10 left-10 right-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                <div class="flex gap-4">
+                                    <a href="booking.html"
+                                        class="flex-1 bg-white text-clinic-trust py-4 rounded-2xl font-black text-center shadow-xl hover:bg-clinic-primary hover:text-white transition-colors">Book
+                                        Visit</a>
+                                    <button
+                                        class="w-14 h-14 bg-white/20 backdrop-blur-md text-white rounded-2xl flex items-center justify-center hover:bg-white transition-colors">
+                                        <i data-lucide="share-2" class="w-6 h-6"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="doctor-info">
+                            <div class="doctor-name-row">
+                                <h3 class="text-3xl font-black text-clinic-trust">Dr. Michael Chen</h3>
+                                <span
+                                    class="doctor-badge px-4 py-1.5 bg-clinic-primary/10 text-clinic-primary rounded-full text-xs font-black uppercase tracking-widest">Specialist</span>
+                            </div>
+                            <p class="doctor-specialty text-clinic-primary font-bold text-lg">Interventional Neurologist
+                            </p>
+                            <p class="doctor-desc text-gray-500 font-medium">Renowned for advanced stroke protocols and
+                                neuroplasticity therapies.</p>
+                        </div>
+                    </div>
+
+                    <!-- Doctor 3 -->
+                    <div class="group relative doctor-card">
+                        <div class="doctor-img-wrap shadow-2xl transition-all duration-700 group-hover:-translate-y-4">
+                            <img src="./assets/img/doctor-female.png" alt="Dr. Emily Brooks"
+                                class="scale-110 group-hover:scale-100 transition-transform duration-1000">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-clinic-trust/90 via-clinic-trust/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            </div>
+                            <div
+                                class="absolute bottom-10 left-10 right-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                <div class="flex gap-4">
+                                    <a href="booking.html"
+                                        class="flex-1 bg-white text-clinic-trust py-4 rounded-2xl font-black text-center shadow-xl hover:bg-clinic-primary hover:text-white transition-colors">Book
+                                        Visit</a>
+                                    <button
+                                        class="w-14 h-14 bg-white/20 backdrop-blur-md text-white rounded-2xl flex items-center justify-center hover:bg-white transition-colors">
+                                        <i data-lucide="share-2" class="w-6 h-6"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="doctor-info">
+                            <div class="doctor-name-row">
+                                <h3 class="text-3xl font-black text-clinic-trust">Dr. Emily Brooks</h3>
+                                <span
+                                    class="doctor-badge px-4 py-1.5 bg-clinic-primary/10 text-clinic-primary rounded-full text-xs font-black uppercase tracking-widest">Specialist</span>
+                            </div>
+                            <p class="doctor-specialty text-clinic-primary font-bold text-lg">Consultant Pediatrician
+                            </p>
+                            <p class="doctor-desc text-gray-500 font-medium">Expert in neonatal wellness and adolescent
+                                growth management.</p>
+                        </div>
+                    </div>
+
+                    <!-- Doctor 4 -->
+                    <div class="group relative doctor-card">
+                        <div class="doctor-img-wrap shadow-2xl transition-all duration-700 group-hover:-translate-y-4">
+                            <img src="./assets/img/doctor-male-2.png" alt="Dr. Robert Wilson"
+                                class="scale-110 group-hover:scale-100 transition-transform duration-1000">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-clinic-trust/90 via-clinic-trust/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            </div>
+                            <div
+                                class="absolute bottom-10 left-10 right-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                <div class="flex gap-4">
+                                    <a href="booking.html"
+                                        class="flex-1 bg-white text-clinic-trust py-4 rounded-2xl font-black text-center shadow-xl hover:bg-clinic-primary hover:text-white transition-colors">Book
+                                        Visit</a>
+                                    <button
+                                        class="w-14 h-14 bg-white/20 backdrop-blur-md text-white rounded-2xl flex items-center justify-center hover:bg-white transition-colors">
+                                        <i data-lucide="share-2" class="w-6 h-6"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="doctor-info">
+                            <div class="doctor-name-row">
+                                <h3 class="text-3xl font-black text-clinic-trust">Dr. Robert Wilson</h3>
+                                <span
+                                    class="doctor-badge px-4 py-1.5 bg-clinic-primary/10 text-clinic-primary rounded-full text-xs font-black uppercase tracking-widest">Surgeon</span>
+                            </div>
+                            <p class="doctor-specialty text-clinic-primary font-bold text-lg">Orthopaedic Trauma Surgeon
+                            </p>
+                            <p class="doctor-desc text-gray-500 font-medium">Specializing in robotic joint replacements
+                                and complex sports reconstructive surgery.</p>
+                        </div>
+                    </div>
+
+                    <!-- Doctor 5 -->
+                    <div class="group relative doctor-card">
+                        <div class="doctor-img-wrap shadow-2xl transition-all duration-700 group-hover:-translate-y-4">
+                            <img src="./assets/img/doctor-female-2.png" alt="Dr. Lisa Ray"
+                                class="scale-110 group-hover:scale-100 transition-transform duration-1000">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-clinic-trust/90 via-clinic-trust/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            </div>
+                            <div
+                                class="absolute bottom-10 left-10 right-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                <div class="flex gap-4">
+                                    <a href="booking.html"
+                                        class="flex-1 bg-white text-clinic-trust py-4 rounded-2xl font-black text-center shadow-xl hover:bg-clinic-primary hover:text-white transition-colors">Book
+                                        Visit</a>
+                                    <button
+                                        class="w-14 h-14 bg-white/20 backdrop-blur-md text-white rounded-2xl flex items-center justify-center hover:bg-white transition-colors">
+                                        <i data-lucide="share-2" class="w-6 h-6"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="doctor-info">
+                            <div class="doctor-name-row">
+                                <h3 class="text-3xl font-black text-clinic-trust">Dr. Lisa Ray</h3>
+                                <span
+                                    class="doctor-badge px-4 py-1.5 bg-clinic-primary/10 text-clinic-primary rounded-full text-xs font-black uppercase tracking-widest">Specialist</span>
+                            </div>
+                            <p class="doctor-specialty text-clinic-primary font-bold text-lg">Dermatologist &amp;
+                                Medical Aesthetician</p>
+                            <p class="doctor-desc text-gray-500 font-medium">Combining clinical skin health with
+                                advanced therapeutic laser technologies.</p>
+                        </div>
+                    </div>
+
+                    <!-- Doctor 6 -->
+                    <div class="group relative doctor-card">
+                        <div class="doctor-img-wrap shadow-2xl transition-all duration-700 group-hover:-translate-y-4">
+                            <img src="./assets/img/doctor-male-3.png" alt="Dr. David Zhang"
+                                class="scale-110 group-hover:scale-100 transition-transform duration-1000">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-clinic-trust/90 via-clinic-trust/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            </div>
+                            <div
+                                class="absolute bottom-10 left-10 right-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                <div class="flex gap-4">
+                                    <a href="booking.html"
+                                        class="flex-1 bg-white text-clinic-trust py-4 rounded-2xl font-black text-center shadow-xl hover:bg-clinic-primary hover:text-white transition-colors">Book
+                                        Visit</a>
+                                    <button
+                                        class="w-14 h-14 bg-white/20 backdrop-blur-md text-white rounded-2xl flex items-center justify-center hover:bg-white transition-colors">
+                                        <i data-lucide="share-2" class="w-6 h-6"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="doctor-info">
+                            <div class="doctor-name-row">
+                                <h3 class="text-3xl font-black text-clinic-trust">Dr. David Zhang</h3>
+                                <span
+                                    class="doctor-badge px-4 py-1.5 bg-clinic-primary/10 text-clinic-primary rounded-full text-xs font-black uppercase tracking-widest">Primary</span>
+                            </div>
+                            <p class="doctor-specialty text-clinic-primary font-bold text-lg">General Internal Medicine
+                            </p>
+                            <p class="doctor-desc text-gray-500 font-medium">Master diagnostic skills for complex
+                                multi-systemic clinical conditions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Care Philosophy (Premium) -->
+        <section class="py-32 bg-white relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+                    <div class="space-y-10">
+                        <div class="text-clinic-primary font-bold tracking-[0.3em] uppercase text-sm">Our Ethos</div>
+                        <h2
+                            class="text-4xl lg:text-7xl font-black text-clinic-trust tracking-tight leading-none italic">
+                            Listening is <br><span class="text-clinic-primary not-italic font-medium">the First
+                                Cure.</span></h2>
+                        <p class="text-xl text-gray-500 leading-relaxed font-medium">
+                            At PremiumCare, we believe clinical brilliance is hollow without empathy. Our doctors are
+                            selected not just for their publications, but for their ability to look you in the eye and
+                            hear what isn't being said.
+                        </p>
+                        <div class="grid grid-cols-2 gap-8 pt-8">
+                            <div>
+                                <div class="text-4xl font-black text-clinic-trust mb-2">45m</div>
+                                <p class="text-gray-500 font-bold uppercase tracking-widest text-xs">Avg. Consultation
+                                </p>
+                            </div>
+                            <div>
+                                <div class="text-4xl font-black text-clinic-trust mb-2">98%</div>
+                                <p class="text-gray-500 font-bold uppercase tracking-widest text-xs">Patient Rapport</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="bg-clinic-mist rounded-[4rem] p-12 lg:p-20 relative z-10 shadow-2xl">
+                            <div class="space-y-12">
+                                <div class="flex gap-8 group">
+                                    <div
+                                        class="w-16 h-16 bg-white rounded-3xl flex items-center justify-center text-clinic-primary shadow-xl group-hover:bg-clinic-primary group-hover:text-white transition-all duration-500">
+                                        <i data-lucide="microscope" class="w-8 h-8"></i>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <h4 class="text-2xl font-black text-clinic-trust">Research Centric</h4>
+                                        <p class="text-gray-500 font-medium leading-snug">Translating the latest global
+                                            breakthroughs into bedside therapy.</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-8 group border-t border-gray-100 pt-12">
+                                    <div
+                                        class="w-16 h-16 bg-white rounded-3xl flex items-center justify-center text-clinic-primary shadow-xl group-hover:bg-clinic-primary group-hover:text-white transition-all duration-500">
+                                        <i data-lucide="shield-check" class="w-8 h-8"></i>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <h4 class="text-2xl font-black text-clinic-trust">Zero-Risk Protocol</h4>
+                                        <p class="text-gray-500 font-medium leading-snug">Multi-surgeon review for every
+                                            complex elective procedure.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute -top-10 -right-10 w-64 h-64 bg-clinic-primary/5 rounded-full blur-3xl -z-10 animate-pulse">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Consultation Protocol -->
+        <section class="py-32 bg-clinic-trust relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <div class="max-w-3xl mx-auto mb-24 space-y-6">
+                    <div class="text-clinic-accent font-bold tracking-[0.3em] uppercase text-sm">The Patient Journey
+                    </div>
+                    <h2 class="text-4xl lg:text-7xl font-black text-white tracking-tight leading-none">Your Time
+                        <br>Matters.
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div
+                        class="bg-white/5 backdrop-blur-md rounded-[3rem] p-12 border border-white/10 hover:bg-white/10 transition-colors group">
+                        <div
+                            class="text-8xl font-black text-white/5 mb-8 group-hover:text-clinic-accent/20 transition-colors">
+                            01</div>
+                        <h3 class="text-2xl font-black text-white mb-4">The Pre-Brief</h3>
+                        <p class="text-blue-100/70 font-medium">Digital history review before you even step into the
+                            clinic window.</p>
+                    </div>
+                    <div
+                        class="bg-white/5 backdrop-blur-md rounded-[3rem] p-12 border border-white/10 hover:bg-white/10 transition-colors group lg:mt-16">
+                        <div
+                            class="text-8xl font-black text-white/5 mb-8 group-hover:text-clinic-accent/20 transition-colors">
+                            02</div>
+                        <h3 class="text-2xl font-black text-white mb-4">Deep Dialogue</h3>
+                        <p class="text-blue-100/70 font-medium">Direct specialist dialogue with no medical jargon—just
+                            clear truth.</p>
+                    </div>
+                    <div
+                        class="bg-white/5 backdrop-blur-md rounded-[3rem] p-12 border border-white/10 hover:bg-white/10 transition-colors group">
+                        <div
+                            class="text-8xl font-black text-white/5 mb-8 group-hover:text-clinic-accent/20 transition-colors">
+                            03</div>
+                        <h3 class="text-2xl font-black text-white mb-4">Path Forward</h3>
+                        <p class="text-blue-100/70 font-medium">Immediate access to your plan via the patient portal
+                            before you leave.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="py-32 bg-white">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div
+                    class="bg-clinic-mist border border-gray-100 rounded-[4rem] p-12 lg:p-24 text-center shadow-2xl relative overflow-hidden group">
+                    <div class="relative z-10 space-y-10">
+                        <h2 class="text-4xl lg:text-7xl font-black text-clinic-trust tracking-tighter leading-none">
+                            Select Your <br>Specialist.</h2>
+                        <p class="text-gray-500 text-xl leading-relaxed max-w-2xl mx-auto font-medium">
+                            World-class care is just a click away. Select your specialist and schedule a visit in
+                            seconds.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-6 justify-center pt-8">
+                            <a href="booking.html"
+                                class="bg-clinic-trust text-white px-12 py-5 rounded-2xl font-black hover:bg-black transition-all shadow-2xl hover:scale-105">
+                                Book an Appointment
+                            </a>
+                            <a href="contact.html"
+                                class="bg-white text-clinic-trust border border-gray-200 px-12 py-5 rounded-2xl font-black hover:bg-clinic-mist transition-all">
+                                Contact Center
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <!-- Footer -->
+    <footer id="contact" class="footer-dark pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Footer Top: Newsletter -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 pb-20 border-b border-white/5 mb-20 items-center">
+                <div>
+                    <h3 class="text-3xl font-black text-white mb-4 tracking-tight">Stay informed with <span
+                            class="text-clinic-primary">PremiumCare.</span></h3>
+                    <p class="text-slate-400 text-lg">Receive exclusive healthcare tips, clinic updates, and wellness
+                        news directly in your inbox.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="Enter your email address"
+                        class="newsletter-input flex-1 px-6 py-4 rounded-2xl text-white">
+                    <button
+                        class="bg-clinic-primary hover:bg-clinic-dark text-white px-8 py-4 rounded-2xl font-bold transition-all whitespace-nowrap">
+                        Subscribe Now
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
+                <!-- Brand & Info -->
+                <div class="space-y-8">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <img src="./assets/img/logo-white.svg" alt="PremiumCare Logo" class="h-10 w-auto">
+                    </a>
+                    <p class="text-slate-400 leading-relaxed">
+                        Redefining medical excellence through human compassion. We provide world-class healthcare with a
+                        personal touch, ensuring every patient feels valued and cared for.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <a href="#" class="social-icon-btn" aria-label="Facebook">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="social-icon-btn" aria-label="Twitter">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="social-icon-btn" aria-label="Instagram">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="social-icon-btn" aria-label="LinkedIn">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="space-y-4">
+                        <li><a href="index.html" class="footer-link">Home</a></li>
+                        <li><a href="home-2.html" class="footer-link">Home2</a></li>
+                        <li><a href="services.html" class="footer-link">Services</a></li>
+                        <li><a href="about.html" class="footer-link">About Us</a></li>
+                        <li><a href="doctors.html" class="footer-link">Doctors</a></li>
+                        <li><a href="contact.html" class="footer-link">Contact</a></li>
+                        <li><a href="login.html" class="footer-link">Login</a></li>
+                    </ul>
+                </div>
+
+                <!-- Patient Portal -->
+                <div>
+                    <h4 class="footer-heading">Patient Portal</h4>
+                    <ul class="space-y-4">
+                        <li><a href="booking.html" class="footer-link font-bold text-clinic-primary">Book
+                                Appointment</a></li>
+                        <li><a href="user-dashboard.html" class="footer-link">Patient Dashboard</a></li>
+                        <li><a href="admin-dashboard.html" class="footer-link">Admin Dashboard</a></li>
+                        <li><a href="signup.html" class="footer-link">Register Account</a></li>
+                        <li><a href="faq.html" class="footer-link">Help &amp; FAQ</a></li>
+                        <li><a href="doctors.html" class="footer-link">Find a Specialist</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Emergency -->
+                <div class="space-y-8">
+                    <div>
+                        <h4 class="footer-heading">Emergency Line</h4>
+                        <a href="tel:+1234567890" class="flex items-center gap-4 group">
+                            <div
+                                class="w-12 h-12 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-all">
+                                <i data-lucide="phone-call" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <div class="text-[0.65rem] font-black text-red-500 uppercase tracking-[0.2em] mb-0.5">
+                                    Available 24/7</div>
+                                <div class="text-xl font-black text-white">+1 (234) 567 890</div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="footer-heading !mb-0">Main Hospital</h4>
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-clinic-primary mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-400">123 Medical Drive, Wellness City, <br>HE 45678, United
+                                States</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="text-slate-500 text-sm font-medium">
+                    © 2026 PremiumCare Health Group. All rights reserved. <span class="hidden md:inline mx-2">•</span>
+                    <span class="text-slate-600 italic">Architected for Life.</span>
+                </div>
+                <div class="flex items-center gap-8">
+                    <a href="privacy-policy.html"
+                        class="text-xs font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest">Privacy
+                        Policy</a>
+                    <a href="terms-of-use.html"
+                        class="text-xs font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest">Legal
+                        Terms</a>
+                    <a href="#"
+                        class="text-xs font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./src/js/api.js"></script>
+    <script src="./src/js/main.js"></script>
+</body>
+
+</html>

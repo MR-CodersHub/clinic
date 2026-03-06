@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Securely login to your PremiumCare Clinic patient or staff dashboard.">
+    <title>Login | PremiumCare Clinic</title>
+    <link rel="icon" type="icon/png" href="./assets/img/favicon.ico.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clinic: {
+                            primary: '#0D9488',
+                            dark: '#0F766E',
+                            light: '#F0FDFA',
+                            mist: '#F9FAFB',
+                            ink: '#1F2937',
+                            accent: '#10B981',
+                            trust: '#1E3A8A',
+                        }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="./src/css/style.css">
+    <style>
+        label.role-pill.selected {
+            border-color: #0D9488;
+            background-color: #F0FDFA;
+            color: #0D9488;
+        }
+
+        label.role-pill.selected[for="role-admin"] {
+            border-color: #1E3A8A;
+            background-color: #EFF6FF;
+            color: #1E3A8A;
+        }
+
+        label.role-pill.selected[for="role-admin"] i {
+            color: #1E3A8A;
+        }
+
+        label.role-pill.selected[for="role-user"] i {
+            color: #0D9488;
+        }
+
+        /* ── Mobile interaction fixes ─────────────────────────────────── */
+
+        /* 1. Ensure the login card is always on the top interaction layer */
+        .login-card {
+            position: relative;
+            z-index: 20;
+        }
+
+        /* 2. Password eye-toggle: must never become full-width on mobile */
+        #toggle-password-btn {
+            position: absolute !important;
+            right: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: auto !important;
+            min-height: unset !important;
+            min-width: unset !important;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            z-index: 5;
+            pointer-events: auto;
+        }
+
+        /* 3. Role selector grid always stays 2-column (undo global mobile collapse) */
+        #role-selector {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+        }
+
+        /* 4. Role pill labels must never become full-width buttons */
+        .role-pill {
+            width: auto !important;
+            min-height: unset !important;
+            min-width: unset !important;
+            display: flex !important;
+        }
+
+        /* 5. On mobile, give the password wrapper an explicit stacking context */
+        .pw-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 6. Inputs on the login form: cancel the global padding:1rem override */
+        @media (max-width: 768px) {
+            .login-card input {
+                padding: 1.25rem 2rem !important;
+            }
+
+            .login-card input[type="password"],
+            .login-card input[type="email"],
+            .login-card input[type="text"] {
+                padding-right: 3.5rem !important;
+                /* keep room for eye icon */
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="auth-page bg-clinic-mist text-clinic-ink font-sans selection:bg-clinic-light selection:text-clinic-primary">
+
+    <main class="min-h-screen flex items-center justify-center relative px-4 py-20 bg-clinic-mist">
+        <!-- Background blobs: pointer-events-none + z-0 so they NEVER intercept clicks -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none" style="z-index:0" aria-hidden="true">
+            <div
+                class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-clinic-light rounded-full blur-[120px] opacity-40">
+            </div>
+            <div
+                class="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-clinic-primary/10 rounded-full blur-[100px] opacity-40">
+            </div>
+        </div>
+
+        <div class="w-full max-w-md" style="position:relative;z-index:10">
+            <div
+                class="login-card bg-white rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(30,58,138,0.1)] border border-white p-10 lg:p-12 space-y-8">
+
+                <!-- Logo -->
+                <div class="flex justify-center">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <img src="./assets/img/logo-full.svg" alt="PremiumCare Logo" class="h-10 w-auto">
+                    </a>
+                </div>
+
+                <div class="text-center space-y-2">
+                    <h1 class="text-3xl font-black text-clinic-trust tracking-tight">Access Portal</h1>
+                    <p class="text-gray-500 font-medium text-sm">Securely sign in to manage your medical journey.</p>
+                </div>
+
+
+
+                <form id="login-form" class="space-y-6" novalidate>
+                    <!-- Email -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-black text-clinic-trust uppercase tracking-widest ml-1">Email
+                            Address</label>
+                        <input type="email" id="email" required placeholder="name@email.com"
+                            class="w-full px-8 py-5 rounded-2xl bg-clinic-mist border-none focus:ring-2 focus:ring-clinic-primary outline-none transition-all font-medium text-clinic-ink">
+                    </div>
+
+                    <!-- Password -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center px-1">
+                            <label
+                                class="text-xs font-black text-clinic-trust uppercase tracking-widest">Password</label>
+                            <a href="#"
+                                class="text-[10px] font-black text-clinic-primary uppercase tracking-widest hover:text-clinic-dark transition-colors">Forgot
+                                Password?</a>
+                        </div>
+                        <div class="pw-wrapper relative">
+                            <input type="password" id="password" required placeholder="••••••••"
+                                class="w-full px-8 py-5 rounded-2xl bg-clinic-mist border-none focus:ring-2 focus:ring-clinic-primary outline-none transition-all font-medium text-clinic-ink pr-16">
+                            <button type="button" id="toggle-password-btn"
+                                onclick="togglePassword('password','eye-icon-login')"
+                                aria-label="Toggle password visibility">
+                                <i id="eye-icon-login" data-lucide="eye"
+                                    class="w-5 h-5 text-gray-400 hover:text-clinic-primary transition-colors"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="flex items-center gap-2 px-1">
+                        <input type="checkbox" id="remember-me"
+                            class="w-4 h-4 rounded border-gray-300 text-clinic-primary focus:ring-clinic-primary cursor-pointer accent-teal-600">
+                        <label for="remember-me" class="text-sm font-bold text-clinic-trust cursor-pointer">Remember
+                            Me</label>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" id="submit-btn"
+                        class="w-full bg-clinic-trust text-white py-5 rounded-2xl font-black text-lg hover:bg-black transition-all shadow-2xl hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3 group">
+                        Sign In
+                        <i data-lucide="log-in" class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </form>
+
+                <div class="text-center">
+                    <p class="text-sm font-medium text-gray-400">
+                        New to clinical portal?
+                        <a href="signup.html" class="font-black text-clinic-primary hover:underline ml-1">Create
+                            Account</a>
+                    </p>
+                </div>
+
+                <!-- Divider -->
+                <div class="relative py-2">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-100"></div>
+                    </div>
+                    <div
+                        class="relative flex justify-center text-xs uppercase tracking-[0.2em] font-black text-gray-300">
+                        <span class="bg-white px-4">Federated Auth</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <button
+                        class="flex items-center justify-center gap-2 py-4 border border-gray-100 rounded-2xl hover:bg-clinic-mist transition-all font-bold text-sm text-clinic-trust group">
+                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                fill="#4285F4" />
+                            <path
+                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                fill="#34A853" />
+                            <path
+                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.26.81-.58z"
+                                fill="#FBBC05" />
+                            <path
+                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                                fill="#EA4335" />
+                        </svg>
+                        Google
+                    </button>
+                    <button
+                        class="flex items-center justify-center gap-2 py-4 border border-gray-100 rounded-2xl hover:bg-clinic-mist transition-all font-bold text-sm text-clinic-trust group">
+                        <i data-lucide="apple" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                        Apple ID
+                    </button>
+                </div>
+
+                <!-- Success State -->
+                <div id="login-success" class="hidden text-center space-y-6 pt-4">
+                    <div
+                        class="w-20 h-20 bg-clinic-light text-clinic-primary rounded-full flex items-center justify-center mx-auto shadow-xl">
+                        <i data-lucide="check" class="w-10 h-10"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h2 class="text-2xl font-black text-clinic-trust">Session Verified</h2>
+                        <p id="success-msg" class="text-gray-500 font-medium">Redirecting...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="./src/js/api.js"></script>
+    <script src="./src/js/main.js"></script>
+    <script>
+        // Form submit
+        document.getElementById('login-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            var email = document.getElementById('email').value.trim();
+            var password = document.getElementById('password').value;
+            var btn = document.getElementById('submit-btn');
+            var success = document.getElementById('login-success');
+            var form = this;
+
+            if (!email || !password) { alert('Please enter your email and password.'); return; }
+
+            btn.disabled = true;
+            btn.innerHTML = '<svg class="animate-spin w-5 h-5 inline-block mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg> Authenticating...';
+
+            try {
+                // Simulate login or call API
+                var user = await StorageService.login(email, password);
+
+                var redirectUrl = (user.role === 'admin') ? 'admin-dashboard.html' : 'user-dashboard.html';
+
+                setTimeout(function () {
+                    form.classList.add('hidden');
+                    success.classList.remove('hidden');
+                    document.getElementById('success-msg').textContent = (user.role === 'admin')
+                        ? 'Redirecting to Admin Dashboard...'
+                        : 'Redirecting to your Patient Dashboard...';
+                    if (window.lucide) lucide.createIcons();
+                    setTimeout(function () { window.location.href = redirectUrl; }, 1500);
+                }, 700);
+
+            } catch (err) {
+                btn.disabled = false;
+                btn.innerHTML = 'Sign In';
+                if (window.lucide) lucide.createIcons();
+                // For demo purposes, if login fails but it's a known admin/user email pattern, redirect anyway? 
+                // User said: "remove any admin or user credential validation, so dashboard access works directly from the dropdown menu"
+                // But on the login page, they might still want to click "Sign In".
+                // I'll just keep the alert but the dropdown is the primary way now.
+                alert('Login failed: ' + err.message);
+            }
+        });
+
+        // Password toggle
+        function togglePassword(inputId, iconId) {
+            var input = document.getElementById(inputId);
+            var icon = document.getElementById(iconId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                input.type = 'password';
+                icon.setAttribute('data-lucide', 'eye');
+            }
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        // Init Lucide icons
+        if (window.lucide) lucide.createIcons();
+    </script>
+</body>
+
+</html>

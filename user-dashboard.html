@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Patient Dashboard | PremiumCare Clinic">
+    <title>Patient Dashboard | PremiumCare Clinic</title>
+    <link rel="icon" type="icon/png" href="./assets/img/favicon.ico.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { clinic: { primary: '#0D9488', dark: '#0F766E', light: '#F0FDFA', mist: '#F9FAFB', ink: '#1F2937', accent: '#10B981', trust: '#1E3A8A' } },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="./src/css/style.css">
+    <style>
+        .nav-btn {
+            transition: all .18s ease;
+        }
+
+        .nav-btn.active {
+            background: #F0FDFA;
+            color: #0D9488;
+            border-right: 3px solid #0D9488;
+            font-weight: 700;
+        }
+
+        .nav-btn.active i {
+            color: #0D9488;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, .5);
+            z-index: 40;
+            backdrop-filter: blur(2px);
+        }
+
+        .overlay.open {
+            display: block;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 1rem;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 1px 8px rgba(30, 58, 138, .06);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(30, 58, 138, .1);
+        }
+
+        #sidebar {
+            transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: .2rem .6rem;
+            border-radius: 9999px;
+            font-size: .65rem;
+            font-weight: 800;
+            letter-spacing: .04em;
+        }
+
+        .badge-pending {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        .badge-complete {
+            background: #D1FAE5;
+            color: #059669;
+        }
+
+        .badge-active {
+            background: #D1FAE5;
+            color: #059669;
+        }
+
+        .badge-expired {
+            background: #F1F5F9;
+            color: #64748B;
+        }
+    </style>
+</head>
+
+<body class="bg-clinic-mist font-sans text-clinic-ink selection:bg-clinic-light selection:text-clinic-primary">
+
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- ══════════════ SIDEBAR ══════════════ -->
+        <aside id="sidebar"
+            class="fixed lg:static inset-y-0 left-0 z-50 w-72 bg-white border-r border-gray-100 flex flex-col -translate-x-full lg:translate-x-0 shadow-2xl lg:shadow-none">
+
+            <!-- Logo -->
+            <div class="px-6 py-5 border-b border-gray-50">
+                <a href="index.html" class="inline-flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <img src="./assets/img/logo-full.svg" alt="PremiumCare" class="h-9 w-auto object-contain">
+                </a>
+            </div>
+
+            <!-- Patient card -->
+            <div class="px-5 py-5 border-b border-gray-50">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-clinic-light flex items-center justify-center border border-clinic-primary/20 shrink-0">
+                        <i data-lucide="user" class="w-6 h-6 text-clinic-primary"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Welcome back</p>
+                        <p id="sb-name" class="font-black text-clinic-trust truncate text-sm mt-0.5">Loading…</p>
+                        <span class="badge badge-active mt-1"><i data-lucide="shield-check"
+                                class="w-2.5 h-2.5 mr-1"></i>Verified Patient</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 p-3 space-y-px overflow-y-auto">
+                <button data-s="overview"
+                    class="nav-btn active  w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-clinic-ink hover:bg-clinic-mist"><i
+                        data-lucide="layout-dashboard" class="w-4.5 h-4.5 text-gray-400 shrink-0"></i> Overview</button>
+                <button data-s="appointments"
+                    class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-clinic-ink hover:bg-clinic-mist"><i
+                        data-lucide="calendar" class="w-4.5 h-4.5 text-gray-400 shrink-0"></i> My Appointments</button>
+                <button data-s="prescriptions"
+                    class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-clinic-ink hover:bg-clinic-mist"><i
+                        data-lucide="pill" class="w-4.5 h-4.5 text-gray-400 shrink-0"></i> Prescriptions</button>
+                <button data-s="labreports"
+                    class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-clinic-ink hover:bg-clinic-mist"><i
+                        data-lucide="flask-conical" class="w-4.5 h-4.5 text-gray-400 shrink-0"></i> Lab Reports</button>
+                <button data-s="billing"
+                    class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-clinic-ink hover:bg-clinic-mist"><i
+                        data-lucide="receipt" class="w-4.5 h-4.5 text-gray-400 shrink-0"></i> Billing</button>
+                <button data-s="messages"
+                    class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-clinic-ink hover:bg-clinic-mist">
+                    <i data-lucide="message-circle" class="w-4.5 h-4.5 text-gray-400 shrink-0"></i> Messages
+                    <span
+                        class="ml-auto bg-clinic-primary text-white text-[10px] font-black px-2 py-0.5 rounded-full">2</span>
+                </button>
+                <button data-s="profile"
+                    class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-clinic-ink hover:bg-clinic-mist"><i
+                        data-lucide="user-circle" class="w-4.5 h-4.5 text-gray-400 shrink-0"></i> My Profile</button>
+            </nav>
+
+            <!-- Footer buttons -->
+            <div class="p-4 border-t border-gray-50 space-y-2">
+                <a href="booking.html"
+                    class="w-full flex items-center justify-center gap-2 bg-clinic-primary text-white py-3 rounded-xl font-bold text-sm hover:bg-clinic-dark transition-all active:scale-95 shadow-lg shadow-clinic-primary/20">
+                    <i data-lucide="calendar-plus" class="w-4 h-4"></i> Book Appointment
+                </a>
+                <button id="logout-btn"
+                    class="w-full flex items-center gap-3 px-4 py-2.5 text-red-500 hover:bg-red-50 rounded-xl font-semibold text-sm transition-all">
+                    <i data-lucide="log-out" class="w-4 h-4"></i> Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <div id="overlay" class="overlay" onclick="closeSidebar()"></div>
+
+        <!-- ══════════════ MAIN ══════════════ -->
+        <main class="flex-1 flex flex-col overflow-y-auto min-w-0">
+
+            <!-- Top header -->
+            <header
+                class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-gray-100 px-5 py-3 flex items-center justify-between shadow-sm">
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleSidebar()"
+                        class="lg:hidden p-2 rounded-xl hover:bg-clinic-mist transition-all" aria-label="Menu">
+                        <i data-lucide="menu" class="w-5 h-5 text-clinic-ink"></i>
+                    </button>
+                    <div>
+                        <h1 id="section-title" class="font-black text-clinic-trust text-base lg:text-lg leading-tight">
+                            Overview</h1>
+                        <p class="text-[11px] text-gray-400 font-medium hidden sm:block">Patient Portal · PremiumCare
+                            Clinic</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="relative p-2.5 rounded-xl hover:bg-clinic-mist transition-all"
+                        aria-label="Notifications">
+                        <i data-lucide="bell" class="w-5 h-5 text-gray-500"></i>
+                        <span
+                            class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+                    </button>
+                    <!-- Profile Dropdown -->
+                    <div class="relative ml-1" id="profile-dropdown-container">
+                        <button id="profile-btn" aria-haspopup="true" aria-expanded="false"
+                            class="w-9 h-9 rounded-full border border-gray-100 flex items-center justify-center hover:bg-clinic-mist transition-all bg-white shadow-sm">
+                            <i data-lucide="user" class="w-4.5 h-4.5 text-clinic-trust"></i>
+                        </button>
+                        <div id="profile-menu"
+                            class="hidden absolute right-0 mt-3 w-52 bg-white border border-gray-100 rounded-2xl shadow-xl shadow-clinic-trust/5 py-2 z-[9999] opacity-0 transform -translate-y-2 transition-all duration-200"
+                            style="min-width:200px;">
+                            <!-- Login / Sign Up - single line -->
+                            <a href="login.html"
+                                class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-ink hover:bg-clinic-mist transition-colors font-semibold rounded-t-xl">
+                                <i data-lucide="log-in" class="w-4 h-4 text-clinic-primary shrink-0"></i>
+                                <span class="whitespace-nowrap">Login&nbsp;/&nbsp;Sign Up</span>
+                            </a>
+                            <div class="h-px bg-gray-100 mx-3"></div>
+                            <!-- Admin Dashboard -->
+                            <a href="admin-dashboard.html"
+                                class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-trust hover:bg-clinic-mist transition-colors font-semibold">
+                                <i data-lucide="shield" class="w-4 h-4 text-clinic-trust shrink-0"></i>
+                                <span class="whitespace-nowrap">Admin Dashboard</span>
+                            </a>
+                            <!-- User Dashboard -->
+                            <a href="user-dashboard.html"
+                                class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-ink hover:bg-clinic-mist transition-colors font-semibold rounded-b-xl">
+                                <i data-lucide="layout-dashboard" class="w-4 h-4 text-clinic-primary shrink-0"></i>
+                                <span class="whitespace-nowrap">User Dashboard</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Sections wrapper -->
+            <div class="flex-1 p-5 lg:p-8">
+
+                <!-- ────── OVERVIEW ────── -->
+                <div id="s-overview" class="section active space-y-6">
+                    <!-- Hero banner -->
+                    <div
+                        class="relative bg-gradient-to-br from-clinic-trust via-blue-700 to-blue-600 rounded-3xl p-7 lg:p-8 text-white overflow-hidden shadow-xl shadow-clinic-trust/20">
+                        <div class="absolute -right-10 -top-10 w-56 h-56 bg-white/5 rounded-full"></div>
+                        <div class="absolute right-10 bottom-0 w-36 h-36 bg-white/5 rounded-full"></div>
+                        <div class="relative z-10">
+                            <p class="text-blue-200 text-xs font-bold uppercase tracking-widest mb-1">Patient Portal</p>
+                            <h2 id="welcome-h" class="text-2xl lg:text-3xl font-black mb-2">Welcome back!</h2>
+                            <p class="text-blue-200 text-sm max-w-sm mb-6">Your health is our priority. Track your
+                                appointments, prescriptions, and lab results all in one place.</p>
+                            <div class="flex flex-wrap gap-3">
+                                <button data-goto="appointments"
+                                    class="goto-btn flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2.5 rounded-xl text-sm font-bold backdrop-blur transition-all border border-white/20">
+                                    <i data-lucide="calendar" class="w-4 h-4"></i> My Appointments
+                                </button>
+                                <a href="booking.html"
+                                    class="flex items-center gap-2 bg-white text-clinic-trust px-4 py-2.5 rounded-xl text-sm font-black hover:shadow-lg transition-all">
+                                    <i data-lucide="plus" class="w-4 h-4"></i> Book Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="card stat-card p-5 transition-all cursor-pointer"
+                            onclick="showSection('appointments')">
+                            <div class="w-10 h-10 bg-teal-50 rounded-xl flex items-center justify-center mb-3"><i
+                                    data-lucide="calendar-clock" class="w-5 h-5 text-clinic-primary"></i></div>
+                            <div id="stat-up" class="text-2xl font-black text-clinic-trust">0</div>
+                            <p class="text-xs text-gray-500 font-medium mt-0.5">Upcoming Visits</p>
+                        </div>
+                        <div class="card stat-card p-5 transition-all cursor-pointer"
+                            onclick="showSection('appointments')">
+                            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mb-3"><i
+                                    data-lucide="history" class="w-5 h-5 text-clinic-trust"></i></div>
+                            <div id="stat-all" class="text-2xl font-black text-clinic-trust">0</div>
+                            <p class="text-xs text-gray-500 font-medium mt-0.5">Total Visits</p>
+                        </div>
+                        <div class="card stat-card p-5 transition-all cursor-pointer"
+                            onclick="showSection('prescriptions')">
+                            <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center mb-3"><i
+                                    data-lucide="pill" class="w-5 h-5 text-emerald-500"></i></div>
+                            <div class="text-2xl font-black text-clinic-trust">2</div>
+                            <p class="text-xs text-gray-500 font-medium mt-0.5">Active Prescriptions</p>
+                        </div>
+                        <div class="card stat-card p-5 transition-all cursor-pointer"
+                            onclick="showSection('labreports')">
+                            <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mb-3"><i
+                                    data-lucide="flask-conical" class="w-5 h-5 text-amber-500"></i></div>
+                            <div class="text-2xl font-black text-clinic-trust">4</div>
+                            <p class="text-xs text-gray-500 font-medium mt-0.5">Lab Reports</p>
+                        </div>
+                    </div>
+
+                    <!-- 2-col grid: Upcoming + Quick Actions -->
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
+                        <div class="lg:col-span-3 card overflow-hidden">
+                            <div class="px-6 py-4 border-b border-gray-50 flex items-center justify-between">
+                                <h3 class="font-black text-clinic-trust text-sm">Upcoming Appointments</h3>
+                                <button data-goto="appointments"
+                                    class="goto-btn text-xs font-bold text-clinic-primary hover:underline">View All
+                                    →</button>
+                            </div>
+                            <div id="upcoming-list" class="p-5 space-y-3 min-h-[80px]">
+                                <p class="text-gray-400 text-sm italic">Loading…</p>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-2 card overflow-hidden">
+                            <div class="px-6 py-4 border-b border-gray-50">
+                                <h3 class="font-black text-clinic-trust text-sm">Quick Actions</h3>
+                            </div>
+                            <div class="p-4 grid grid-cols-3 gap-2.5">
+                                <button data-goto="appointments"
+                                    class="goto-btn qa-btn flex flex-col items-center gap-1.5 p-3 rounded-2xl bg-clinic-mist hover:bg-clinic-light transition-all group">
+                                    <div
+                                        class="w-9 h-9 bg-clinic-primary/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="calendar" class="w-4 h-4 text-clinic-primary"></i>
+                                    </div><span
+                                        class="text-[10px] font-bold text-center leading-tight">Appointments</span>
+                                </button>
+                                <button data-goto="prescriptions"
+                                    class="goto-btn qa-btn flex flex-col items-center gap-1.5 p-3 rounded-2xl bg-clinic-mist hover:bg-emerald-50 transition-all group">
+                                    <div
+                                        class="w-9 h-9 bg-emerald-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="pill" class="w-4 h-4 text-emerald-600"></i>
+                                    </div><span
+                                        class="text-[10px] font-bold text-center leading-tight">Prescriptions</span>
+                                </button>
+                                <button data-goto="labreports"
+                                    class="goto-btn qa-btn flex flex-col items-center gap-1.5 p-3 rounded-2xl bg-clinic-mist hover:bg-amber-50 transition-all group">
+                                    <div
+                                        class="w-9 h-9 bg-amber-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="flask-conical" class="w-4 h-4 text-amber-600"></i>
+                                    </div><span class="text-[10px] font-bold text-center leading-tight">Lab
+                                        Reports</span>
+                                </button>
+                                <button data-goto="billing"
+                                    class="goto-btn qa-btn flex flex-col items-center gap-1.5 p-3 rounded-2xl bg-clinic-mist hover:bg-purple-50 transition-all group">
+                                    <div
+                                        class="w-9 h-9 bg-purple-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="receipt" class="w-4 h-4 text-purple-600"></i>
+                                    </div><span class="text-[10px] font-bold text-center leading-tight">Billing</span>
+                                </button>
+                                <button data-goto="messages"
+                                    class="goto-btn qa-btn flex flex-col items-center gap-1.5 p-3 rounded-2xl bg-clinic-mist hover:bg-sky-50 transition-all group">
+                                    <div
+                                        class="w-9 h-9 bg-sky-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="message-circle" class="w-4 h-4 text-sky-600"></i>
+                                    </div><span class="text-[10px] font-bold text-center leading-tight">Messages</span>
+                                </button>
+                                <a href="booking.html"
+                                    class="qa-btn flex flex-col items-center gap-1.5 p-3 rounded-2xl bg-clinic-mist hover:bg-rose-50 transition-all group">
+                                    <div
+                                        class="w-9 h-9 bg-rose-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="calendar-plus" class="w-4 h-4 text-rose-500"></i>
+                                    </div><span class="text-[10px] font-bold text-center leading-tight">Book
+                                        Appt.</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Visits Table -->
+                    <div class="card overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-50">
+                            <h3 class="font-black text-clinic-trust text-sm">Recent Visit History</h3>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-clinic-mist/60">
+                                    <tr>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Department</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Date</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Time</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="visits-tbody" class="divide-y divide-gray-50">
+                                    <tr>
+                                        <td colspan="4" class="px-5 py-8 text-center text-gray-400 italic text-sm">
+                                            Loading…</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Notifications / Reminders -->
+                    <div class="card p-6">
+                        <h3 class="font-black text-clinic-trust text-sm mb-4">Health Reminders &amp; Notifications</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="flex gap-3 p-4 bg-amber-50 rounded-2xl border border-amber-100">
+                                <div class="w-9 h-9 bg-amber-100 rounded-xl flex items-center justify-center shrink-0">
+                                    <i data-lucide="pill" class="w-4 h-4 text-amber-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-clinic-trust text-[13px]">Morning Medication</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">Atorvastatin 10mg — after breakfast</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                                <div class="w-9 h-9 bg-blue-100 rounded-xl flex items-center justify-center shrink-0"><i
+                                        data-lucide="droplets" class="w-4 h-4 text-blue-600"></i></div>
+                                <div>
+                                    <p class="font-bold text-clinic-trust text-[13px]">Stay Hydrated</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">Drink at least 2 litres of water daily</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 p-4 bg-green-50 rounded-2xl border border-green-100">
+                                <div class="w-9 h-9 bg-green-100 rounded-xl flex items-center justify-center shrink-0">
+                                    <i data-lucide="activity" class="w-4 h-4 text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-clinic-trust text-[13px]">Next Check-up</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">Follow-up scheduled for Mar 1, 2026</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /overview -->
+
+                <!-- ────── APPOINTMENTS ────── -->
+                <div id="s-appointments" class="section space-y-5">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-xl font-black text-clinic-trust">My Appointments</h2>
+                            <p class="text-gray-500 text-sm">All your scheduled and past visits</p>
+                        </div>
+                        <a href="booking.html"
+                            class="flex items-center gap-2 bg-clinic-primary text-white px-4 py-2.5 rounded-xl font-bold text-sm hover:bg-clinic-dark transition-all active:scale-95">
+                            <i data-lucide="plus" class="w-4 h-4"></i> Book New
+                        </a>
+                    </div>
+                    <!-- filter -->
+                    <div class="flex gap-2 flex-wrap" id="appt-filters">
+                        <button class="apft active px-4 py-2 rounded-xl font-bold text-sm bg-clinic-primary text-white"
+                            data-f="all">All</button>
+                        <button
+                            class="apft px-4 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-500 hover:border-clinic-primary hover:text-clinic-primary transition-all"
+                            data-f="pending">Upcoming</button>
+                        <button
+                            class="apft px-4 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-500 hover:border-clinic-primary hover:text-clinic-primary transition-all"
+                            data-f="past">Past</button>
+                    </div>
+                    <div id="full-apts" class="space-y-3">
+                        <p class="text-gray-400 text-sm italic py-8 text-center">Loading appointments…</p>
+                    </div>
+                </div>
+
+                <!-- ────── PRESCRIPTIONS ────── -->
+                <div id="s-prescriptions" class="section space-y-5">
+                    <div>
+                        <h2 class="text-xl font-black text-clinic-trust">Prescriptions</h2>
+                        <p class="text-gray-500 text-sm">Your active and past medication prescriptions</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="card p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex gap-3">
+                                    <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center"><i
+                                            data-lucide="pill" class="w-5 h-5 text-emerald-600"></i></div>
+                                    <div>
+                                        <p class="font-black text-clinic-trust text-sm">Atorvastatin 10mg</p>
+                                        <p class="text-xs text-gray-400">Dr. Sarah Johnson · Cardiology</p>
+                                    </div>
+                                </div><span class="badge badge-active">Active</span>
+                            </div>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between py-1.5 border-b border-gray-50"><span
+                                        class="text-gray-400 font-semibold">Dosage</span><span class="font-bold">Once
+                                        daily — after breakfast</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-gray-50"><span
+                                        class="text-gray-400 font-semibold">Duration</span><span class="font-bold">3
+                                        months (ends Apr 2026)</span></div>
+                                <div class="flex justify-between py-1.5"><span
+                                        class="text-gray-400 font-semibold">Refills left</span><span
+                                        class="font-bold">2</span></div>
+                            </div><button
+                                class="mt-4 w-full flex items-center justify-center gap-2 py-2.5 border border-clinic-primary text-clinic-primary rounded-xl text-sm font-bold hover:bg-clinic-light transition-all"><i
+                                    data-lucide="download" class="w-4 h-4"></i> Download PDF</button>
+                        </div>
+                        <div class="card p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex gap-3">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center"><i
+                                            data-lucide="pill" class="w-5 h-5 text-blue-600"></i></div>
+                                    <div>
+                                        <p class="font-black text-clinic-trust text-sm">Metformin 500mg</p>
+                                        <p class="text-xs text-gray-400">Dr. Michael Chen · Diabetology</p>
+                                    </div>
+                                </div><span class="badge badge-active">Active</span>
+                            </div>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between py-1.5 border-b border-gray-50"><span
+                                        class="text-gray-400 font-semibold">Dosage</span><span class="font-bold">Twice
+                                        daily — with meals</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-gray-50"><span
+                                        class="text-gray-400 font-semibold">Duration</span><span class="font-bold">6
+                                        months (ends Jun 2026)</span></div>
+                                <div class="flex justify-between py-1.5"><span
+                                        class="text-gray-400 font-semibold">Refills left</span><span
+                                        class="font-bold">4</span></div>
+                            </div><button
+                                class="mt-4 w-full flex items-center justify-center gap-2 py-2.5 border border-clinic-primary text-clinic-primary rounded-xl text-sm font-bold hover:bg-clinic-light transition-all"><i
+                                    data-lucide="download" class="w-4 h-4"></i> Download PDF</button>
+                        </div>
+                        <div class="card p-6 opacity-60">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex gap-3">
+                                    <div class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center"><i
+                                            data-lucide="pill" class="w-5 h-5 text-gray-400"></i></div>
+                                    <div>
+                                        <p class="font-black text-clinic-trust text-sm">Amoxicillin 500mg</p>
+                                        <p class="text-xs text-gray-400">Dr. Sarah Johnson · General</p>
+                                    </div>
+                                </div><span class="badge badge-expired">Expired</span>
+                            </div>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between py-1.5 border-b border-gray-50"><span
+                                        class="text-gray-400 font-semibold">Dosage</span><span class="font-bold">3×
+                                        daily for 7 days</span></div>
+                                <div class="flex justify-between py-1.5"><span
+                                        class="text-gray-400 font-semibold">Prescribed</span><span class="font-bold">Dec
+                                        10, 2025</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ────── LAB REPORTS ────── -->
+                <div id="s-labreports" class="section space-y-5">
+                    <div>
+                        <h2 class="text-xl font-black text-clinic-trust">Lab Reports</h2>
+                        <p class="text-gray-500 text-sm">Diagnostic and laboratory test results</p>
+                    </div>
+                    <div class="card overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-clinic-mist/60">
+                                    <tr>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Test Name</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Date</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Lab</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Result</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Status</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-50">
+                                    <tr>
+                                        <td class="px-5 py-4 font-bold text-clinic-trust">Complete Blood Count</td>
+                                        <td class="px-5 py-4 text-gray-600">Feb 10, 2026</td>
+                                        <td class="px-5 py-4 text-gray-600">PathCare Labs</td>
+                                        <td class="px-5 py-4 font-semibold text-emerald-600">Normal</td>
+                                        <td class="px-5 py-4"><span class="badge badge-active">Ready</span></td>
+                                        <td class="px-5 py-4"><button
+                                                class="text-clinic-primary text-xs font-bold hover:underline flex items-center gap-1"
+                                                onclick="alert('Downloading CBC Report…')"><i data-lucide="download"
+                                                    class="w-3 h-3"></i> Download</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-5 py-4 font-bold text-clinic-trust">Lipid Panel</td>
+                                        <td class="px-5 py-4 text-gray-600">Feb 10, 2026</td>
+                                        <td class="px-5 py-4 text-gray-600">PathCare Labs</td>
+                                        <td class="px-5 py-4 font-semibold text-amber-600">Borderline High</td>
+                                        <td class="px-5 py-4"><span class="badge badge-active">Ready</span></td>
+                                        <td class="px-5 py-4"><button
+                                                class="text-clinic-primary text-xs font-bold hover:underline flex items-center gap-1"
+                                                onclick="alert('Downloading Lipid Panel Report…')"><i
+                                                    data-lucide="download" class="w-3 h-3"></i> Download</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-5 py-4 font-bold text-clinic-trust">HbA1c (Blood Sugar)</td>
+                                        <td class="px-5 py-4 text-gray-600">Jan 15, 2026</td>
+                                        <td class="px-5 py-4 text-gray-600">Metropolis Health</td>
+                                        <td class="px-5 py-4 font-semibold text-red-500">High — 7.2%</td>
+                                        <td class="px-5 py-4"><span class="badge badge-active">Ready</span></td>
+                                        <td class="px-5 py-4"><button
+                                                class="text-clinic-primary text-xs font-bold hover:underline flex items-center gap-1"
+                                                onclick="alert('Downloading HbA1c Report…')"><i data-lucide="download"
+                                                    class="w-3 h-3"></i> Download</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-5 py-4 font-bold text-clinic-trust">Chest X-Ray</td>
+                                        <td class="px-5 py-4 text-gray-400">Scheduled</td>
+                                        <td class="px-5 py-4 text-gray-600">PremiumCare Radiology</td>
+                                        <td class="px-5 py-4 text-gray-400">—</td>
+                                        <td class="px-5 py-4"><span class="badge badge-pending">Pending</span></td>
+                                        <td class="px-5 py-4"><span class="text-gray-400 text-xs">Processing…</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ────── BILLING ────── -->
+                <div id="s-billing" class="section space-y-5">
+                    <div>
+                        <h2 class="text-xl font-black text-clinic-trust">Billing &amp; Payments</h2>
+                        <p class="text-gray-500 text-sm">Invoices and payment history</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="card p-5">
+                            <div class="w-9 h-9 bg-amber-50 rounded-xl flex items-center justify-center mb-3"><i
+                                    data-lucide="clock" class="w-5 h-5 text-amber-500"></i></div>
+                            <p class="text-xl font-black text-clinic-trust">$120.00</p>
+                            <p class="text-xs text-gray-500 mt-0.5">Outstanding Balance</p>
+                        </div>
+                        <div class="card p-5">
+                            <div class="w-9 h-9 bg-emerald-50 rounded-xl flex items-center justify-center mb-3"><i
+                                    data-lucide="check-circle" class="w-5 h-5 text-emerald-500"></i></div>
+                            <p class="text-xl font-black text-clinic-trust">$480.00</p>
+                            <p class="text-xs text-gray-500 mt-0.5">Total Paid (2026)</p>
+                        </div>
+                        <div class="card p-5">
+                            <div class="w-9 h-9 bg-blue-50 rounded-xl flex items-center justify-center mb-3"><i
+                                    data-lucide="file-text" class="w-5 h-5 text-clinic-trust"></i></div>
+                            <p class="text-xl font-black text-clinic-trust">3</p>
+                            <p class="text-xs text-gray-500 mt-0.5">Open Invoices</p>
+                        </div>
+                    </div>
+                    <div class="card overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-50">
+                            <h3 class="font-black text-clinic-trust text-sm">Payment History</h3>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-clinic-mist/60">
+                                    <tr>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Invoice</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Date</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Service</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Amount</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Status</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-50">
+                                    <tr>
+                                        <td class="px-5 py-4 font-bold text-clinic-trust font-mono text-xs">
+                                            #INV-2026-003</td>
+                                        <td class="px-5 py-4 text-gray-600">Feb 10, 2026</td>
+                                        <td class="px-5 py-4 text-gray-600">Lab Tests — CBC &amp; Lipids</td>
+                                        <td class="px-5 py-4 font-bold">$120.00</td>
+                                        <td class="px-5 py-4"><span class="badge badge-pending">Pending</span></td>
+                                        <td class="px-5 py-4"><button
+                                                class="text-clinic-primary text-xs font-bold hover:underline"
+                                                onclick="alert('Payment link for #INV-2026-003 — Amount: $120.00')">Pay
+                                                Now</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-5 py-4 font-bold text-clinic-trust font-mono text-xs">
+                                            #INV-2026-002</td>
+                                        <td class="px-5 py-4 text-gray-600">Jan 15, 2026</td>
+                                        <td class="px-5 py-4 text-gray-600">Cardiology Consultation</td>
+                                        <td class="px-5 py-4 font-bold">$250.00</td>
+                                        <td class="px-5 py-4"><span class="badge badge-complete">Paid</span></td>
+                                        <td class="px-5 py-4"><button
+                                                class="text-clinic-primary text-xs font-bold hover:underline"
+                                                onclick="alert('Downloading receipt for #INV-2026-002')">Receipt</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-5 py-4 font-bold text-clinic-trust font-mono text-xs">
+                                            #INV-2026-001</td>
+                                        <td class="px-5 py-4 text-gray-600">Jan 5, 2026</td>
+                                        <td class="px-5 py-4 text-gray-600">General Check-up</td>
+                                        <td class="px-5 py-4 font-bold">$110.00</td>
+                                        <td class="px-5 py-4"><span class="badge badge-complete">Paid</span></td>
+                                        <td class="px-5 py-4"><button
+                                                class="text-clinic-primary text-xs font-bold hover:underline"
+                                                onclick="alert('Downloading receipt for #INV-2026-001')">Receipt</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ────── MESSAGES ────── -->
+                <div id="s-messages" class="section space-y-5">
+                    <div>
+                        <h2 class="text-xl font-black text-clinic-trust">Messages</h2>
+                        <p class="text-gray-500 text-sm">Communications from your care team</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="card p-5 flex items-start gap-4 border-l-4 border-clinic-primary">
+                            <div
+                                class="w-10 h-10 bg-clinic-light rounded-2xl flex items-center justify-center shrink-0">
+                                <i data-lucide="stethoscope" class="w-5 h-5 text-clinic-primary"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-1">
+                                    <p class="font-black text-clinic-trust text-sm">Dr. Sarah Johnson · Cardiology</p>
+                                    <span class="text-[11px] text-gray-400">Today, 9:15 AM</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Your latest lipid panel shows borderline high
+                                    cholesterol. Please continue Atorvastatin and schedule a follow-up in 4 weeks.</p>
+                                <button class="mt-2 text-xs font-bold text-clinic-primary hover:underline"
+                                    onclick="alert('Reply feature coming soon!')">Reply →</button>
+                            </div>
+                            <span class="w-2.5 h-2.5 bg-clinic-primary rounded-full shrink-0 mt-1"></span>
+                        </div>
+                        <div class="card p-5 flex items-start gap-4 border-l-4 border-blue-400">
+                            <div class="w-10 h-10 bg-blue-50 rounded-2xl flex items-center justify-center shrink-0"><i
+                                    data-lucide="bell" class="w-5 h-5 text-clinic-trust"></i></div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-1">
+                                    <p class="font-black text-clinic-trust text-sm">PremiumCare · Reminder</p><span
+                                        class="text-[11px] text-gray-400">Yesterday</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Your HbA1c retest is scheduled for Mar 1, 2026 at 8:00
+                                    AM. Please fast for 8 hours before the test.</p>
+                            </div>
+                            <span class="w-2.5 h-2.5 bg-clinic-primary rounded-full shrink-0 mt-1"></span>
+                        </div>
+                        <div class="card p-5 flex items-start gap-4 opacity-70">
+                            <div class="w-10 h-10 bg-gray-100 rounded-2xl flex items-center justify-center shrink-0"><i
+                                    data-lucide="receipt" class="w-5 h-5 text-gray-400"></i></div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-1">
+                                    <p class="font-black text-clinic-trust text-sm">Billing Department</p><span
+                                        class="text-[11px] text-gray-400">Feb 10, 2026</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Invoice #INV-2026-003 for $120.00 is now available.
+                                    Please complete payment by Mar 10, 2026.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-black text-clinic-trust text-sm mb-4">Contact Support</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <a href="tel:+1234567890"
+                                class="flex items-center gap-3 p-4 bg-clinic-mist rounded-2xl hover:bg-clinic-light transition-all group">
+                                <div
+                                    class="w-9 h-9 bg-clinic-primary/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i data-lucide="phone" class="w-4 h-4 text-clinic-primary"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-clinic-trust text-xs">Emergency Line</p>
+                                    <p class="text-xs text-gray-500">+1 (234) 567-890</p>
+                                </div>
+                            </a>
+                            <a href="contact.html"
+                                class="flex items-center gap-3 p-4 bg-clinic-mist rounded-2xl hover:bg-clinic-light transition-all group">
+                                <div
+                                    class="w-9 h-9 bg-clinic-primary/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i data-lucide="mail" class="w-4 h-4 text-clinic-primary"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-clinic-trust text-xs">Email Support</p>
+                                    <p class="text-xs text-gray-500">contact@premiumcare.com</p>
+                                </div>
+                            </a>
+                            <a href="faq.html"
+                                class="flex items-center gap-3 p-4 bg-clinic-mist rounded-2xl hover:bg-clinic-light transition-all group">
+                                <div
+                                    class="w-9 h-9 bg-clinic-primary/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i data-lucide="help-circle" class="w-4 h-4 text-clinic-primary"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-clinic-trust text-xs">Help Centre</p>
+                                    <p class="text-xs text-gray-500">FAQ &amp; Documentation</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ────── PROFILE ────── -->
+                <div id="s-profile" class="section space-y-5">
+                    <div>
+                        <h2 class="text-xl font-black text-clinic-trust">My Profile</h2>
+                        <p class="text-gray-500 text-sm">Your personal and medical information</p>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                        <!-- Avatar card -->
+                        <div class="card p-6 flex flex-col items-center text-center gap-4">
+                            <div
+                                class="w-20 h-20 rounded-3xl bg-clinic-light flex items-center justify-center border-4 border-clinic-primary/20">
+                                <i data-lucide="user" class="w-10 h-10 text-clinic-primary"></i>
+                            </div>
+                            <div>
+                                <p id="prof-name" class="font-black text-clinic-trust text-lg">Loading…</p>
+                                <p id="prof-email" class="text-sm text-gray-400 mt-0.5">—</p>
+                            </div>
+                            <span class="badge badge-active"><i data-lucide="shield-check" class="w-3 h-3 mr-1"></i>
+                                Verified Patient</span>
+                            <div class="w-full space-y-2 text-left text-sm">
+                                <div class="flex justify-between py-2 border-b border-gray-50"><span
+                                        class="text-gray-400 font-semibold">Patient ID</span><span id="prof-id"
+                                        class="font-bold font-mono text-xs">—</span></div>
+                                <div class="flex justify-between py-2 border-b border-gray-50"><span
+                                        class="text-gray-400 font-semibold">Account Role</span><span
+                                        class="font-bold text-clinic-primary">Patient</span></div>
+                                <div class="flex justify-between py-2"><span class="text-gray-400 font-semibold">Member
+                                        Since</span><span id="prof-joined" class="font-bold">—</span></div>
+                            </div>
+                        </div>
+                        <!-- Edit form -->
+                        <div class="lg:col-span-2 card p-6 space-y-5">
+                            <h3 class="font-black text-clinic-trust text-sm">Personal Information</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div><label
+                                        class="text-[11px] font-black text-gray-400 uppercase tracking-widest block mb-1.5">Full
+                                        Name</label><input id="prof-name-input"
+                                        class="w-full px-4 py-3 rounded-xl bg-clinic-mist border border-gray-200 text-sm font-medium focus:ring-2 focus:ring-clinic-primary outline-none"
+                                        placeholder="Your full name"></div>
+                                <div><label
+                                        class="text-[11px] font-black text-gray-400 uppercase tracking-widest block mb-1.5">Email
+                                        Address</label><input id="prof-email-input"
+                                        class="w-full px-4 py-3 rounded-xl bg-clinic-mist border border-gray-200 text-sm font-medium focus:ring-2 focus:ring-clinic-primary outline-none"
+                                        placeholder="Your email"></div>
+                                <div><label
+                                        class="text-[11px] font-black text-gray-400 uppercase tracking-widest block mb-1.5">Phone
+                                        Number</label><input
+                                        class="w-full px-4 py-3 rounded-xl bg-clinic-mist border border-gray-200 text-sm font-medium focus:ring-2 focus:ring-clinic-primary outline-none"
+                                        placeholder="+1 (555) 000-0000"></div>
+                                <div><label
+                                        class="text-[11px] font-black text-gray-400 uppercase tracking-widest block mb-1.5">Date
+                                        of Birth</label><input type="date"
+                                        class="w-full px-4 py-3 rounded-xl bg-clinic-mist border border-gray-200 text-sm font-medium focus:ring-2 focus:ring-clinic-primary outline-none">
+                                </div>
+                                <div class="sm:col-span-2"><label
+                                        class="text-[11px] font-black text-gray-400 uppercase tracking-widest block mb-1.5">Address</label><input
+                                        class="w-full px-4 py-3 rounded-xl bg-clinic-mist border border-gray-200 text-sm font-medium focus:ring-2 focus:ring-clinic-primary outline-none"
+                                        placeholder="123 Main St, City, State ZIP"></div>
+                            </div>
+                            <button onclick="alert('Profile update saved!')"
+                                class="flex items-center gap-2 bg-clinic-primary text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-clinic-dark transition-all active:scale-95">
+                                <i data-lucide="save" class="w-4 h-4"></i> Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /sections -->
+        </main>
+    </div>
+
+    <script src="./src/js/api.js"></script>
+    <script>
+            (function () {
+                'use strict';
+
+                var SECTIONS = ['overview', 'appointments', 'prescriptions', 'labreports', 'billing', 'messages', 'profile'];
+                var TITLES = { overview: 'Overview', appointments: 'My Appointments', prescriptions: 'Prescriptions', labreports: 'Lab Reports', billing: 'Billing', messages: 'Messages', profile: 'My Profile' };
+
+                // ── Section switcher ──────────────────────────────────────────────
+                window.showSection = function (id) {
+                    SECTIONS.forEach(function (s) {
+                        var el = document.getElementById('s-' + s);
+                        if (el) el.classList.remove('active');
+                        var btn = document.querySelector('[data-s="' + s + '"]');
+                        if (btn) btn.classList.remove('active');
+                    });
+                    var target = document.getElementById('s-' + id);
+                    if (target) { target.classList.add('active'); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+                    var activeBtn = document.querySelector('[data-s="' + id + '"]');
+                    if (activeBtn) activeBtn.classList.add('active');
+                    var titleEl = document.getElementById('section-title');
+                    if (titleEl) titleEl.textContent = TITLES[id] || id;
+                    closeSidebar();
+                    if (window.lucide) lucide.createIcons();
+                };
+
+                // Wire up all nav buttons
+                document.querySelectorAll('.nav-btn[data-s]').forEach(function (btn) {
+                    btn.addEventListener('click', function () { showSection(this.dataset.s); });
+                });
+
+                // Wire up goto / quick action buttons
+                document.querySelectorAll('[data-goto]').forEach(function (el) {
+                    el.addEventListener('click', function () { showSection(this.dataset.goto); });
+                });
+
+                // Appointment filter tabs
+                var allBooks = [];
+                document.querySelectorAll('.apft').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        document.querySelectorAll('.apft').forEach(function (b) {
+                            b.className = 'apft px-4 py-2 rounded-xl font-bold text-sm bg-white border border-gray-200 text-gray-500 hover:border-clinic-primary hover:text-clinic-primary transition-all';
+                        });
+                        this.className = 'apft active px-4 py-2 rounded-xl font-bold text-sm bg-clinic-primary text-white';
+                        renderAppointments(allBooks, this.dataset.f);
+                    });
+                });
+
+                function renderAppointments(books, filter) {
+                    var el = document.getElementById('full-apts');
+                    if (!el) return;
+                    var now = new Date();
+                    var list = books.slice().reverse().filter(function (b) {
+                        if (filter === 'pending') return new Date(b.date) >= now;
+                        if (filter === 'past') return new Date(b.date) < now;
+                        return true;
+                    });
+                    if (!list.length) {
+                        el.innerHTML = '<div class="card text-center p-10"><i data-lucide="calendar-x" class="w-12 h-12 text-gray-200 mx-auto mb-3"></i><p class="text-gray-400 font-medium text-sm">No appointments found.</p><a href="booking.html" class="inline-flex items-center gap-2 mt-4 bg-clinic-primary text-white px-5 py-2.5 rounded-xl font-bold text-sm">Book Appointment</a></div>';
+                    } else {
+                        el.innerHTML = list.map(function (b) {
+                            var past = new Date(b.date) < now;
+                            return '<div class="card p-5 flex flex-col sm:flex-row sm:items-center gap-4">'
+                                + '<div class="w-12 h-12 bg-clinic-mist rounded-2xl flex items-center justify-center shrink-0"><i data-lucide="calendar" class="w-6 h-6 text-clinic-primary"></i></div>'
+                                + '<div class="flex-1 min-w-0">'
+                                + '<p class="font-black text-clinic-trust text-sm uppercase tracking-wide">' + (b.department || '—') + '</p>'
+                                + '<p class="text-xs text-gray-500 mt-1">' + new Date(b.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + ' &middot; ' + (b.time || '') + '</p>'
+                                + '</div>'
+                                + '<span class="badge ' + (past ? 'badge-complete' : 'badge-pending') + '">' + (past ? 'Completed' : b.status) + '</span>'
+                                + '</div>';
+                        }).join('');
+                    }
+                    if (window.lucide) lucide.createIcons();
+                }
+
+                // ── Sidebar ───────────────────────────────────────────────────────
+                window.toggleSidebar = function () {
+                    document.getElementById('sidebar').classList.toggle('-translate-x-full');
+                    document.getElementById('overlay').classList.toggle('open');
+                };
+                window.closeSidebar = function () {
+                    document.getElementById('sidebar').classList.add('-translate-x-full');
+                    document.getElementById('overlay').classList.remove('open');
+                };
+
+                // ── Bootstrap ─────────────────────────────────────────────────────
+                async function init() {
+                    var user = null;
+                    if (window.StorageService) {
+                        try { user = await StorageService.getCurrentUser(); } catch (e) { }
+                    }
+                    if (!user) user = { name: "Guest User", role: "user", email: "guest@demo.com" };
+
+                    var fName = user.name || 'Patient';
+                    var el;
+                    el = document.getElementById('sb-name'); if (el) el.textContent = fName;
+                    el = document.getElementById('welcome-h'); if (el) el.textContent = 'Welcome back, ' + fName.split(' ')[0] + '!';
+                    el = document.getElementById('prof-name'); if (el) el.textContent = fName;
+                    el = document.getElementById('prof-email'); if (el) el.textContent = user.email || '—';
+                    el = document.getElementById('prof-id'); if (el) el.textContent = user.id || '—';
+                    el = document.getElementById('prof-joined'); if (el) el.textContent = user.createdAt ? new Date(user.createdAt).toLocaleDateString() : '—';
+                    el = document.getElementById('prof-name-input'); if (el) el.value = user.name || '';
+                    el = document.getElementById('prof-email-input'); if (el) el.value = user.email || '';
+
+                    try {
+                        var books = await StorageService.getUserBookings(user.id);
+                        allBooks = books;
+                        var now = new Date();
+                        var upcoming = books.filter(function (b) { return new Date(b.date) >= now; });
+                        el = document.getElementById('stat-up'); if (el) el.textContent = upcoming.length;
+                        el = document.getElementById('stat-all'); if (el) el.textContent = books.length;
+
+                        // Upcoming list
+                        var ul = document.getElementById('upcoming-list');
+                        if (ul) {
+                            if (!upcoming.length) {
+                                ul.innerHTML = '<p class="text-gray-400 text-sm italic">No upcoming appointments. <a href="booking.html" class="text-clinic-primary font-bold hover:underline">Book one now.</a></p>';
+                            } else {
+                                ul.innerHTML = upcoming.slice(0, 3).map(function (b) {
+                                    return '<div class="flex items-center gap-3 p-3.5 bg-clinic-mist rounded-2xl">'
+                                        + '<div class="w-10 h-10 bg-clinic-primary/10 rounded-xl flex items-center justify-center shrink-0"><i data-lucide="calendar" class="w-5 h-5 text-clinic-primary"></i></div>'
+                                        + '<div class="flex-1 min-w-0"><p class="font-bold text-clinic-trust text-sm uppercase">' + (b.department) + '</p><p class="text-xs text-gray-500 mt-0.5">' + new Date(b.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' · ' + b.time + '</p></div>'
+                                        + '<span class="badge badge-pending">' + b.status + '</span>'
+                                        + '</div>';
+                                }).join('');
+                            }
+                        }
+
+                        // Visits table
+                        var tb = document.getElementById('visits-tbody');
+                        if (tb) {
+                            if (!books.length) {
+                                tb.innerHTML = '<tr><td colspan="4" class="px-5 py-8 text-center text-gray-400 italic text-sm">No visit history yet.</td></tr>';
+                            } else {
+                                tb.innerHTML = books.slice().reverse().map(function (b) {
+                                    var past = new Date(b.date) < now;
+                                    return '<tr><td class="px-5 py-3 font-bold text-clinic-trust text-sm uppercase">' + b.department + '</td>'
+                                        + '<td class="px-5 py-3 text-gray-600 text-sm">' + new Date(b.date).toLocaleDateString() + '</td>'
+                                        + '<td class="px-5 py-3 text-gray-600 text-sm">' + b.time + '</td>'
+                                        + '<td class="px-5 py-3"><span class="badge ' + (past ? 'badge-complete' : 'badge-pending') + '">' + (past ? 'Completed' : b.status) + '</span></td></tr>';
+                                }).join('');
+                            }
+                        }
+
+                        renderAppointments(books, 'all');
+                    } catch (e) { console.warn('Dashboard data error:', e); }
+
+                    if (window.lucide) lucide.createIcons();
+                }
+
+                document.getElementById('logout-btn').addEventListener('click', async function () {
+                    if (window.StorageService) await StorageService.logout();
+                    localStorage.removeItem('role'); localStorage.removeItem('userRole');
+                    window.location.href = 'login.html';
+                });
+
+                // --- Profile Dropdown Logic ---
+                const profileBtn = document.getElementById('profile-btn');
+                const profileMenu = document.getElementById('profile-menu');
+
+                function closeDropdown() {
+                    if (profileMenu && !profileMenu.classList.contains('hidden')) {
+                        profileMenu.classList.add('opacity-0', '-translate-y-2');
+                        profileBtn?.setAttribute('aria-expanded', 'false');
+                        setTimeout(() => {
+                            profileMenu.classList.add('hidden');
+                        }, 200);
+                    }
+                }
+
+                if (profileBtn && profileMenu) {
+                    profileBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const isExpanded = profileBtn.getAttribute('aria-expanded') === 'true';
+                        profileBtn.setAttribute('aria-expanded', String(!isExpanded));
+
+                        if (profileMenu.classList.contains('hidden')) {
+                            profileMenu.classList.remove('hidden');
+                            setTimeout(() => {
+                                profileMenu.classList.remove('opacity-0', '-translate-y-2');
+                            }, 10);
+                        } else {
+                            closeDropdown();
+                        }
+                    });
+                }
+
+                window.addEventListener('click', (e) => {
+                    if (profileMenu && !profileMenu.contains(e.target) && !profileBtn?.contains(e.target)) {
+                        closeDropdown();
+                    }
+                });
+
+                init();
+            })();
+    </script>
+</body>
+
+</html>

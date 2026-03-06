@@ -1,0 +1,589 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Book an appointment online with PremiumCare Clinic. Select your preferred doctor and time slot instantly.">
+    <title>Book Appointment | PremiumCare Clinic</title>
+    <link rel="icon" type="icon/png" href="./assets/img/favicon.ico.png">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clinic: {
+                            primary: '#0D9488', // Teal 600
+                            dark: '#0F766E',    // Teal 700
+                            light: '#F0FDFA',   // Teal 50
+                            mist: '#F9FAFB',    // Gray 50
+                            ink: '#1F2937',     // Gray 800
+                            accent: '#10B981',  // Emerald 500
+                            trust: '#1E3A8A',   // Blue 900
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="./src/css/style.css">
+</head>
+
+<body
+    class="auth-page bg-clinic-mist text-clinic-ink font-sans selection:bg-clinic-light selection:text-clinic-primary">
+
+
+
+    <!-- Navigation -->
+    <header class="fixed top-0 w-full z-50 transition-all duration-300 glass-nav border-b border-gray-100/50"
+        id="main-nav">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 lg:h-18 flex items-center justify-between gap-2">
+
+            <!-- Logo Section -->
+            <a href="index.html" class="flex items-center gap-2 shrink-0">
+                <img src="./assets/img/logo-full.svg" alt="PremiumCare Logo" class="h-7 lg:h-8 w-auto logo-img">
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center justify-center lg:gap-x-4 xl:gap-x-7 nav-links">
+                <a href="index.html"
+                    class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">Home</a>
+                <a href="home-2.html"
+                    class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">Home2</a>
+                <a href="services.html"
+                    class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">Services</a>
+                <a href="about.html"
+                    class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">About</a>
+                <a href="doctors.html"
+                    class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">Doctors</a>
+                <a href="contact.html"
+                    class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">Contact</a>
+            </div>
+
+            <!-- Action Section -->
+            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                <!-- Profile Dropdown -->
+                <div class="relative" id="profile-dropdown-container">
+                    <button id="profile-btn" aria-haspopup="true" aria-expanded="false"
+                        class="w-9 h-9 rounded-full border border-gray-100 flex items-center justify-center hover:bg-clinic-mist transition-all bg-white shadow-sm">
+                        <i data-lucide="user" class="w-4.5 h-4.5 text-clinic-trust"></i>
+                    </button>
+                              <div id="profile-menu"
+            class="hidden absolute right-0 mt-3 w-52 bg-white border border-gray-100 rounded-2xl shadow-xl shadow-clinic-trust/5 py-2 z-[9999] opacity-0 transform -translate-y-2 transition-all duration-200"
+            style="min-width:200px;">
+            <!-- Login / Sign Up - single line -->
+            <a href="login.html"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-ink hover:bg-clinic-mist transition-colors font-semibold rounded-t-xl">
+              <i data-lucide="log-in" class="w-4 h-4 text-clinic-primary shrink-0"></i>
+              <span class="whitespace-nowrap">Login&nbsp;/&nbsp;Sign Up</span>
+            </a>
+            <div class="h-px bg-gray-100 mx-3"></div>
+            <!-- Admin Dashboard -->
+            <a href="admin-dashboard.html"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-trust hover:bg-clinic-mist transition-colors font-semibold">
+              <i data-lucide="shield" class="w-4 h-4 text-clinic-trust shrink-0"></i>
+              <span class="whitespace-nowrap">Admin Dashboard</span>
+            </a>
+            <!-- User Dashboard -->
+            <a href="user-dashboard.html"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-ink hover:bg-clinic-mist transition-colors font-semibold rounded-b-xl">
+              <i data-lucide="layout-dashboard" class="w-4 h-4 text-clinic-primary shrink-0"></i>
+              <span class="whitespace-nowrap">User Dashboard</span>
+            </a>
+          </div>
+                </div>
+
+                <a href="booking.html"
+                    class="bg-clinic-primary text-white px-4 py-2 lg:px-5 lg:py-2.5 rounded-full text-[12px] lg:text-[13px] font-extrabold hover:bg-clinic-dark transition-all shadow-md shadow-clinic-primary/10 flex items-center gap-2 whitespace-nowrap active:scale-95">
+                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Book Now</span>
+                    <span class="sm:hidden">Book</span>
+                </a>
+                <button
+                    class="lg:hidden text-clinic-ink p-2 menu-toggle flex items-center justify-center rounded-lg hover:bg-clinic-mist transition-all bg-clinic-mist/50"
+                    id="mobile-menu-btn" aria-label="Toggle menu">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="lg:hidden hidden bg-white/98 backdrop-blur-xl border-t border-gray-100 px-6 py-8 shadow-2xl absolute w-full left-0 top-16 z-40 h-[calc(100vh-4rem)] overflow-y-auto"
+            id="mobile-menu">
+            <div class="flex flex-col gap-2">
+                <a href="index.html"
+                    class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+                    <div
+                        class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+                        <i data-lucide="home" class="w-5 h-5"></i>
+                    </div>
+                    Home
+                </a>
+                <a href="home-2.html"
+                    class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+                    <div
+                        class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+                        <i data-lucide="zap" class="w-5 h-5"></i>
+                    </div>
+                    Home2
+                </a>
+                <a href="services.html"
+                    class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+                    <div
+                        class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+                        <i data-lucide="stethoscope" class="w-5 h-5"></i>
+                    </div>
+                    Services
+                </a>
+                <a href="about.html"
+                    class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+                    <div
+                        class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+                        <i data-lucide="info" class="w-5 h-5"></i>
+                    </div>
+                    About
+                </a>
+                <a href="doctors.html"
+                    class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+                    <div
+                        class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                    </div>
+                    Doctors
+                </a>
+                <a href="contact.html"
+                    class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+                    <div
+                        class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                    </div>
+                    Contact
+                </a>
+                <div class="h-px bg-gray-100 my-4"></div>
+                <div class="space-y-4">
+                    <button
+                        class="flex items-center justify-center gap-3 bg-clinic-primary text-white px-6 py-4 rounded-2xl text-center text-base font-bold shadow-lg shadow-clinic-primary/20 hover:bg-clinic-dark transition-all active:scale-95 w-full">
+                        <i data-lucide="calendar" class="w-5 h-5"></i>
+                        Book Appointment
+                    </button>
+                    <div class="grid grid-cols-2 gap-4" id="mobile-auth-links">
+                        <a href="login.html"
+                            class="flex items-center justify-center gap-2 py-4 border border-gray-100 rounded-2xl text-sm font-bold text-clinic-trust bg-white shadow-sm">
+                            <i data-lucide="log-in" class="w-4 h-4"></i> Login
+                        </a>
+                        <a href="signup.html"
+                            class="flex items-center justify-center gap-2 py-4 border border-gray-100 rounded-2xl text-sm font-bold text-clinic-trust bg-white shadow-sm">
+                            <i data-lucide="user-plus" class="w-4 h-4"></i> Sign Up
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="bg-white">
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden !pt-32 !pb-20 lg:!pt-48 lg:!pb-32 bg-clinic-mist">
+            <!-- Background Decorative Elements -->
+            <div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-40">
+                <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-clinic-light rounded-full blur-[120px]">
+                </div>
+                <div
+                    class="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-clinic-primary/10 rounded-full blur-[100px]">
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center space-y-8 animate-fade-in-up">
+                    <div
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-white text-clinic-primary rounded-full text-sm font-bold border border-clinic-primary/10 shadow-sm">
+                        <i data-lucide="clock" class="w-4 h-4"></i> Available 24/7 Online
+                    </div>
+                    <h1 class="text-5xl lg:text-8xl font-black text-clinic-trust leading-[0.95] tracking-tighter">
+                        Secure Your <br><span class="text-clinic-primary font-medium italic">Consultation.</span>
+                    </h1>
+                    <p class="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
+                        Seamlessly book your appointment with world-class specialists. Your journey to wellness begins
+                        with a single click.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking Section -->
+        <section class="py-24 relative z-20 -mt-20">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div
+                    class="bg-white rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(30,58,138,0.15)] border border-gray-50 overflow-hidden">
+                    <div class="p-8 lg:p-20">
+                        <form id="appointment-form" class="space-y-10">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                <div class="space-y-3">
+                                    <label
+                                        class="text-xs font-black text-clinic-trust uppercase tracking-widest ml-1">Full
+                                        Name *</label>
+                                    <input type="text" id="name" placeholder="John Doe" required
+                                        class="w-full px-8 py-5 rounded-2xl bg-clinic-mist border-none focus:ring-2 focus:ring-clinic-primary outline-none transition-all font-medium text-clinic-ink">
+                                </div>
+                                <div class="space-y-3">
+                                    <label
+                                        class="text-xs font-black text-clinic-trust uppercase tracking-widest ml-1">Email
+                                        Address *</label>
+                                    <input type="email" id="email" placeholder="john@example.com" required
+                                        class="w-full px-8 py-5 rounded-2xl bg-clinic-mist border-none focus:ring-2 focus:ring-clinic-primary outline-none transition-all font-medium text-clinic-ink">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                <div class="space-y-3">
+                                    <label
+                                        class="text-xs font-black text-clinic-trust uppercase tracking-widest ml-1">Phone
+                                        Number *</label>
+                                    <input type="tel" id="phone" placeholder="+1 (234) 567-890" required
+                                        class="w-full px-8 py-5 rounded-2xl bg-clinic-mist border-none focus:ring-2 focus:ring-clinic-primary outline-none transition-all font-medium text-clinic-ink">
+                                </div>
+                                <div class="space-y-3">
+                                    <label
+                                        class="text-xs font-black text-clinic-trust uppercase tracking-widest ml-1">Specialty
+                                        Department *</label>
+                                    <div class="relative">
+                                        <select id="department" required
+                                            class="w-full px-8 py-5 rounded-2xl bg-clinic-mist border-none focus:ring-2 focus:ring-clinic-primary outline-none transition-all font-medium text-clinic-ink appearance-none cursor-pointer">
+                                            <option value="">Select Specialty</option>
+                                            <option value="cardiology">Cardiology</option>
+                                            <option value="neurology">Neurology</option>
+                                            <option value="pediatrics">Pediatrics</option>
+                                            <option value="orthopedic">Orthopedic</option>
+                                        </select>
+                                        <i data-lucide="chevron-down"
+                                            class="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                <div class="space-y-3">
+                                    <label
+                                        class="text-xs font-black text-clinic-trust uppercase tracking-widest ml-1">Preferred
+                                        Date *</label>
+                                    <input type="date" id="date" required
+                                        class="w-full px-8 py-5 rounded-2xl bg-clinic-mist border-none focus:ring-2 focus:ring-clinic-primary outline-none transition-all font-medium text-clinic-ink cursor-pointer">
+                                </div>
+                                <div class="space-y-3">
+                                    <label
+                                        class="text-xs font-black text-clinic-trust uppercase tracking-widest ml-1">Requested
+                                        Time Slot *</label>
+                                    <div class="relative">
+                                        <select id="time" required
+                                            class="w-full px-8 py-5 rounded-2xl bg-clinic-mist border-none focus:ring-2 focus:ring-clinic-primary outline-none transition-all font-medium text-clinic-ink appearance-none cursor-pointer">
+                                            <option value="">Choose a Slot</option>
+                                            <option value="09:00">09:00 AM - Morning</option>
+                                            <option value="10:00">10:00 AM - Morning</option>
+                                            <option value="11:00">11:00 AM - Morning</option>
+                                            <option value="14:00">02:00 PM - Afternoon</option>
+                                            <option value="15:00">03:00 PM - Afternoon</option>
+                                        </select>
+                                        <i data-lucide="chevron-down"
+                                            class="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3">
+                                <label class="text-xs font-black text-clinic-trust uppercase tracking-widest ml-1">Brief
+                                    Medical Concern (Optional)</label>
+                                <textarea id="message" rows="4" placeholder="How can we help you today?"
+                                    class="w-full px-8 py-5 rounded-2xl bg-clinic-mist border-none focus:ring-2 focus:ring-clinic-primary outline-none transition-all font-medium text-clinic-ink resize-none"></textarea>
+                            </div>
+
+                            <button type="submit"
+                                class="w-full bg-clinic-trust text-white py-6 rounded-2xl font-black text-lg hover:bg-black transition-all shadow-2xl hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-4 group">
+                                Confirm Booking
+                                <i data-lucide="arrow-right"
+                                    class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </form>
+
+                        <!-- Success State (Hidden) -->
+                        <div id="success-message" class="hidden text-center space-y-8 py-12 animate-fade-in-up">
+                            <div
+                                class="w-24 h-24 bg-clinic-light text-clinic-primary rounded-full flex items-center justify-center mx-auto shadow-xl">
+                                <i data-lucide="check-circle-2" class="w-12 h-12"></i>
+                            </div>
+                            <div class="space-y-2">
+                                <h2 class="text-4xl font-black text-clinic-trust">Booking Confirmed!</h2>
+                                <p class="text-gray-500 font-medium text-lg">Your request has been registered. Our
+                                    patient coordinator will contact you via email shortly.</p>
+                            </div>
+                            <div class="pt-6">
+                                <a href="index.html"
+                                    class="inline-flex items-center gap-2 bg-clinic-primary text-white px-8 py-4 rounded-2xl font-bold transition-all hover:bg-clinic-dark">
+                                    Return Home <i data-lucide="home" class="w-5 h-5"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Information Cards -->
+        <section class="pb-32 bg-white">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Preparation -->
+                    <div class="bg-clinic-mist p-12 rounded-[3.5rem] space-y-8 border border-gray-50">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-clinic-primary shadow-sm">
+                                <i data-lucide="clipboard-check" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-2xl font-black text-clinic-trust">Pre-Arrival Guide</h3>
+                        </div>
+                        <ul class="space-y-6">
+                            <li class="flex items-start gap-4">
+                                <div
+                                    class="w-6 h-6 bg-clinic-primary/10 rounded-full flex items-center justify-center text-clinic-primary flex-shrink-0 mt-1">
+                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                </div>
+                                <p class="text-gray-500 font-medium">Bring a valid government-issued ID and your active
+                                    health insurance card.</p>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <div
+                                    class="w-6 h-6 bg-clinic-primary/10 rounded-full flex items-center justify-center text-clinic-primary flex-shrink-0 mt-1">
+                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                </div>
+                                <p class="text-gray-500 font-medium">Digital copies of your recent medical history or
+                                    medication lists.</p>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <div
+                                    class="w-6 h-6 bg-clinic-primary/10 rounded-full flex items-center justify-center text-clinic-primary flex-shrink-0 mt-1">
+                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                </div>
+                                <p class="text-gray-500 font-medium">Arrive 15 minutes before your scheduled slot for
+                                    registration.</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Policy & Support -->
+                    <div
+                        class="bg-clinic-trust text-white p-12 rounded-[3.5rem] space-y-10 relative overflow-hidden group">
+                        <div
+                            class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700">
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-clinic-accent">
+                                    <i data-lucide="alert-octagon" class="w-6 h-6"></i>
+                                </div>
+                                <h3 class="text-2xl font-black">Cancellation Policy</h3>
+                            </div>
+                            <p class="text-blue-100/70 font-medium text-lg leading-relaxed">
+                                We request a minimum of 24-hour notice for any rescheduling. This allows us to offer the
+                                slot to other patients in need.
+                            </p>
+                        </div>
+
+                        <div class="pt-8 border-t border-white/10">
+                            <p class="text-sm font-bold text-blue-200 uppercase tracking-widest mb-4">Need Urgent Help?
+                            </p>
+                            <a href="tel:+1234567890" class="flex items-center gap-4 group/btn">
+                                <div
+                                    class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-clinic-trust shadow-lg group-hover/btn:scale-110 transition-transform">
+                                    <i data-lucide="phone-forwarded" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-xl font-black">+1 (234) 567-890</span>
+                                    <span class="text-blue-200 text-sm font-bold">24/7 Booking Concierge</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer -->
+        <footer id="contact" class="footer-dark pt-24 pb-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- Footer Top: Newsletter -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 pb-20 border-b border-white/5 mb-20 items-center">
+                    <div>
+                        <h3 class="text-3xl font-black text-white mb-4 tracking-tight">Stay informed with <span
+                                class="text-clinic-primary">PremiumCare.</span></h3>
+                        <p class="text-slate-400 text-lg">Receive exclusive healthcare tips, clinic updates, and
+                            wellness news directly in your inbox.</p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="email" placeholder="Enter your email address"
+                            class="newsletter-input flex-1 px-6 py-4 rounded-2xl text-white">
+                        <button
+                            class="bg-clinic-primary hover:bg-clinic-dark text-white px-8 py-4 rounded-2xl font-bold transition-all whitespace-nowrap">
+                            Subscribe Now
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
+                    <!-- Brand & Info -->
+                    <div class="space-y-8">
+                        <a href="index.html" class="flex items-center gap-2">
+                            <img src="./assets/img/logo-white.svg" alt="PremiumCare Logo" class="h-10 w-auto ">
+                        </a>
+                        <p class="text-slate-400 leading-relaxed">
+                            Redefining medical excellence through human compassion. We provide world-class healthcare
+                            with a personal touch, ensuring every patient feels valued and cared for.
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <a href="#" class="social-icon-btn" aria-label="Facebook">
+                                <i data-lucide="facebook" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#" class="social-icon-btn" aria-label="Twitter">
+                                <i data-lucide="twitter" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#" class="social-icon-btn" aria-label="Instagram">
+                                <i data-lucide="instagram" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#" class="social-icon-btn" aria-label="LinkedIn">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+        <!-- Quick Links -->
+        <div>
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="space-y-4">
+            <li><a href="index.html" class="footer-link">Home</a></li>
+            <li><a href="home-2.html" class="footer-link">Home2</a></li>
+            <li><a href="services.html" class="footer-link">Services</a></li>
+            <li><a href="about.html" class="footer-link">About Us</a></li>
+            <li><a href="doctors.html" class="footer-link">Doctors</a></li>
+            <li><a href="contact.html" class="footer-link">Contact</a></li>
+            <li><a href="login.html" class="footer-link">Login</a></li>
+          </ul>
+        </div>
+
+        <!-- Patient Portal -->
+        <div>
+          <h4 class="footer-heading">Patient Portal</h4>
+          <ul class="space-y-4">
+            <li><a href="booking.html" class="footer-link font-bold text-clinic-primary">Book Appointment</a></li>
+            <li><a href="user-dashboard.html" class="footer-link">Patient Dashboard</a></li>
+            <li><a href="admin-dashboard.html" class="footer-link">Admin Dashboard</a></li>
+            <li><a href="signup.html" class="footer-link">Register Account</a></li>
+            <li><a href="faq.html" class="footer-link">Help &amp; FAQ</a></li>
+            <li><a href="doctors.html" class="footer-link">Find a Specialist</a></li>
+          </ul>
+        </div>
+
+                    <!-- Contact & Emergency -->
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="footer-heading">Emergency Line</h4>
+                            <a href="tel:+1234567890" class="flex items-center gap-4 group">
+                                <div
+                                    class="w-12 h-12 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-all">
+                                    <i data-lucide="phone-call" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <div
+                                        class="text-[0.65rem] font-black text-red-500 uppercase tracking-[0.2em] mb-0.5">
+                                        Available 24/7</div>
+                                    <div class="text-xl font-black text-white">+1 (234) 567 890</div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="space-y-4">
+                            <h4 class="footer-heading !mb-0">Main Hospital</h4>
+                            <div class="flex items-start gap-3">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-clinic-primary mt-1 flex-shrink-0"></i>
+                                <span class="text-slate-400">123 Medical Drive, Wellness City, <br>HE 45678, United
+                                    States</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Bar -->
+                <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="text-slate-500 text-sm font-medium">
+                        © 2026 PremiumCare Health Group. All rights reserved. <span
+                            class="hidden md:inline mx-2">•</span> <span class="text-slate-600 italic">Architected for
+                            Life.</span>
+                    </div>
+                    <div class="flex items-center gap-8">
+                        <a href="privacy-policy.html"
+                            class="text-xs font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest">Privacy
+                            Policy</a>
+                        <a href="terms-of-use.html"
+                            class="text-xs font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest">Legal
+                            Terms</a>
+                        <a href="#"
+                            class="text-xs font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script src="./src/js/api.js"></script>
+        <script src="./src/js/main.js"></script>
+
+        <script>
+            document.getElementById('appointment-form').addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const formData = {
+                    patientName: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    department: document.getElementById('department').value,
+                    date: document.getElementById('date').value,
+                    time: document.getElementById('time').value,
+                    message: document.getElementById('message').value
+                };
+
+                const btn = this.querySelector('button[type="submit"]');
+                btn.innerHTML = '<i data-lucide="loader-2" class="w-6 h-6 animate-spin"></i><span>Processing...</span>';
+                btn.disabled = true;
+                if (window.lucide) lucide.createIcons();
+
+                try {
+                    // REAL SYSTEM ACTION: Persist booking to backend (localStorage)
+                    await StorageService.createBooking(formData);
+
+                    setTimeout(() => {
+                        this.classList.add('hidden');
+                        document.getElementById('success-message').classList.remove('hidden');
+                    }, 1000);
+                } catch (err) {
+                    alert('Error booking appointment: ' + err.message);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i data-lucide="calendar-check" class="w-6 h-6"></i><span>Confirm Appointment</span>';
+                }
+            });
+        </script>
+</body>
+
+</html>

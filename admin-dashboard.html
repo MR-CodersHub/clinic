@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin Dashboard | PremiumCare Clinic">
+    <title>Admin Dashboard | PremiumCare Clinic</title>
+    <link rel="icon" type="icon/png" href="./assets/img/favicon.ico.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { clinic: { primary: '#0D9488', dark: '#0F766E', light: '#F0FDFA', mist: '#F9FAFB', ink: '#1F2937', trust: '#1E3A8A' } }, fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
+    </script>
+    <link rel="stylesheet" href="./src/css/style.css">
+    <style>
+        .nav-btn {
+            transition: all .18s ease;
+        }
+
+        .nav-btn.active {
+            background: rgba(255, 255, 255, .15);
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, .55);
+            z-index: 40;
+            backdrop-filter: blur(2px);
+        }
+
+        .overlay.open {
+            display: block;
+        }
+
+        #sidebar {
+            transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 1rem;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 1px 8px rgba(30, 58, 138, .06);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: .2rem .6rem;
+            border-radius: 9999px;
+            font-size: .65rem;
+            font-weight: 800;
+        }
+
+        .badge-pending {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        .badge-ok {
+            background: #D1FAE5;
+            color: #059669;
+        }
+
+        .badge-cancel {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+
+        #modal-bg {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, .55);
+            z-index: 100;
+            backdrop-filter: blur(3px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        #modal-bg.open {
+            display: flex;
+        }
+
+        #modal-box {
+            background: #fff;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 25px 60px rgba(30, 58, 138, .15);
+        }
+
+        input[type=search]::-webkit-search-cancel-button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 font-sans text-slate-800">
+
+    <!-- ── MODAL ── -->
+    <div id="modal-bg" onclick="closeModal()">
+        <div id="modal-box" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between mb-5">
+                <h3 id="modal-title" class="font-black text-clinic-trust text-lg">Detail</h3>
+                <button onclick="closeModal()" class="p-2 rounded-xl hover:bg-slate-100 transition-all"><i
+                        data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div id="modal-body" class="space-y-3 text-sm text-slate-700"></div>
+            <div class="mt-6 flex gap-3 justify-end">
+                <button onclick="closeModal()"
+                    class="px-4 py-2 rounded-xl border border-slate-200 font-bold text-sm hover:bg-slate-50 transition-all">Close</button>
+                <button id="modal-action"
+                    class="px-4 py-2 rounded-xl bg-clinic-trust text-white font-bold text-sm hover:bg-black transition-all hidden">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- ══ SIDEBAR ══ -->
+        <aside id="sidebar"
+            class="fixed lg:static inset-y-0 left-0 z-50 w-72 bg-gradient-to-b from-slate-900 to-[#1E3A8A] flex flex-col -translate-x-full lg:translate-x-0 shadow-2xl">
+            <div class="px-6 py-5 border-b border-white/10">
+                <a href="index.html" class="inline-flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <img src="./assets/img/logo-white.svg" alt="PremiumCare" class="h-9 w-auto object-contain"
+                        onerror="this.src='./assets/img/logo-full.svg';this.classList.add('brightness-0','invert')">
+                </a>
+            </div>
+            <div class="px-5 py-5 border-b border-white/10">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center shrink-0"><i
+                            data-lucide="shield" class="w-6 h-6 text-white"></i></div>
+                    <div class="min-w-0">
+                        <p class="text-white/50 text-[10px] font-black uppercase tracking-widest">Admin Account</p>
+                        <p id="admin-name" class="text-white font-black text-sm truncate mt-0.5">System Admin</p>
+                        <span
+                            class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full mt-1"><span
+                                class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse inline-block"></span> Full
+                            Access</span>
+                    </div>
+                </div>
+            </div>
+            <nav class="flex-1 p-3 space-y-px overflow-y-auto">
+                <button data-s="overview"
+                    class="nav-btn active w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-white/70 hover:bg-white/10 hover:text-white"><i
+                        data-lucide="layout-dashboard" class="w-4 h-4 shrink-0"></i> Dashboard</button>
+                <button data-s="appointments"
+                    class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-white/70 hover:bg-white/10 hover:text-white"><i
+                        data-lucide="calendar" class="w-4 h-4 shrink-0"></i> Appointments</button>
+                <button data-s="patients"
+                    class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-white/70 hover:bg-white/10 hover:text-white"><i
+                        data-lucide="users" class="w-4 h-4 shrink-0"></i> Patient Records</button>
+                <button data-s="doctors"
+                    class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-white/70 hover:bg-white/10 hover:text-white"><i
+                        data-lucide="stethoscope" class="w-4 h-4 shrink-0"></i> Doctors</button>
+                <button data-s="queries"
+                    class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-white/70 hover:bg-white/10 hover:text-white">
+                    <i data-lucide="mail" class="w-4 h-4 shrink-0"></i> Queries
+                    <span id="q-badge"
+                        class="ml-auto hidden bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full"></span>
+                </button>
+                <button data-s="reports"
+                    class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-white/70 hover:bg-white/10 hover:text-white"><i
+                        data-lucide="bar-chart-3" class="w-4 h-4 shrink-0"></i> Reports</button>
+                <button data-s="settings"
+                    class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-white/70 hover:bg-white/10 hover:text-white"><i
+                        data-lucide="settings" class="w-4 h-4 shrink-0"></i> Settings</button>
+            </nav>
+            <div class="p-4 border-t border-white/10">
+                <button id="logout-btn"
+                    class="w-full flex items-center gap-3 px-4 py-2.5 text-rose-300 hover:bg-white/5 rounded-xl font-semibold text-sm transition-all"><i
+                        data-lucide="log-out" class="w-4 h-4"></i> Sign Out</button>
+            </div>
+        </aside>
+        <div id="overlay" class="overlay" onclick="closeSidebar()"></div>
+
+        <!-- ══ MAIN ══ -->
+        <main class="flex-1 flex flex-col overflow-y-auto min-w-0">
+            <header
+                class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-5 py-3 flex items-center justify-between shadow-sm">
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleSidebar()"
+                        class="lg:hidden p-2 rounded-xl hover:bg-slate-100 transition-all"><i data-lucide="menu"
+                            class="w-5 h-5"></i></button>
+                    <div>
+                        <h1 id="section-title" class="font-black text-clinic-trust text-base lg:text-lg leading-tight">
+                            Dashboard</h1>
+                        <p class="text-[11px] text-gray-400 font-medium hidden sm:block">Admin Control Panel ·
+                            PremiumCare Clinic</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span
+                        class="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-clinic-trust bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-full"><i
+                            data-lucide="shield" class="w-3.5 h-3.5"></i> Admin</span>
+                    <button class="relative p-2.5 rounded-xl hover:bg-slate-100 transition-all"><i data-lucide="bell"
+                            class="w-5 h-5 text-gray-500"></i><span
+                            class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span></button>
+
+                    <!-- Profile Dropdown -->
+                    <div class="relative ml-1" id="profile-dropdown-container">
+                        <button id="profile-btn" aria-haspopup="true" aria-expanded="false"
+                            class="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-100 transition-all bg-white shadow-sm">
+                            <i data-lucide="user" class="w-4.5 h-4.5 text-clinic-trust"></i>
+                        </button>
+                        <div id="profile-menu"
+                            class="hidden absolute right-0 mt-3 w-52 bg-white border border-gray-100 rounded-2xl shadow-xl shadow-clinic-trust/5 py-2 z-[9999] opacity-0 transform -translate-y-2 transition-all duration-200"
+                            style="min-width:200px;">
+                            <!-- Login / Sign Up - single line -->
+                            <a href="login.html"
+                                class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-ink hover:bg-clinic-mist transition-colors font-semibold rounded-t-xl">
+                                <i data-lucide="log-in" class="w-4 h-4 text-clinic-primary shrink-0"></i>
+                                <span class="whitespace-nowrap">Login&nbsp;/&nbsp;Sign Up</span>
+                            </a>
+                            <div class="h-px bg-gray-100 mx-3"></div>
+                            <!-- Admin Dashboard -->
+                            <a href="admin-dashboard.html"
+                                class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-trust hover:bg-clinic-mist transition-colors font-semibold">
+                                <i data-lucide="shield" class="w-4 h-4 text-clinic-trust shrink-0"></i>
+                                <span class="whitespace-nowrap">Admin Dashboard</span>
+                            </a>
+                            <!-- User Dashboard -->
+                            <a href="user-dashboard.html"
+                                class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-ink hover:bg-clinic-mist transition-colors font-semibold rounded-b-xl">
+                                <i data-lucide="layout-dashboard" class="w-4 h-4 text-clinic-primary shrink-0"></i>
+                                <span class="whitespace-nowrap">User Dashboard</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex-1 p-5 lg:p-8">
+
+                <!-- ── OVERVIEW ── -->
+                <div id="s-overview" class="section active space-y-6">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="card p-5 cursor-pointer hover:-translate-y-0.5 transition-all"
+                            onclick="showSection('patients')">
+                            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mb-3"><i
+                                    data-lucide="users" class="w-5 h-5 text-clinic-trust"></i></div>
+                            <div id="st-users" class="text-2xl font-black text-clinic-trust">—</div>
+                            <p class="text-xs text-gray-500 mt-0.5">Total Patients</p>
+                        </div>
+                        <div class="card p-5 cursor-pointer hover:-translate-y-0.5 transition-all"
+                            onclick="showSection('appointments')">
+                            <div class="w-10 h-10 bg-teal-50 rounded-xl flex items-center justify-center mb-3"><i
+                                    data-lucide="calendar-check" class="w-5 h-5 text-clinic-primary"></i></div>
+                            <div id="st-books" class="text-2xl font-black text-clinic-trust">—</div>
+                            <p class="text-xs text-gray-500 mt-0.5">Total Appointments</p>
+                        </div>
+                        <div class="card p-5 cursor-pointer hover:-translate-y-0.5 transition-all"
+                            onclick="showSection('appointments')">
+                            <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mb-3"><i
+                                    data-lucide="clock" class="w-5 h-5 text-amber-500"></i></div>
+                            <div id="st-pend" class="text-2xl font-black text-clinic-trust">—</div>
+                            <p class="text-xs text-gray-500 mt-0.5">Pending Requests</p>
+                        </div>
+                        <div class="card p-5 cursor-pointer hover:-translate-y-0.5 transition-all"
+                            onclick="showSection('queries')">
+                            <div class="w-10 h-10 bg-rose-50 rounded-xl flex items-center justify-center mb-3"><i
+                                    data-lucide="mail" class="w-5 h-5 text-rose-500"></i></div>
+                            <div id="st-q" class="text-2xl font-black text-clinic-trust">—</div>
+                            <p class="text-xs text-gray-500 mt-0.5">Open Queries</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                        <div class="lg:col-span-2 card overflow-hidden">
+                            <div class="px-6 py-4 border-b border-slate-50 flex items-center justify-between">
+                                <h3 class="font-black text-clinic-trust text-sm">Recent Appointments</h3><button
+                                    data-goto="appointments"
+                                    class="goto text-xs font-bold text-clinic-primary hover:underline">View All
+                                    →</button>
+                            </div>
+                            <div id="ov-apts" class="divide-y divide-slate-50"></div>
+                        </div>
+                        <div class="card p-5 space-y-2">
+                            <h3 class="font-black text-clinic-trust text-sm mb-3">Quick Links</h3>
+                            <button data-goto="appointments"
+                                class="goto w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-blue-50 transition-all text-left text-sm font-semibold text-clinic-trust"><i
+                                    data-lucide="calendar-plus" class="w-4 h-4 text-clinic-trust shrink-0"></i> Manage
+                                Appointments</button>
+                            <button data-goto="patients"
+                                class="goto w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-teal-50  transition-all text-left text-sm font-semibold text-clinic-trust"><i
+                                    data-lucide="users" class="w-4 h-4 text-clinic-primary shrink-0"></i> Patient
+                                Records</button>
+                            <button data-goto="doctors"
+                                class="goto w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-amber-50 transition-all text-left text-sm font-semibold text-clinic-trust"><i
+                                    data-lucide="stethoscope" class="w-4 h-4 text-amber-600 shrink-0"></i>
+                                Doctors</button>
+                            <button data-goto="queries"
+                                class="goto w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-rose-50  transition-all text-left text-sm font-semibold text-clinic-trust"><i
+                                    data-lucide="mail" class="w-4 h-4 text-rose-500 shrink-0"></i> Contact
+                                Queries</button>
+                            <button data-goto="reports"
+                                class="goto w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-purple-50 transition-all text-left text-sm font-semibold text-clinic-trust"><i
+                                    data-lucide="bar-chart-3" class="w-4 h-4 text-purple-600 shrink-0"></i>
+                                Analytics</button>
+                        </div>
+                    </div>
+                    <div class="card overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-50 flex items-center justify-between">
+                            <h3 class="font-black text-clinic-trust text-sm">Recent Patient Registrations</h3><button
+                                data-goto="patients"
+                                class="goto text-xs font-bold text-clinic-primary hover:underline">View All →</button>
+                        </div>
+                        <div id="ov-pats" class="divide-y divide-slate-50"></div>
+                    </div>
+                </div>
+
+                <!-- ── APPOINTMENTS ── -->
+                <div id="s-appointments" class="section space-y-5">
+                    <div>
+                        <h2 class="text-xl font-black text-clinic-trust">Appointment Management</h2>
+                        <p class="text-gray-500 text-sm">All patient bookings — approve, cancel, or view details</p>
+                    </div>
+                    <div class="card overflow-hidden">
+                        <div class="px-5 py-4 border-b border-slate-50 flex flex-col sm:flex-row gap-3">
+                            <input id="appt-search" type="search" placeholder="Search by department or patient ID…"
+                                class="flex-1 px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:ring-2 focus:ring-clinic-primary outline-none">
+                            <select id="appt-filter-status"
+                                class="px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:ring-2 focus:ring-clinic-primary outline-none font-semibold">
+                                <option value="">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                            </select>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Patient ID</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Department</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Date</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Time</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Status</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="apts-tbody" class="divide-y divide-slate-50">
+                                    <tr>
+                                        <td colspan="6" class="px-5 py-10 text-center text-gray-400 italic text-sm">
+                                            Loading…</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── PATIENTS ── -->
+                <div id="s-patients" class="section space-y-5">
+                    <div>
+                        <h2 class="text-xl font-black text-clinic-trust">Patient Records</h2>
+                        <p class="text-gray-500 text-sm">All registered patient accounts</p>
+                    </div>
+                    <div class="card overflow-hidden">
+                        <div class="px-5 py-4 border-b border-slate-50">
+                            <input id="pat-search" type="search" placeholder="Search by name or email…"
+                                class="w-full sm:w-72 px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:ring-2 focus:ring-clinic-primary outline-none">
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Name</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Email</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Patient ID</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Joined</th>
+                                        <th
+                                            class="px-5 py-3 text-[11px] font-black text-gray-400 uppercase tracking-wider">
+                                            Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pats-tbody" class="divide-y divide-slate-50">
+                                    <tr>
+                                        <td colspan="5" class="px-5 py-10 text-center text-gray-400 italic text-sm">
+                                            Loading…</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── DOCTORS ── -->
+                <div id="s-doctors" class="section space-y-5">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-xl font-black text-clinic-trust">Doctors &amp; Staff</h2>
+                            <p class="text-gray-500 text-sm">Medical team directory</p>
+                        </div><a href="doctors.html"
+                            class="flex items-center gap-2 bg-clinic-primary text-white px-4 py-2.5 rounded-xl font-bold text-sm hover:bg-clinic-dark transition-all">Public
+                            Page →</a>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <div class="card p-6 flex flex-col items-center text-center gap-3">
+                            <div class="w-16 h-16 rounded-2xl bg-teal-50 flex items-center justify-center"><i
+                                    data-lucide="user-check" class="w-8 h-8 text-clinic-primary"></i></div>
+                            <div>
+                                <p class="font-black text-clinic-trust">Dr. Sarah Johnson</p>
+                                <p class="text-xs text-gray-400 mt-0.5">Cardiology</p>
+                            </div><span class="badge badge-ok">Available</span>
+                            <div class="flex gap-2 mt-1"><button
+                                    onclick="openModal('Dr. Sarah Johnson','Cardiology · Available · Mon–Fri 9am–5pm · srjohnson@premiumcare.com')"
+                                    class="text-xs font-bold text-clinic-primary hover:underline">View</button><button
+                                    onclick="alert('Edit feature: Dr. Sarah Johnson')"
+                                    class="text-xs font-bold text-gray-400 hover:text-clinic-trust hover:underline">Edit</button>
+                            </div>
+                        </div>
+                        <div class="card p-6 flex flex-col items-center text-center gap-3">
+                            <div class="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center"><i
+                                    data-lucide="user-check" class="w-8 h-8 text-clinic-trust"></i></div>
+                            <div>
+                                <p class="font-black text-clinic-trust">Dr. Michael Chen</p>
+                                <p class="text-xs text-gray-400 mt-0.5">Diabetology</p>
+                            </div><span class="badge badge-ok">Available</span>
+                            <div class="flex gap-2 mt-1"><button
+                                    onclick="openModal('Dr. Michael Chen','Diabetology · Available · Mon–Sat 8am–4pm · mchen@premiumcare.com')"
+                                    class="text-xs font-bold text-clinic-primary hover:underline">View</button><button
+                                    onclick="alert('Edit feature: Dr. Michael Chen')"
+                                    class="text-xs font-bold text-gray-400 hover:text-clinic-trust hover:underline">Edit</button>
+                            </div>
+                        </div>
+                        <div class="card p-6 flex flex-col items-center text-center gap-3">
+                            <div class="w-16 h-16 rounded-2xl bg-purple-50 flex items-center justify-center"><i
+                                    data-lucide="user-check" class="w-8 h-8 text-purple-500"></i></div>
+                            <div>
+                                <p class="font-black text-clinic-trust">Dr. Priya Sharma</p>
+                                <p class="text-xs text-gray-400 mt-0.5">Neurology</p>
+                            </div><span class="badge badge-pending">On Leave</span>
+                            <div class="flex gap-2 mt-1"><button
+                                    onclick="openModal('Dr. Priya Sharma','Neurology · On Leave till Mar 5 · psharma@premiumcare.com')"
+                                    class="text-xs font-bold text-clinic-primary hover:underline">View</button><button
+                                    onclick="alert('Edit feature: Dr. Priya Sharma')"
+                                    class="text-xs font-bold text-gray-400 hover:text-clinic-trust hover:underline">Edit</button>
+                            </div>
+                        </div>
+                        <div class="card p-6 flex flex-col items-center text-center gap-3">
+                            <div class="w-16 h-16 rounded-2xl bg-rose-50 flex items-center justify-center"><i
+                                    data-lucide="user-check" class="w-8 h-8 text-rose-500"></i></div>
+                            <div>
+                                <p class="font-black text-clinic-trust">Dr. James Wilson</p>
+                                <p class="text-xs text-gray-400 mt-0.5">Pediatrics</p>
+                            </div><span class="badge badge-ok">Available</span>
+                            <div class="flex gap-2 mt-1"><button
+                                    onclick="openModal('Dr. James Wilson','Pediatrics · Available · Tue–Sat 10am–6pm · jwilson@premiumcare.com')"
+                                    class="text-xs font-bold text-clinic-primary hover:underline">View</button><button
+                                    onclick="alert('Edit feature: Dr. James Wilson')"
+                                    class="text-xs font-bold text-gray-400 hover:text-clinic-trust hover:underline">Edit</button>
+                            </div>
+                        </div>
+                        <div class="card p-6 flex flex-col items-center text-center gap-3">
+                            <div class="w-16 h-16 rounded-2xl bg-amber-50 flex items-center justify-center"><i
+                                    data-lucide="user-check" class="w-8 h-8 text-amber-600"></i></div>
+                            <div>
+                                <p class="font-black text-clinic-trust">Dr. Emily Torres</p>
+                                <p class="text-xs text-gray-400 mt-0.5">Dermatology</p>
+                            </div><span class="badge badge-ok">Available</span>
+                            <div class="flex gap-2 mt-1"><button
+                                    onclick="openModal('Dr. Emily Torres','Dermatology · Available · Mon–Fri 9am–5pm · etorres@premiumcare.com')"
+                                    class="text-xs font-bold text-clinic-primary hover:underline">View</button><button
+                                    onclick="alert('Edit feature: Dr. Emily Torres')"
+                                    class="text-xs font-bold text-gray-400 hover:text-clinic-trust hover:underline">Edit</button>
+                            </div>
+                        </div>
+                        <div class="card p-6 flex flex-col items-center text-center gap-3 border-dashed border-2 border-slate-200 cursor-pointer hover:border-clinic-primary hover:bg-clinic-light transition-all"
+                            onclick="alert('Add Doctor feature coming soon!')">
+                            <div class="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center"><i
+                                    data-lucide="user-plus" class="w-8 h-8 text-gray-300"></i></div>
+                            <div>
+                                <p class="font-bold text-gray-400 text-sm">Add New Doctor</p>
+                                <p class="text-xs text-gray-300 mt-0.5">Expand the team</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── QUERIES ── -->
+                <div id="s-queries" class="section space-y-5">
+                    <div>
+                        <h2 class="text-xl font-black text-clinic-trust">Contact Queries</h2>
+                        <p class="text-gray-500 text-sm">All patient and visitor messages from the contact form</p>
+                    </div>
+                    <div id="queries-list" class="space-y-4">
+                        <p class="text-gray-400 text-sm text-center py-10 italic">Loading…</p>
+                    </div>
+                </div>
+
+                <!-- ── REPORTS ── -->
+                <div id="s-reports" class="section space-y-5">
+                    <div>
+                        <h2 class="text-xl font-black text-clinic-trust">Reports &amp; Analytics</h2>
+                        <p class="text-gray-500 text-sm">Clinic performance overview</p>
+                    </div>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4" id="rep-cards"></div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                        <div class="card p-6">
+                            <h3 class="font-black text-clinic-trust text-sm mb-4">Appointments by Department</h3>
+                            <div id="dept-bars" class="space-y-3"></div>
+                        </div>
+                        <div class="card overflow-hidden">
+                            <div class="px-6 py-4 border-b border-slate-50">
+                                <h3 class="font-black text-clinic-trust text-sm">Recent Activity</h3>
+                            </div>
+                            <div id="act-log" class="divide-y divide-slate-50 max-h-72 overflow-y-auto"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── SETTINGS ── -->
+                <div id="s-settings" class="section space-y-5">
+                    <div>
+                        <h2 class="text-xl font-black text-clinic-trust">Settings</h2>
+                        <p class="text-gray-500 text-sm">Clinic configuration and preferences</p>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                        <div class="card p-6 space-y-4">
+                            <h3 class="font-black text-clinic-trust text-sm">Clinic Information</h3>
+                            <div class="space-y-3">
+                                <div><label
+                                        class="text-[11px] font-black text-gray-400 uppercase tracking-widest block mb-1.5">Clinic
+                                        Name</label><input value="PremiumCare Clinic"
+                                        class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium focus:ring-2 focus:ring-clinic-primary outline-none">
+                                </div>
+                                <div><label
+                                        class="text-[11px] font-black text-gray-400 uppercase tracking-widest block mb-1.5">Admin
+                                        Email</label><input id="sett-email"
+                                        class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium focus:ring-2 focus:ring-clinic-primary outline-none">
+                                </div>
+                                <div><label
+                                        class="text-[11px] font-black text-gray-400 uppercase tracking-widest block mb-1.5">Phone</label><input
+                                        value="+1 (234) 567-890"
+                                        class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium focus:ring-2 focus:ring-clinic-primary outline-none">
+                                </div>
+                            </div><button onclick="alert('Settings saved!')"
+                                class="flex items-center gap-2 bg-clinic-primary text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-clinic-dark transition-all active:scale-95"><i
+                                    data-lucide="save" class="w-4 h-4"></i> Save Settings</button>
+                        </div>
+                        <div class="card p-6 space-y-4">
+                            <h3 class="font-black text-clinic-trust text-sm">Notifications</h3><label
+                                class="flex items-center justify-between p-3 bg-slate-50 rounded-xl cursor-pointer text-sm font-semibold">New
+                                appointment alerts<input type="checkbox" checked
+                                    class="w-4 h-4 accent-teal-600"></label><label
+                                class="flex items-center justify-between p-3 bg-slate-50 rounded-xl cursor-pointer text-sm font-semibold">New
+                                patient registrations<input type="checkbox" checked
+                                    class="w-4 h-4 accent-teal-600"></label><label
+                                class="flex items-center justify-between p-3 bg-slate-50 rounded-xl cursor-pointer text-sm font-semibold">Contact
+                                form queries<input type="checkbox" class="w-4 h-4 accent-teal-600"></label><label
+                                class="flex items-center justify-between p-3 bg-slate-50 rounded-xl cursor-pointer text-sm font-semibold">Weekly
+                                summary email<input type="checkbox" checked class="w-4 h-4 accent-teal-600"></label>
+                        </div>
+                        <div class="card p-6 space-y-4 border-red-100 lg:col-span-2">
+                            <h3 class="font-black text-red-600 text-sm">Danger Zone</h3>
+                            <div class="flex flex-wrap gap-3"><button
+                                    onclick="if(confirm('Clear all bookings?')){localStorage.removeItem('clinic_v1_bookings');alert('Bookings cleared.');location.reload();}"
+                                    class="flex items-center gap-2 px-5 py-2.5 border border-red-200 text-red-500 rounded-xl font-bold text-sm hover:bg-red-50 transition-all"><i
+                                        data-lucide="trash-2" class="w-4 h-4"></i> Clear All Bookings</button><button
+                                    onclick="if(confirm('Clear all queries?')){localStorage.removeItem('clinic_v1_queries');alert('Queries cleared.');location.reload();}"
+                                    class="flex items-center gap-2 px-5 py-2.5 border border-red-200 text-red-500 rounded-xl font-bold text-sm hover:bg-red-50 transition-all"><i
+                                        data-lucide="trash-2" class="w-4 h-4"></i> Clear All Queries</button></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="./src/js/api.js"></script>
+    <script>
+            (function () {
+                'use strict';
+                var SECTIONS = ['overview', 'appointments', 'patients', 'doctors', 'queries', 'reports', 'settings'];
+                var TITLES = { overview: 'Dashboard', appointments: 'Appointment Management', patients: 'Patient Records', doctors: 'Doctors & Staff', queries: 'Contact Queries', reports: 'Reports & Analytics', settings: 'Settings' };
+                var allBooks = [], allPats = [];
+
+                // ── Section nav ──
+                window.showSection = function (id) {
+                    SECTIONS.forEach(function (s) {
+                        var el = document.getElementById('s-' + s); if (el) el.classList.remove('active');
+                        var b = document.querySelector('[data-s="' + s + '"]'); if (b) b.classList.remove('active');
+                    });
+                    var t = document.getElementById('s-' + id); if (t) { t.classList.add('active'); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+                    var ab = document.querySelector('[data-s="' + id + '"]'); if (ab) ab.classList.add('active');
+                    var st = document.getElementById('section-title'); if (st) st.textContent = TITLES[id] || id;
+                    closeSidebar();
+                    if (window.lucide) lucide.createIcons();
+                };
+                document.querySelectorAll('.nav-btn[data-s]').forEach(function (b) { b.addEventListener('click', function () { showSection(this.dataset.s); }); });
+                document.querySelectorAll('.goto').forEach(function (b) { b.addEventListener('click', function () { showSection(this.dataset.goto); }); });
+
+                // ── Sidebar ──
+                window.toggleSidebar = function () { document.getElementById('sidebar').classList.toggle('-translate-x-full'); document.getElementById('overlay').classList.toggle('open'); };
+                window.closeSidebar = function () { document.getElementById('sidebar').classList.add('-translate-x-full'); document.getElementById('overlay').classList.remove('open'); };
+
+                // ── Modal ──
+                window.openModal = function (title, body, actionLabel, actionFn) {
+                    document.getElementById('modal-title').textContent = title;
+                    document.getElementById('modal-body').innerHTML = typeof body === 'string' ? '<p>' + body + '</p>' : body;
+                    var ab = document.getElementById('modal-action');
+                    if (actionLabel && actionFn) { ab.textContent = actionLabel; ab.classList.remove('hidden'); ab.onclick = function () { actionFn(); closeModal(); }; }
+                    else { ab.classList.add('hidden'); }
+                    document.getElementById('modal-bg').classList.add('open');
+                    if (window.lucide) lucide.createIcons();
+                };
+                window.closeModal = function () { document.getElementById('modal-bg').classList.remove('open'); };
+
+                // ── Render appointments table ──
+                function renderApts(list) {
+                    var tb = document.getElementById('apts-tbody'); if (!tb) return;
+                    if (!list.length) { tb.innerHTML = '<tr><td colspan="6" class="px-5 py-10 text-center text-gray-400 italic text-sm">No appointments found.</td></tr>'; return; }
+                    tb.innerHTML = list.map(function (b, i) {
+                        var badge = b.status === 'confirmed' ? 'badge-ok' : 'badge-pending';
+                        return '<tr data-i="' + i + '">'
+                            + '<td class="px-5 py-3 font-mono text-xs text-gray-500">' + b.userId + '</td>'
+                            + '<td class="px-5 py-3 font-bold text-clinic-trust text-sm uppercase">' + b.department + '</td>'
+                            + '<td class="px-5 py-3 text-sm text-gray-600">' + new Date(b.date).toLocaleDateString() + '</td>'
+                            + '<td class="px-5 py-3 text-sm text-gray-600">' + b.time + '</td>'
+                            + '<td class="px-5 py-3"><span class="badge ' + badge + '">' + b.status + '</span></td>'
+                            + '<td class="px-5 py-3 flex items-center gap-2">'
+                            + '<button class="text-xs font-bold text-clinic-primary hover:underline" data-act="view" data-idx="' + i + '">View</button>'
+                            + '<button class="text-xs font-bold text-emerald-600 hover:underline" data-act="approve" data-idx="' + i + '">Approve</button>'
+                            + '<button class="text-xs font-bold text-red-400 hover:underline" data-act="cancel" data-idx="' + i + '">Cancel</button>'
+                            + '</td></tr>';
+                    }).join('');
+                    // Bind action buttons
+                    tb.querySelectorAll('[data-act]').forEach(function (btn) {
+                        btn.addEventListener('click', function () {
+                            var idx = parseInt(this.dataset.idx); var b = list[idx]; var act = this.dataset.act;
+                            if (act === 'view') {
+                                openModal('Appointment — ' + b.department, '<div class="space-y-2"><div class="flex justify-between py-1.5 border-b border-gray-100"><span class="font-semibold text-gray-500">Patient ID</span><span class="font-bold font-mono text-xs">' + b.userId + '</span></div><div class="flex justify-between py-1.5 border-b border-gray-100"><span class="font-semibold text-gray-500">Department</span><span class="font-bold">' + b.department + '</span></div><div class="flex justify-between py-1.5 border-b border-gray-100"><span class="font-semibold text-gray-500">Date</span><span class="font-bold">' + new Date(b.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + '</span></div><div class="flex justify-between py-1.5 border-b border-gray-100"><span class="font-semibold text-gray-500">Time</span><span class="font-bold">' + b.time + '</span></div><div class="flex justify-between py-1.5"><span class="font-semibold text-gray-500">Status</span><span class="font-bold capitalize">' + b.status + '</span></div></div>');
+                            } else if (act === 'approve') {
+                                openModal('Approve Appointment', '<p>Approve <strong>' + b.department + '</strong> appointment on <strong>' + new Date(b.date).toLocaleDateString() + '</strong>?</p>', 'Approve', function () { b.status = 'confirmed'; try { var key = 'clinic_v1_bookings'; var all = JSON.parse(localStorage.getItem(key) || '[]'); var found = all.find(function (x) { return x.id === b.id; }); if (found) found.status = 'confirmed'; localStorage.setItem(key, JSON.stringify(all)); } catch (e) { } alert('Appointment approved!'); applyApptFilters(); });
+                            } else {
+                                openModal('Cancel Appointment', '<p>Cancel <strong>' + b.department + '</strong> appointment on <strong>' + new Date(b.date).toLocaleDateString() + '</strong>?</p>', 'Cancel Appointment', function () { b.status = 'cancelled'; try { var key = 'clinic_v1_bookings'; var all = JSON.parse(localStorage.getItem(key) || '[]'); var found = all.find(function (x) { return x.id === b.id; }); if (found) found.status = 'cancelled'; localStorage.setItem(key, JSON.stringify(all)); } catch (e) { } alert('Appointment cancelled.'); applyApptFilters(); });
+                            }
+                        });
+                    });
+                    if (window.lucide) lucide.createIcons();
+                }
+
+                function applyApptFilters() {
+                    var q = (document.getElementById('appt-search') || {}).value || '';
+                    var st = (document.getElementById('appt-filter-status') || {}).value || '';
+                    var filtered = allBooks.slice().reverse().filter(function (b) {
+                        var matchQ = !q || (b.department || '').toLowerCase().includes(q.toLowerCase()) || (b.userId || '').toLowerCase().includes(q.toLowerCase());
+                        var matchS = !st || b.status === st;
+                        return matchQ && matchS;
+                    });
+                    renderApts(filtered);
+                }
+
+                function renderPats(list) {
+                    var tb = document.getElementById('pats-tbody'); if (!tb) return;
+                    if (!list.length) { tb.innerHTML = '<tr><td colspan="5" class="px-5 py-10 text-center text-gray-400 italic text-sm">No patients found.</td></tr>'; return; }
+                    tb.innerHTML = list.map(function (u) {
+                        return '<tr>'
+                            + '<td class="px-5 py-3 font-bold text-clinic-trust text-sm">' + u.name + '</td>'
+                            + '<td class="px-5 py-3 text-sm text-gray-600">' + u.email + '</td>'
+                            + '<td class="px-5 py-3 font-mono text-xs text-gray-500">' + u.id + '</td>'
+                            + '<td class="px-5 py-3 text-sm text-gray-600">' + new Date(u.createdAt).toLocaleDateString() + '</td>'
+                            + '<td class="px-5 py-3"><button class="text-xs font-bold text-clinic-primary hover:underline mr-3" onclick="openModal(\'Patient — ' + u.name + '\',\'<div class=&quot;space-y-2&quot;><div class=&quot;flex justify-between py-1.5 border-b border-gray-100&quot;><span class=&quot;font-semibold text-gray-500&quot;>Name</span><span class=&quot;font-bold&quot;>' + u.name + '</span></div><div class=&quot;flex justify-between py-1.5 border-b border-gray-100&quot;><span class=&quot;font-semibold text-gray-500&quot;>Email</span><span class=&quot;font-bold text-xs&quot;>' + u.email + '</span></div><div class=&quot;flex justify-between py-1.5&quot;><span class=&quot;font-semibold text-gray-500&quot;>Joined</span><span class=&quot;font-bold&quot;>' + new Date(u.createdAt).toLocaleDateString() + '</span></div></div>\')">View</button>'
+                            + '<button class="text-xs font-bold text-gray-400 hover:text-clinic-trust hover:underline" onclick="alert(\'Edit patient: ' + u.name + '\')">Edit</button></td></tr>';
+                    }).join('');
+                }
+
+                function applyPatFilters() {
+                    var q = (document.getElementById('pat-search') || {}).value || '';
+                    var filtered = allPats.filter(function (u) { return !q || (u.name || '').toLowerCase().includes(q.toLowerCase()) || (u.email || '').toLowerCase().includes(q.toLowerCase()); });
+                    renderPats(filtered);
+                }
+
+                // Wire search inputs
+                document.addEventListener('input', function (e) {
+                    if (e.target.id === 'appt-search' || e.target.id === 'appt-filter-status') applyApptFilters();
+                    if (e.target.id === 'pat-search') applyPatFilters();
+                });
+                document.addEventListener('change', function (e) {
+                    if (e.target.id === 'appt-filter-status') applyApptFilters();
+                });
+
+                // ── Init ──
+                async function init() {
+                    var user = null;
+                    if (window.StorageService) {
+                        try { user = await StorageService.getCurrentUser(); } catch (e) { }
+                    }
+                    if (!user) user = { name: "Guest Admin", role: "admin", email: "admin@demo.com" };
+
+                    var el;
+                    el = document.getElementById('admin-name'); if (el) el.textContent = user.name || 'System Admin';
+                    el = document.getElementById('sett-email'); if (el) el.value = user.email || '';
+
+                    try {
+                        var stats = await StorageService.getGlobalStats();
+                        ['users', 'books', 'pend', 'q'].forEach(function (k, i) {
+                            el = document.getElementById('st-' + k);
+                            if (el) el.textContent = [stats.totalUsers, stats.totalBookings, stats.pendingBookings, stats.totalQueries][i];
+                        });
+                        if (stats.totalQueries > 0) { var qb = document.getElementById('q-badge'); if (qb) { qb.textContent = stats.totalQueries; qb.classList.remove('hidden'); } }
+
+                        // ── Bookings ──
+                        var books = await StorageService.getBookings();
+                        allBooks = books;
+
+                        var oa = document.getElementById('ov-apts');
+                        if (oa) {
+                            if (!books.length) { oa.innerHTML = '<p class="px-6 py-8 text-gray-400 text-sm text-center italic">No appointments yet.</p>'; }
+                            else { oa.innerHTML = books.slice(-5).reverse().map(function (b) { return '<div class="px-6 py-4 flex items-center gap-4"><div class="w-9 h-9 bg-blue-50 rounded-xl flex items-center justify-center shrink-0"><i data-lucide="calendar" class="w-4 h-4 text-clinic-trust"></i></div><div class="flex-1 min-w-0"><p class="font-bold text-clinic-trust text-sm uppercase">' + b.department + '</p><p class="text-xs text-gray-500">' + b.userId + ' · ' + new Date(b.date).toLocaleDateString() + ' ' + b.time + '</p></div><span class="badge badge-pending">' + b.status + '</span></div>'; }).join(''); }
+                        }
+
+                        applyApptFilters();
+
+                        // ── Patients ──
+                        var users = await StorageService.getUsers();
+                        allPats = users.filter(function (u) { return u.role !== 'admin'; });
+
+                        var op = document.getElementById('ov-pats');
+                        if (op) {
+                            if (!allPats.length) { op.innerHTML = '<p class="px-6 py-8 text-gray-400 text-sm text-center italic">No patients registered yet.</p>'; }
+                            else { op.innerHTML = allPats.slice(-4).reverse().map(function (u) { return '<div class="px-6 py-4 flex items-center gap-3"><div class="w-9 h-9 bg-clinic-light rounded-xl flex items-center justify-center shrink-0"><i data-lucide="user" class="w-4 h-4 text-clinic-primary"></i></div><div class="flex-1 min-w-0"><p class="font-bold text-clinic-trust text-sm">' + u.name + '</p><p class="text-xs text-gray-500">' + u.email + '</p></div><span class="font-mono text-[10px] text-gray-400">' + u.id + '</span></div>'; }).join(''); }
+                        }
+
+                        applyPatFilters();
+
+                        // ── Queries ──
+                        var queries = await StorageService.getQueries();
+                        var ql = document.getElementById('queries-list');
+                        if (ql) {
+                            if (!queries.length) { ql.innerHTML = '<div class="card text-center p-10"><i data-lucide="inbox" class="w-12 h-12 text-gray-200 mx-auto mb-3"></i><p class="text-gray-400 font-medium text-sm">No queries yet.</p></div>'; }
+                            else { ql.innerHTML = queries.slice().reverse().map(function (q) { return '<div class="card p-5"><div class="flex items-start justify-between gap-4 mb-3"><div><p class="font-black text-clinic-trust">' + (q.name || 'Anonymous') + '</p><p class="text-xs text-gray-400">' + (q.email || '—') + ' · ' + new Date(q.createdAt).toLocaleDateString() + '</p></div><span class="font-mono text-[10px] text-gray-400 shrink-0">' + q.id + '</span></div><p class="text-sm text-gray-600 bg-slate-50 rounded-xl p-3">' + (q.message || q.subject || '—') + '</p><button class="mt-3 text-xs font-bold text-clinic-primary hover:underline" onclick="alert(\'Reply to ' + (q.email || 'user') + ' coming soon!\')">Reply →</button></div>'; }).join(''); }
+                        }
+
+                        // ── Reports ──
+                        var rc = document.getElementById('rep-cards');
+                        if (rc) { rc.innerHTML = [{ l: 'Total Patients', v: stats.totalUsers, i: 'users', c: 'bg-blue-50 text-clinic-trust' }, { l: 'Appointments', v: stats.totalBookings, i: 'calendar', c: 'bg-teal-50 text-clinic-primary' }, { l: 'Pending', v: stats.pendingBookings, i: 'clock', c: 'bg-amber-50 text-amber-600' }, { l: 'Queries', v: stats.totalQueries, i: 'mail', c: 'bg-rose-50 text-rose-500' }].map(function (s) { return '<div class="card p-5"><div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3 ' + s.c + '"><i data-lucide="' + s.i + '" class="w-5 h-5"></i></div><div class="text-2xl font-black text-clinic-trust">' + s.v + '</div><p class="text-xs text-gray-500 mt-0.5">' + s.l + '</p></div>'; }).join(''); }
+
+                        var depts = {};
+                        books.forEach(function (b) { depts[b.department] = (depts[b.department] || 0) + 1; });
+                        var da = Object.keys(depts).map(function (k) { return { n: k, c: depts[k] }; }).sort(function (a, b) { return b.c - a.c; });
+                        var max = da[0] ? da[0].c : 1;
+                        var db = document.getElementById('dept-bars');
+                        if (db) { db.innerHTML = da.length ? da.map(function (d) { return '<div><div class="flex items-center justify-between mb-1"><span class="text-sm font-bold text-clinic-trust uppercase">' + d.n + '</span><span class="text-xs font-bold text-gray-400">' + d.c + ' appts</span></div><div class="w-full bg-slate-100 rounded-full h-2.5"><div class="bg-clinic-primary h-2.5 rounded-full transition-all" style="width:' + Math.round(d.c / max * 100) + '%"></div></div></div>'; }).join('') : '<p class="text-gray-400 text-sm italic">No appointment data yet.</p>'; }
+
+                        var al = document.getElementById('act-log');
+                        var ra = stats.recentActivity || [];
+                        if (al) { al.innerHTML = ra.length ? ra.map(function (a) { var icon = a.department ? 'calendar' : (a.email ? 'user-plus' : 'mail'); var lbl = a.department ? 'Booking: ' + a.department : (a.email ? 'New patient: ' + a.email : 'Query from ' + (a.name || '?')); return '<div class="px-5 py-3 flex items-center gap-3 hover:bg-slate-50"><i data-lucide="' + icon + '" class="w-4 h-4 text-gray-400 shrink-0"></i><span class="text-sm text-gray-700 flex-1">' + lbl + '</span><span class="text-xs text-gray-400 shrink-0">' + new Date(a.createdAt).toLocaleString() + '</span></div>'; }).join('') : '<p class="px-5 py-8 text-gray-400 text-sm text-center italic">No recent activity.</p>'; }
+
+                    } catch (e) { console.error('Admin init error:', e); }
+
+                    if (window.lucide) lucide.createIcons();
+                }
+
+                document.getElementById('logout-btn').addEventListener('click', async function () {
+                    if (window.StorageService) await StorageService.logout();
+                    localStorage.removeItem('role'); localStorage.removeItem('userRole');
+                    window.location.href = 'login.html';
+                });
+
+                // --- Profile Dropdown Logic ---
+                const profileBtn = document.getElementById('profile-btn');
+                const profileMenu = document.getElementById('profile-menu');
+
+                function closeDropdown() {
+                    if (profileMenu && !profileMenu.classList.contains('hidden')) {
+                        profileMenu.classList.add('opacity-0', '-translate-y-2');
+                        profileBtn?.setAttribute('aria-expanded', 'false');
+                        setTimeout(() => {
+                            profileMenu.classList.add('hidden');
+                        }, 200);
+                    }
+                }
+
+                if (profileBtn && profileMenu) {
+                    profileBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const isExpanded = profileBtn.getAttribute('aria-expanded') === 'true';
+                        profileBtn.setAttribute('aria-expanded', String(!isExpanded));
+
+                        if (profileMenu.classList.contains('hidden')) {
+                            profileMenu.classList.remove('hidden');
+                            setTimeout(() => {
+                                profileMenu.classList.remove('opacity-0', '-translate-y-2');
+                            }, 10);
+                        } else {
+                            closeDropdown();
+                        }
+                    });
+                }
+
+                window.addEventListener('click', (e) => {
+                    if (profileMenu && !profileMenu.contains(e.target) && !profileBtn?.contains(e.target)) {
+                        closeDropdown();
+                    }
+                });
+
+                init();
+            })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,837 @@
+/* Custom Clinic Premium Styles */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+.brand {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    /* 24px */
+    font-weight: 700;
+    color: #1E3A8A;
+    /* clinic-trust */
+    text-decoration: none;
+    letter-spacing: -0.025em;
+    /* Prevent text from being clipped by inline-block shrink-wrapping */
+    display: inline-block;
+    padding: 0.125rem 0.25rem;
+    /* small breathing room so descenders/ascenders don't clip */
+    line-height: 1.4;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.dark-bg .brand {
+    color: #fff;
+}
+
+/* Custom scrollbar for premium feel */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #0d9488;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0f766e;
+}
+
+.glass-nav {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+}
+
+.glass-nav.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-down {
+    animation: slideDown 0.3s ease-out forwards;
+}
+
+.mobile-menu-active {
+    display: flex !important;
+    animation: slideDown 0.3s ease-out forwards;
+}
+
+@keyframes bounce-slow {
+
+    0%,
+    100% {
+        transform: translateY(-5%);
+    }
+
+    50% {
+        transform: translateY(0);
+    }
+}
+
+.animate-bounce-slow {
+    animation: bounce-slow 3s infinite ease-in-out;
+}
+
+/* Global Layout Utilities */
+main {
+    padding-top: 5rem;
+    /* Ensure main content clears the fixed 5rem (h-20) header */
+}
+
+/* Auth pages (login/signup) have no navbar — remove the inherited padding */
+body.auth-page main {
+    padding-top: 0;
+}
+
+section {
+    position: relative;
+    padding-top: 4rem;
+    /* py-16 */
+    padding-bottom: 4rem;
+    /* py-16 */
+}
+
+.container-custom {
+    max-width: 80rem;
+    /* 1280px - max-w-7xl */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+    .container-custom {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container-custom {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+/* Premium Divider */
+.premium-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(13, 148, 136, 0.2), transparent);
+    width: 100%;
+}
+
+@keyframes bounce-slow {
+
+    0%,
+    100% {
+        transform: translateY(-5%);
+    }
+
+    50% {
+        transform: translateY(0);
+    }
+}
+
+.animate-bounce-slow {
+    animation: bounce-slow 3s infinite ease-in-out;
+}
+
+/* --- RESPONSIVENESS ENHANCEMENTS --- */
+
+/* Global Responsive Base */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Base Typography Scale */
+html {
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+/* Responsive Font Sizes */
+h1 {
+    font-size: 2.5rem;
+}
+
+/* ~40px */
+h2 {
+    font-size: 2rem;
+}
+
+/* ~32px */
+h3 {
+    font-size: 1.5rem;
+}
+
+/* ~24px */
+
+/* --- RESPONSIVE BREAKPOINTS --- */
+
+/* 1. Large Tablets / Laptops (1200px) */
+@media (max-width: 1200px) {
+    .container-custom {
+        max-width: 960px;
+    }
+}
+
+/* 2. Tablets (992px) */
+@media (max-width: 992px) {
+    .container-custom {
+        max-width: 720px;
+    }
+
+    h1 {
+        font-size: 2.25rem;
+    }
+
+    h2 {
+        font-size: 1.875rem;
+    }
+
+    section {
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+    }
+}
+
+/* 3. Small Tablets & Phones (768px) - CRITICAL BREAKPOINT */
+@media (max-width: 768px) {
+    .container-custom {
+        max-width: 100%;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+        line-height: 1.25;
+    }
+
+    h3 {
+        font-size: 1.35rem;
+    }
+
+    body {
+        font-size: 1rem;
+    }
+
+    section {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    /* Column Stacking */
+    .grid-cols-2,
+    .grid-cols-3,
+    .grid-cols-4 {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Navigation Adjustment */
+    #mobile-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        left: 0;
+        top: 5rem;
+        /* Match header height h-20 */
+        background: white;
+        z-index: 1000;
+        max-height: calc(100vh - 5rem);
+        overflow-y: auto;
+        position: fixed;
+    }
+
+    #mobile-menu.mobile-menu-active {
+        display: flex !important;
+    }
+
+    /* Mobile Menu Highlight */
+    .mobile-link-active {
+        background-color: var(--clinic-light, #F0FDFA) !important;
+        color: var(--clinic-primary, #0D9488) !important;
+    }
+
+    .mobile-link-active .icon-container-active {
+        background-color: rgba(13, 148, 136, 0.1) !important;
+        color: var(--clinic-primary, #0D9488) !important;
+    }
+
+    /* Form & Button Optimization */
+    input,
+    select,
+    textarea {
+        width: 100% !important;
+        font-size: 16px !important;
+        /* Prevent iOS zoom */
+        /* Do NOT override padding here — it breaks inputs with custom padding */
+    }
+
+    /* Full-width only for block-level action buttons, NOT icon-only toggles */
+    button.btn-block,
+    .btn {
+        min-height: 52px;
+        /* Thumb-friendly tap target */
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Make submit buttons on forms full-width but keep icon/inline buttons intact */
+    form button[type="submit"] {
+        width: 100%;
+    }
+
+    /* Absolute-positioned buttons (e.g. password eye toggle) must NEVER go full-width */
+    button[style*="position"],
+    .absolute button,
+    button.absolute {
+        width: auto !important;
+        min-height: unset !important;
+    }
+
+    /* Remove excessive layout gaps */
+    .gap-20,
+    .gap-32 {
+        gap: 2.5rem !important;
+    }
+}
+
+/* 4. Mobile (576px) */
+@media (max-width: 576px) {
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    section {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+    }
+
+    .container-custom {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* Cards spacing */
+    .p-8,
+    .p-10,
+    .p-12 {
+        padding: 1.5rem !important;
+    }
+}
+
+/* 5. Small Mobile (420px) */
+@media (max-width: 420px) {
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    /* Extreme spacing reduction */
+    section {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .glass-nav nav {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* Hero section font optimization */
+    .hero-text {
+        font-size: 0.95rem;
+    }
+
+    /* Navbar Crowding Prevention */
+    #main-nav nav {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    #main-nav .logo-img {
+        height: 1.5rem;
+    }
+
+    /* Smallest tap targets optimization */
+    .menu-toggle,
+    #profile-btn {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+}
+
+/* --- Accessibility & Usability --- */
+@media (pointer: coarse) {
+
+    /* Touch devices target sizing */
+    a,
+    button,
+    input[type="submit"] {
+        min-height: 44px;
+    }
+}
+
+/* Prevent Horizontal Scroll */
+html {
+    overflow-x: hidden;
+    /* NOTE: do NOT add position:relative to html — it creates a stacking context
+       that can trap fixed/absolute children beneath decorative blobs. */
+    width: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+}
+
+/* Fix for background decorative blur elements causing overflow */
+.blur-\[120px\],
+.blur-\[100px\] {
+    max-width: 100vw;
+}
+
+/* Partner Marquee Animation */
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-marquee {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+    animation-play-state: paused;
+}
+
+.partner-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0 4rem;
+    filter: grayscale(100%);
+    opacity: 0.4;
+    transition: all 0.4s ease;
+}
+
+.partner-logo:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* Footer Enhancements */
+.footer-dark {
+    background-color: #0F172A;
+    /* Deep Slate/Navy */
+    color: #94A3B8;
+}
+
+.footer-link {
+    color: #94A3B8;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-link:hover {
+    color: #F8FAFC;
+    transform: translateX(4px);
+}
+
+.footer-heading {
+    color: #F8FAFC;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    margin-bottom: 2rem;
+}
+
+.social-icon-btn {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94A3B8;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.social-icon-btn:hover {
+    background: var(--clinic-primary);
+    color: white;
+    border-color: var(--clinic-primary);
+    transform: translateY(-4px) rotate(8deg);
+}
+
+.newsletter-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.newsletter-input:focus {
+    border-color: var(--clinic-primary);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
+}
+
+/* ── Brand / Logo Alignment Fix ──────────────────────────────────
+   The PremiumCare brand is an SVG that has text at y=28 in a 40px-high
+   viewBox. When the <img> is rendered at only 28px tall (Tailwind h-7)
+   on small screens, the text baseline sits right at the edge and can
+   appear clipped or visually unbalanced.
+
+   We fix this by:
+   1. Giving logo <img> elements a minimum height and ensuring the SVG
+      aspect-ratio is preserved without distortion.
+   2. Making the logo anchor wrapper a proper flex container so the
+      image is always vertically centred inside the header.
+   3. Fixing the text-based .brand span to have safe padding.
+   ------------------------------------------------------------------ */
+
+/* Logo image — never render below 30px which is the safe threshold
+   for the SVG text to remain legible and un-clipped */
+#main-nav .logo-img,
+.logo-img {
+    min-height: 30px;
+    height: auto;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    overflow: visible;
+    /* SVG text at y=28 in h=40 box must not clip */
+}
+
+/* Ensure the anchor wrapping the logo is a proper flex row so the
+   image is vertically centred regardless of the nav height */
+#main-nav a:has(.logo-img),
+a:has(.logo-img) {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    padding: 0.25rem 0;
+    position: relative;
+    z-index: 60;
+}
+
+/* Sidebar/dashboard logo container */
+.sidebar-logo-wrapper,
+aside a:has(.logo-img) {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    position: relative;
+    z-index: 60;
+}
+
+/* Mobile 360px — allow the logo to scale down gracefully but not below 26px */
+@media (max-width: 360px) {
+    .logo-img {
+        min-height: 26px !important;
+        max-height: 32px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   DOCTOR CARD LAYOUT FIX
+   Scoped entirely to the Doctors page grid. No other section is touched.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* 1. Grid — use stretch so every card in a row has equal height */
+.doctors-section .doctors-grid {
+    align-items: stretch;
+}
+
+/* 2. Card outer wrapper — full-height vertical flex column */
+.doctors-section .doctor-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* 3. Image area — lock every card to the same aspect ratio (4/5)
+      so images never shift the layout regardless of source ratio */
+.doctors-section .doctor-img-wrap {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 3.5rem;
+    overflow: hidden;
+    flex-shrink: 0;
+    /* never compress the image zone */
+}
+
+.doctors-section .doctor-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    /* keep faces visible */
+}
+
+/* 4. Text content wrapper — grows to fill remaining card height */
+.doctors-section .doctor-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    margin-top: 2rem;
+    /* consistent with original mt-8 */
+    gap: 0.5rem;
+    /* consistent inter-element spacing */
+    min-height: 0;
+    /* allow flex to shrink correctly */
+}
+
+/* 5. Name + Badge row — single flex line, badge never wraps under name */
+.doctors-section .doctor-name-row {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    /* 10px gap between name and badge */
+    flex-wrap: nowrap;
+    min-height: 3rem;
+    /* consistent row height even if name is short */
+}
+
+.doctors-section .doctor-name-row h3 {
+    flex: 1 1 auto;
+    /* name takes all remaining space */
+    min-width: 0;
+    /* allow truncation if needed */
+    line-height: 1.15;
+    /* tighten leading for large headings */
+}
+
+.doctors-section .doctor-name-row .doctor-badge {
+    flex-shrink: 0;
+    /* badge stays at fixed width, never squashes */
+    white-space: nowrap;
+}
+
+/* 6. Specialty title — fixed line height so 1-line vs 2-line doesn't shift */
+.doctors-section .doctor-specialty {
+    min-height: 1.75rem;
+    /* ~1 line at text-lg */
+    line-height: 1.4;
+}
+
+/* 7. Description — grows to push the bottom of the card to uniform height */
+.doctors-section .doctor-desc {
+    flex: 1 1 auto;
+    padding-top: 0.5rem;
+    line-height: 1.6;
+}
+
+/* ── Responsive tweaks ───────────────────────────────────────────── */
+
+/* Tablet (768px): 2-column grid — lock image to slightly shorter ratio */
+@media (max-width: 1024px) and (min-width: 768px) {
+    .doctors-section .doctor-img-wrap {
+        aspect-ratio: 3 / 4;
+    }
+}
+
+/* Mobile (< 768px): 1-column, full-width cards */
+@media (max-width: 768px) {
+    .doctors-section .doctor-img-wrap {
+        aspect-ratio: 4 / 3;
+        /* landscape feels better full-width on mobile */
+        border-radius: 2.5rem;
+    }
+
+    .doctors-section .doctor-name-row h3 {
+        font-size: 1.5rem;
+        /* scale down h3 so badge always fits same row */
+    }
+}
+
+/* Small mobile (360px) */
+@media (max-width: 360px) {
+    .doctors-section .doctor-img-wrap {
+        aspect-ratio: 1 / 1;
+        /* square feels balanced at 360px width */
+        border-radius: 2rem;
+    }
+
+    .doctors-section .doctor-name-row {
+        flex-wrap: wrap;
+        /* allow badge to wrap below at very small size */
+        min-height: unset;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SERVICES PAGE CARD LAYOUT FIX
+   Scoped entirely to .services-section — no other section affected.
+   Goal: pin every "Learn More" button to the same bottom line.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* 1. Grid — stretch all cells to equal row height */
+.services-section .services-grid {
+    align-items: stretch;
+}
+
+/* 2. Each card — vertical flex column, full height of its grid cell */
+.services-section .service-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* 3. card-body — absorbs all remaining space, pushing footer down */
+.services-section .card-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    /* allow flex shrink correctly */
+}
+
+/* 4. card-footer — always sits at the very bottom of the card */
+.services-section .card-footer {
+    flex-shrink: 0;
+    margin-top: auto;
+    /* pushes footer to bottom when body is shorter */
+    padding-top: 16px;
+}
+
+/* ── Also fix card-1 (Cardiology) which uses a slightly different
+      class combo from before the refactor ─────────────────────── */
+.services-section>div>div>div:first-child {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Ensure Tailwind's h-full on the Cardiology card also works within
+   the grid context — grid cell must stretch */
+.services-section .services-grid>* {
+    height: 100%;
+    /* each grid item fills its row track */
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ABOUT PAGE — VALUES SECTION LAYOUT FIX
+   Scoped to .about-values-section only. Navbar and other pages
+   are completely unaffected.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* 1. Grid — desktop: 3 equal columns that never squeeze below their
+      content; tablet: 2 columns; mobile: 1 column */
+.about-values-section .about-values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* desktop */
+    gap: 3rem;
+    /* = gap-12 */
+    align-items: stretch;
+    /* equal row heights */
+}
+
+@media (max-width: 1024px) and (min-width: 640px) {
+    .about-values-section .about-values-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        /* tablet */
+    }
+}
+
+@media (max-width: 639px) {
+    .about-values-section .about-values-grid {
+        grid-template-columns: 1fr;
+        /* mobile */
+    }
+}
+
+/* 2. Each card — min-width:0 is critical: without it a grid child
+      will refuse to shrink below its intrinsic content width */
+.about-values-section .about-value-card {
+    min-width: 0;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* 3. Heading — must wrap normally, no truncation or overflow cropping */
+.about-values-section .about-value-heading {
+    white-space: normal;
+    /* allow heading to wrap to next line */
+    word-break: normal;
+    /* don't break mid-word unless necessary */
+    overflow-wrap: break-word;
+    /* only break extremely long words */
+    overflow: visible;
+    /* never clip heading text */
+    line-height: 1.25;
+    /* comfortable multi-line spacing */
+    min-width: 0;
+}
+
+/* 4. Remove any accidental horizontal scroll on the section itself */
+.about-values-section {
+    overflow-x: hidden;
+}

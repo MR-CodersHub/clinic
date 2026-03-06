@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 48" fill="none">
+    <defs>
+        <linearGradient id="brandGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#0D9488"/>
+            <stop offset="1" stop-color="#0F766E"/>
+        </linearGradient>
+    </defs>
+    <!-- Icon Background: Rounded Square — centred vertically in 48px height -->
+    <rect x="0" y="4" width="40" height="40" rx="10" fill="url(#brandGrad)"/>
+
+    <!-- Medical Cross -->
+    <path d="M20 14V34M10 24H30" stroke="white" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Text — vertically centred using dominant-baseline, safely inside the viewBox -->
+    <text
+        x="52"
+        y="24"
+        font-family="Arial, Helvetica, sans-serif"
+        font-weight="bold"
+        font-size="22"
+        fill="#1E3A8A"
+        letter-spacing="-0.5"
+        dominant-baseline="central"
+    >PremiumCare</text>
+</svg>

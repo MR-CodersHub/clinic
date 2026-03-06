@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply font-sans;
+    }
+}
+
+@layer components {
+    .btn-primary {
+        @apply bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:bg-teal-700 active:scale-95;
+    }
+
+    .btn-secondary {
+        @apply border-2 border-teal-600 text-teal-600 px-6 py-3 rounded-lg font-semibold transition-all hover:bg-teal-50 active:scale-95;
+    }
+
+    .section-container {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16;
+    }
+
+    .card-premium {
+        @apply bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow;
+    }
+}
+
+/* Custom Healthcare Palette */
+:root {
+    --clinic-primary: #0d9488;
+    /* teal-600 */
+    --clinic-primary-dark: #0f766e;
+    /* teal-700 */
+    --clinic-bg: #ffffff;
+    --clinic-section-bg: #f9fafb;
+    /* gray-50 */
+    --clinic-accent: #10b981;
+    /* emerald-500 */
+    --clinic-trust: #1e3a8a;
+    /* blue-900 */
+}

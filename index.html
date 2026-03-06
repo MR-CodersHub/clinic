@@ -1,0 +1,1154 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="PremiumCare Clinic offers world-class healthcare services, expert doctors, and advanced medical technology in a compassionate environment. Book your appointment today.">
+  <title>PremiumCare Clinic | Modern Healthcare Excellence</title>
+  <link rel="icon" type="icon/png" href="./assets/img/favicon.ico.png">
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clinic: {
+              primary: '#0D9488', // Teal 600
+              dark: '#0F766E',    // Teal 700
+              light: '#F0FDFA',   // Teal 50
+              mist: '#F9FAFB',    // Gray 50
+              ink: '#1F2937',     // Gray 800
+              accent: '#10B981',  // Emerald 500
+              trust: '#1E3A8A',   // Blue 900
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Style -->
+  <link rel="stylesheet" href="./src/css/style.css">
+</head>
+
+<body class="bg-white text-clinic-ink font-sans selection:bg-clinic-light selection:text-clinic-primary">
+
+  <!-- Header / Navbar -->
+  <header class="fixed top-0 w-full z-50 transition-all duration-300 glass-nav border-b border-gray-100/50"
+    id="main-nav">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 lg:h-18 flex items-center justify-between gap-2">
+
+      <!-- Logo Section -->
+      <a href="index.html" class="flex items-center gap-2 shrink-0">
+        <img src="./assets/img/logo-full.svg" alt="PremiumCare Logo" class="h-7 lg:h-8 w-auto logo-img">
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center justify-center lg:gap-x-4 xl:gap-x-7 nav-links">
+        <a href="index.html" class="text-[13px] font-bold text-clinic-primary transition-all whitespace-nowrap">Home</a>
+        <a href="home-2.html"
+          class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">Home2</a>
+        <a href="services.html"
+          class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">Services</a>
+        <a href="about.html"
+          class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">About</a>
+        <a href="doctors.html"
+          class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">Doctors</a>
+        <a href="contact.html"
+          class="text-[13px] font-bold text-clinic-ink hover:text-clinic-primary transition-all whitespace-nowrap">Contact</a>
+      </div>
+
+      <!-- Action Section -->
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <!-- Profile Dropdown -->
+        <div class="relative" id="profile-dropdown-container">
+          <button id="profile-btn" aria-haspopup="true" aria-expanded="false"
+            class="w-9 h-9 rounded-full border border-gray-100 flex items-center justify-center hover:bg-clinic-mist transition-all bg-white shadow-sm">
+            <i data-lucide="user" class="w-4.5 h-4.5 text-clinic-trust"></i>
+          </button>
+          <div id="profile-menu"
+            class="hidden absolute right-0 mt-3 w-52 bg-white border border-gray-100 rounded-2xl shadow-xl shadow-clinic-trust/5 py-2 z-[9999] opacity-0 transform -translate-y-2 transition-all duration-200"
+            style="min-width:200px;">
+            <!-- Login / Sign Up — single line -->
+            <a href="login.html"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-ink hover:bg-clinic-mist transition-colors font-semibold rounded-t-xl">
+              <i data-lucide="log-in" class="w-4 h-4 text-clinic-primary shrink-0"></i>
+              <span class="whitespace-nowrap">Login&nbsp;/&nbsp;Sign Up</span>
+            </a>
+            <div class="h-px bg-gray-100 mx-3"></div>
+            <!-- Admin Dashboard -->
+            <a href="admin-dashboard.html"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-trust hover:bg-clinic-mist transition-colors font-semibold">
+              <i data-lucide="shield" class="w-4 h-4 text-clinic-trust shrink-0"></i>
+              <span class="whitespace-nowrap">Admin Dashboard</span>
+            </a>
+            <!-- User Dashboard -->
+            <a href="user-dashboard.html"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-clinic-ink hover:bg-clinic-mist transition-colors font-semibold rounded-b-xl">
+              <i data-lucide="layout-dashboard" class="w-4 h-4 text-clinic-primary shrink-0"></i>
+              <span class="whitespace-nowrap">User Dashboard</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="booking.html"
+          class="bg-clinic-primary text-white px-4 py-2 lg:px-5 lg:py-2.5 rounded-full text-[12px] lg:text-[13px] font-extrabold hover:bg-clinic-dark transition-all shadow-md shadow-clinic-primary/10 flex items-center gap-2 whitespace-nowrap active:scale-95">
+          <i data-lucide="calendar" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">Book Appointment</span>
+          <span class="sm:hidden">Book</span>
+        </a>
+        <button
+          class="lg:hidden text-clinic-ink p-2 menu-toggle flex items-center justify-center rounded-lg hover:bg-clinic-mist transition-all bg-clinic-mist/50"
+          id="mobile-menu-btn" aria-label="Toggle menu">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div
+      class="lg:hidden hidden bg-white/98 backdrop-blur-xl border-t border-gray-100 px-6 py-8 shadow-2xl absolute w-full left-0 top-16 z-40 h-[calc(100vh-4rem)] overflow-y-auto"
+      id="mobile-menu">
+      <div class="flex flex-col gap-2">
+        <a href="index.html"
+          class="flex items-center gap-4 text-base font-bold text-clinic-primary p-4 rounded-2xl bg-clinic-light transition-all group">
+          <div class="w-10 h-10 bg-clinic-primary/10 rounded-xl flex items-center justify-center text-clinic-primary">
+            <i data-lucide="home" class="w-5 h-5"></i>
+          </div>
+          Home
+        </a>
+        <a href="home-2.html"
+          class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+          <div
+            class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+            <i data-lucide="zap" class="w-5 h-5"></i>
+          </div>
+          Home2
+        </a>
+        <a href="services.html"
+          class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+          <div
+            class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+            <i data-lucide="stethoscope" class="w-5 h-5"></i>
+          </div>
+          Services
+        </a>
+        <a href="about.html"
+          class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+          <div
+            class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+            <i data-lucide="info" class="w-5 h-5"></i>
+          </div>
+          About
+        </a>
+        <a href="doctors.html"
+          class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+          <div
+            class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+            <i data-lucide="users" class="w-5 h-5"></i>
+          </div>
+          Doctors
+        </a>
+        <a href="contact.html"
+          class="flex items-center gap-4 text-base font-bold text-clinic-ink p-4 rounded-2xl hover:bg-clinic-mist transition-all group">
+          <div
+            class="w-10 h-10 bg-clinic-mist rounded-xl flex items-center justify-center text-gray-400 group-hover:text-clinic-primary group-hover:bg-clinic-light transition-all">
+            <i data-lucide="phone" class="w-5 h-5"></i>
+          </div>
+          Contact
+        </a>
+        <div class="h-px bg-gray-100 my-4"></div>
+        <div class="space-y-4">
+          <a href="booking.html"
+            class="flex items-center justify-center gap-3 bg-clinic-primary text-white px-6 py-4 rounded-2xl text-center text-base font-bold shadow-lg shadow-clinic-primary/20 hover:bg-clinic-dark transition-all active:scale-95">
+            <i data-lucide="calendar" class="w-5 h-5"></i>
+            Book Appointment
+          </a>
+          <div class="grid grid-cols-2 gap-4" id="mobile-auth-links">
+            <a href="login.html"
+              class="flex items-center justify-center gap-2 py-4 border border-gray-100 rounded-2xl text-sm font-bold text-clinic-trust bg-white shadow-sm">
+              <i data-lucide="log-in" class="w-4 h-4"></i> Login
+            </a>
+            <a href="signup.html"
+              class="flex items-center justify-center gap-2 py-4 border border-gray-100 rounded-2xl text-sm font-bold text-clinic-trust bg-white shadow-sm">
+              <i data-lucide="user-plus" class="w-4 h-4"></i> Sign Up
+            </a>
+          </div>
+          <div id="mobile-user-info" class="hidden space-y-4">
+            <a href="user-dashboard.html"
+              class="flex items-center justify-center gap-3 py-4 border border-gray-100 rounded-2xl text-sm font-bold text-clinic-trust bg-white shadow-sm"
+              id="mobile-dashboard-link">
+              <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+            </a>
+            <button
+              class="w-full flex items-center justify-center gap-3 py-4 border border-red-100 rounded-2xl text-sm font-bold text-red-500 bg-red-50"
+              id="mobile-logout-btn">
+              <i data-lucide="log-out" class="w-4 h-4"></i> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="relative bg-white overflow-hidden !pt-12 !pb-12 lg:!pb-24">
+      <!-- Background Decorative Elements -->
+      <div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-40">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-clinic-light rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-clinic-primary/10 rounded-full blur-[100px]">
+        </div>
+      </div>
+
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
+        <!-- Content -->
+        <div class="flex-1 space-y-8 animate-fade-in-up">
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 bg-clinic-light text-clinic-primary rounded-full text-sm font-bold border border-clinic-primary/10">
+            <span class="relative flex h-2 w-2">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-clinic-primary opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-clinic-primary"></span>
+            </span>
+            Trusted by 10,000+ Active Patients
+          </div>
+          <h1 class="text-5xl lg:text-8xl font-black text-clinic-trust leading-[0.95] tracking-tighter">
+            Your Health, <br><span class="text-clinic-primary">Our Legacy.</span>
+          </h1>
+          <p class="text-xl text-gray-500 max-w-xl leading-relaxed font-medium">
+            Elevating healthcare through precision medicine and compassionate human connection. Experience the future of
+            medical excellence today.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 pt-4">
+            <a href="booking.html"
+              class="group relative inline-flex items-center gap-3 bg-clinic-primary text-white px-10 py-5 rounded-2xl font-bold hover:bg-clinic-dark transition-all shadow-2xl shadow-clinic-primary/30 hover:scale-[1.02] active:scale-95">
+              <span>Book Appointment</span>
+              <i data-lucide="calendar" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i>
+            </a>
+            <div class="flex items-center gap-4 group cursor-pointer">
+              <div
+                class="w-14 h-14 rounded-full border-2 border-gray-100 flex items-center justify-center group-hover:border-clinic-primary group-hover:bg-clinic-light transition-all">
+                <i data-lucide="play" class="w-5 h-5 text-clinic-trust fill-clinic-trust"></i>
+              </div>
+              <span class="text-sm font-bold text-clinic-trust group-hover:text-clinic-primary transition-colors">Watch
+                Virtual Tour</span>
+            </div>
+          </div>
+
+          <!-- Quick Trust Indicators -->
+          <div class="pt-8 grid grid-cols-2 sm:grid-cols-3 gap-8">
+            <div class="flex items-center gap-3">
+              <div class="text-clinic-primary">
+                <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+              </div>
+              <div class="text-sm font-bold text-clinic-trust">Board Certified</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="text-clinic-primary">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+              </div>
+              <div class="text-sm font-bold text-clinic-trust">ISO Accredited</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="text-clinic-primary">
+                <i data-lucide="clock" class="w-6 h-6"></i>
+              </div>
+              <div class="text-sm font-bold text-clinic-trust">24/7 Response</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Grid Side -->
+        <div class="flex-1 w-full flex items-center justify-center lg:justify-end animate-fade-in-up"
+          style="animation-delay: 0.2s;">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-xl">
+            <!-- Card 1: 25+ -->
+            <div
+              class="bg-white p-6 rounded-[2.5rem] shadow-xl shadow-clinic-trust/5 border border-gray-50 flex flex-col items-center justify-center text-center group hover:bg-clinic-trust hover:-translate-y-2 transition-all duration-500 min-h-[160px]">
+              <div class="text-5xl font-black text-clinic-trust group-hover:text-white transition-colors mb-2">25+</div>
+              <div
+                class="text-xs font-bold text-gray-400 group-hover:text-blue-100 transition-colors uppercase tracking-widest">
+                Years of Excellence</div>
+            </div>
+
+            <!-- Card 2: 99.8% -->
+            <div
+              class="bg-clinic-trust p-6 rounded-[2.5rem] shadow-2xl shadow-clinic-trust/20 flex flex-col items-center justify-center text-center group hover:-translate-y-2 transition-all duration-500 min-h-[160px]">
+              <div class="text-5xl font-black text-white mb-2">99.8%</div>
+              <div class="text-xs font-bold text-blue-200 uppercase tracking-widest">Patient Satisfaction</div>
+            </div>
+
+            <!-- Card 3: 300+ -->
+            <div
+              class="bg-white p-6 rounded-[2.5rem] shadow-xl shadow-clinic-trust/5 border border-gray-50 flex flex-col items-center justify-center text-center group hover:bg-clinic-trust hover:-translate-y-2 transition-all duration-500 min-h-[160px]">
+              <div class="text-5xl font-black text-clinic-trust group-hover:text-white transition-colors mb-2">300+
+              </div>
+              <div
+                class="text-xs font-bold text-gray-400 group-hover:text-blue-100 transition-colors uppercase tracking-widest">
+                Expert Doctors</div>
+            </div>
+
+            <!-- Card 4: 12k+ -->
+            <div
+              class="bg-white p-6 rounded-[2.5rem] shadow-xl shadow-clinic-trust/5 border border-gray-50 flex flex-col items-center justify-center text-center group hover:bg-clinic-trust hover:-translate-y-2 transition-all duration-500 min-h-[160px]">
+              <div class="text-5xl font-black text-clinic-trust group-hover:text-white transition-colors mb-2">12k+
+              </div>
+              <div
+                class="text-xs font-bold text-gray-400 group-hover:text-blue-100 transition-colors uppercase tracking-widest">
+                Success Stories</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust Partners Section -->
+    <section class="py-12 bg-white border-y border-gray-50 relative overflow-hidden group">
+      <!-- Edge Fades for Marquee -->
+      <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
+
+      <div class="max-w-7xl mx-auto px-4 mb-10 flex flex-col items-center">
+        <span class="text-[0.65rem] font-black text-clinic-primary uppercase tracking-[0.4em] mb-2">Our Healthcare
+          Network</span>
+        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest text-center">Trusted by Global Institutions
+        </h3>
+      </div>
+
+      <div class="flex overflow-hidden">
+        <div class="animate-marquee flex items-center">
+          <!-- Set 1 -->
+          <div class="partner-logo">
+            <i data-lucide="shield-check" class="w-8 h-8 text-blue-600"></i>
+            <span class="text-xl font-black tracking-tighter text-clinic-trust">MediShield</span>
+          </div>
+          <div class="partner-logo">
+            <i data-lucide="activity" class="w-8 h-8 text-emerald-600"></i>
+            <span class="text-xl font-black tracking-tighter text-clinic-trust">BioPulse</span>
+          </div>
+          <div class="partner-logo">
+            <i data-lucide="globe" class="w-8 h-8 text-indigo-600"></i>
+            <span class="text-xl font-black tracking-tighter text-clinic-trust">GlobalHealth</span>
+          </div>
+          <div class="partner-logo">
+            <i data-lucide="plus-square" class="w-8 h-8 text-red-600"></i>
+            <span class="text-xl font-black tracking-tighter text-clinic-trust">CrossCare</span>
+          </div>
+          <div class="partner-logo">
+            <i data-lucide="microscope" class="w-8 h-8 text-slate-600"></i>
+            <span class="text-xl font-black tracking-tighter text-clinic-trust">LabQuest</span>
+          </div>
+          <div class="partner-logo">
+            <i data-lucide="heart" class="w-8 h-8 text-rose-600"></i>
+            <span class="text-xl font-black tracking-tighter text-clinic-trust">VitalLink</span>
+          </div>
+
+          <!-- Duplicated for Loop -->
+          <div class="partner-logo">
+            <i data-lucide="shield-check" class="w-8 h-8 text-blue-600"></i>
+            <span class="text-xl font-black tracking-tighter text-clinic-trust">MediShield</span>
+          </div>
+          <div class="partner-logo">
+            <i data-lucide="activity" class="w-8 h-8 text-emerald-600"></i>
+            <span class="text-xl font-black tracking-tighter text-clinic-trust">BioPulse</span>
+          </div>
+          <div class="partner-logo">
+            <i data-lucide="globe" class="w-8 h-8 text-indigo-600"></i>
+            <span class="text-xl font-black tracking-tighter text-clinic-trust">GlobalHealth</span>
+          </div>
+          <div class="partner-logo">
+            <i data-lucide="plus-square" class="w-8 h-8 text-red-600"></i>
+            <span class="text-xl font-black tracking-tighter text-clinic-trust">CrossCare</span>
+          </div>
+          <div class="partner-logo">
+            <i data-lucide="microscope" class="w-8 h-8 text-slate-600"></i>
+            <span class="text-xl font-black tracking-tighter text-clinic-trust">LabQuest</span>
+          </div>
+          <div class="partner-logo">
+            <i data-lucide="heart" class="w-8 h-8 text-rose-600"></i>
+            <span class="text-xl font-black tracking-tighter text-clinic-trust">VitalLink</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Appointment Filter Bar -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-40 mb-12">
+      <div class="bg-white p-6 lg:p-8 rounded-[2.5rem] shadow-2xl shadow-clinic-trust/10 border border-gray-50">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-end">
+          <div class="space-y-2">
+            <label class="text-xs font-bold text-gray-400 uppercase ml-1" for="dept-select">Department</label>
+            <select id="dept-select" aria-label="Select Medical Department" required
+              class="w-full p-4 rounded-xl bg-clinic-mist border border-transparent focus:border-clinic-primary outline-none transition-all appearance-none cursor-pointer">
+              <option value="" disabled selected>Select Department</option>
+              <option>Cardiology</option>
+              <option>Neurology</option>
+              <option>Pediatrics</option>
+              <option>Radiology</option>
+            </select>
+            <span class="text-[10px] text-gray-400 ml-1">Choose speciality</span>
+          </div>
+          <div class="space-y-2">
+            <label class="text-xs font-bold text-gray-400 uppercase ml-1" for="doctor-select">Doctor</label>
+            <select id="doctor-select" aria-label="Select Doctor"
+              class="w-full p-4 rounded-xl bg-clinic-mist border border-transparent focus:border-clinic-primary outline-none transition-all appearance-none cursor-pointer">
+              <option value="" disabled selected>Any Available Doctor</option>
+              <option>Dr. Sarah Johnson</option>
+              <option>Dr. Michael Chen</option>
+              <option>Dr. Emily Brooks</option>
+            </select>
+            <span class="text-[10px] text-gray-400 ml-1">Optional preference</span>
+          </div>
+          <div class="space-y-2">
+            <label class="text-xs font-bold text-gray-400 uppercase ml-1" for="date-select">Date</label>
+            <div class="relative">
+              <input type="date" id="date-select" required aria-label="Select Appointment Date"
+                class="w-full p-4 rounded-xl bg-clinic-mist border border-transparent focus:border-clinic-primary outline-none transition-all cursor-pointer">
+            </div>
+            <span class="text-[10px] text-gray-400 ml-1">Preferred date</span>
+          </div>
+          <div class="space-y-2">
+            <label class="text-xs font-bold text-gray-400 uppercase ml-1" for="location-select">Location</label>
+            <select id="location-select" aria-label="Select Clinic Location" required
+              class="w-full p-4 rounded-xl bg-clinic-mist border border-transparent focus:border-clinic-primary outline-none transition-all appearance-none cursor-pointer">
+              <option value="" disabled selected>Select Location</option>
+              <option>Downtown Branch</option>
+              <option>South Campus</option>
+            </select>
+            <span class="text-[10px] text-gray-400 ml-1">Nearest clinic</span>
+          </div>
+          <a href="booking.html"
+            class="w-full bg-clinic-primary text-white py-4 rounded-xl font-bold hover:bg-clinic-dark transition-all shadow-lg shadow-clinic-primary/20 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95">
+            <i data-lucide="calendar" class="w-5 h-5"></i>
+            Book Now
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-clinic-mist relative z-30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div
+            class="bg-white p-10 rounded-[3rem] shadow-xl shadow-clinic-trust/5 border border-white flex flex-col items-center text-center group hover:bg-clinic-trust hover:-translate-y-2 transition-all duration-500">
+            <div
+              class="w-16 h-16 bg-clinic-light rounded-2xl flex items-center justify-center text-clinic-primary mb-6 group-hover:bg-white/10 group-hover:text-white transition-all">
+              <i data-lucide="heart" class="w-8 h-8"></i>
+            </div>
+            <div class="text-5xl font-black text-clinic-trust mb-2 group-hover:text-white transition-colors">15k+</div>
+            <div
+              class="text-sm font-bold text-gray-400 uppercase tracking-widest group-hover:text-blue-200 transition-colors">
+              Happy Patients</div>
+          </div>
+
+          <div
+            class="bg-white p-10 rounded-[3rem] shadow-xl shadow-clinic-trust/5 border border-white flex flex-col items-center text-center group hover:bg-clinic-trust hover:-translate-y-2 transition-all duration-500">
+            <div
+              class="w-16 h-16 bg-clinic-light rounded-2xl flex items-center justify-center text-clinic-primary mb-6 group-hover:bg-white/10 group-hover:text-white transition-all">
+              <i data-lucide="stethoscope" class="w-8 h-8"></i>
+            </div>
+            <div class="text-5xl font-black text-clinic-trust mb-2 group-hover:text-white transition-colors">120+</div>
+            <div
+              class="text-sm font-bold text-gray-400 uppercase tracking-widest group-hover:text-blue-200 transition-colors">
+              Expert Doctors</div>
+          </div>
+
+          <div
+            class="bg-white p-10 rounded-[3rem] shadow-xl shadow-clinic-trust/5 border border-white flex flex-col items-center text-center group hover:bg-clinic-trust hover:-translate-y-2 transition-all duration-500">
+            <div
+              class="w-16 h-16 bg-clinic-light rounded-2xl flex items-center justify-center text-clinic-primary mb-6 group-hover:bg-white/10 group-hover:text-white transition-all">
+              <i data-lucide="award" class="w-8 h-8"></i>
+            </div>
+            <div class="text-5xl font-black text-clinic-trust mb-2 group-hover:text-white transition-colors">50+</div>
+            <div
+              class="text-sm font-bold text-gray-400 uppercase tracking-widest group-hover:text-blue-200 transition-colors">
+              Awards Won</div>
+          </div>
+
+          <div
+            class="bg-white p-10 rounded-[3rem] shadow-xl shadow-clinic-trust/5 border border-white flex flex-col items-center text-center group hover:bg-clinic-trust hover:-translate-y-2 transition-all duration-500">
+            <div
+              class="w-16 h-16 bg-clinic-light rounded-2xl flex items-center justify-center text-clinic-primary mb-6 group-hover:bg-white/10 group-hover:text-white transition-all">
+              <i data-lucide="activity" class="w-8 h-8"></i>
+            </div>
+            <div class="text-5xl font-black text-clinic-trust mb-2 group-hover:text-white transition-colors">24/7</div>
+            <div
+              class="text-sm font-bold text-gray-400 uppercase tracking-widest group-hover:text-blue-200 transition-colors">
+              Emergency Care</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Department Categories -->
+    <section class="py-20 bg-white overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <!-- Decoration -->
+        <div
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] border-[40px] border-clinic-mist/30 rounded-full pointer-events-none scale-75">
+        </div>
+
+        <div class="text-center space-y-4 mb-20 relative z-10 transition-all duration-700">
+          <div class="text-clinic-primary font-bold tracking-[0.3em] uppercase text-sm">Our Specialties</div>
+          <h2 class="text-4xl lg:text-6xl font-black text-clinic-trust tracking-tight">World Class Departments</h2>
+          <p class="text-gray-500 max-w-2xl mx-auto text-lg leading-relaxed">Providing advanced care across all medical
+            specialties with
+            precision and empathy.</p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-6 gap-8 relative z-10">
+          <!-- Dept Card 1 -->
+          <a href="services.html#cardiology"
+            class="group bg-white p-8 rounded-[2.5rem] border border-gray-50 shadow-xl shadow-clinic-trust/5 flex flex-col items-center justify-center text-center hover:bg-clinic-primary hover:-translate-y-2 transition-all duration-500">
+            <div
+              class="w-20 h-20 bg-clinic-light rounded-3xl flex items-center justify-center text-clinic-primary mb-6 group-hover:bg-white group-hover:scale-110 transition-all">
+              <i data-lucide="heart" class="w-10 h-10"></i>
+            </div>
+            <span class="text-lg font-bold text-clinic-trust group-hover:text-white transition-colors">Cardiology</span>
+          </a>
+          <!-- Dept Card 2 -->
+          <a href="services.html#neurology"
+            class="group bg-white p-8 rounded-[2.5rem] border border-gray-50 shadow-xl shadow-clinic-trust/5 flex flex-col items-center justify-center text-center hover:bg-clinic-primary hover:-translate-y-2 transition-all duration-500">
+            <div
+              class="w-20 h-20 bg-clinic-light rounded-3xl flex items-center justify-center text-clinic-primary mb-6 group-hover:bg-white group-hover:scale-110 transition-all">
+              <i data-lucide="brain" class="w-10 h-10"></i>
+            </div>
+            <span class="text-lg font-bold text-clinic-trust group-hover:text-white transition-colors">Neurology</span>
+          </a>
+          <!-- Dept Card 3 -->
+          <a href="services.html#pediatrics"
+            class="group bg-white p-8 rounded-[2.5rem] border border-gray-50 shadow-xl shadow-clinic-trust/5 flex flex-col items-center justify-center text-center hover:bg-clinic-primary hover:-translate-y-2 transition-all duration-500">
+            <div
+              class="w-20 h-20 bg-clinic-light rounded-3xl flex items-center justify-center text-clinic-primary mb-6 group-hover:bg-white group-hover:scale-110 transition-all">
+              <i data-lucide="baby" class="w-10 h-10"></i>
+            </div>
+            <span class="text-lg font-bold text-clinic-trust group-hover:text-white transition-colors">Pediatrics</span>
+          </a>
+          <!-- Dept Card 4 -->
+          <a href="services.html#eyecare"
+            class="group bg-white p-8 rounded-[2.5rem] border border-gray-50 shadow-xl shadow-clinic-trust/5 flex flex-col items-center justify-center text-center hover:bg-clinic-primary hover:-translate-y-2 transition-all duration-500">
+            <div
+              class="w-20 h-20 bg-clinic-light rounded-3xl flex items-center justify-center text-clinic-primary mb-6 group-hover:bg-white group-hover:scale-110 transition-all">
+              <i data-lucide="eye" class="w-10 h-10"></i>
+            </div>
+            <span
+              class="text-lg font-bold text-clinic-trust group-hover:text-white transition-colors">Ophthalmology</span>
+          </a>
+          <!-- Dept Card 5 -->
+          <a href="services.html#orthopedics"
+            class="group bg-white p-8 rounded-[2.5rem] border border-gray-50 shadow-xl shadow-clinic-trust/5 flex flex-col items-center justify-center text-center hover:bg-clinic-primary hover:-translate-y-2 transition-all duration-500">
+            <div
+              class="w-20 h-20 bg-clinic-light rounded-3xl flex items-center justify-center text-clinic-primary mb-6 group-hover:bg-white group-hover:scale-110 transition-all">
+              <i data-lucide="bone" class="w-10 h-10"></i>
+            </div>
+            <span
+              class="text-lg font-bold text-clinic-trust group-hover:text-white transition-colors">Orthopedics</span>
+          </a>
+          <!-- Dept Card 6 -->
+          <a href="services.html#dental"
+            class="group bg-white p-8 rounded-[2.5rem] border border-gray-50 shadow-xl shadow-clinic-trust/5 flex flex-col items-center justify-center text-center hover:bg-clinic-primary hover:-translate-y-2 transition-all duration-500">
+            <div
+              class="w-20 h-20 bg-clinic-light rounded-3xl flex items-center justify-center text-clinic-primary mb-6 group-hover:bg-white group-hover:scale-110 transition-all">
+              <i data-lucide="smile" class="w-10 h-10"></i>
+            </div>
+            <span class="text-lg font-bold text-clinic-trust group-hover:text-white transition-colors">Dental
+              Care</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-clinic-mist overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-20">
+          <div class="space-y-6">
+            <div class="text-clinic-primary font-bold tracking-[0.3em] uppercase text-sm">Our Expertise</div>
+            <h2 class="text-4xl lg:text-6xl font-black text-clinic-trust tracking-tight">Caring for Your <br> Every Need
+            </h2>
+            <p class="text-gray-500 max-w-lg text-lg leading-relaxed">We provide high-quality medical services with
+              advanced equipment and
+              expert care for every patient.</p>
+          </div>
+          <a href="services.html"
+            class="inline-flex items-center gap-4 bg-white text-clinic-trust px-8 py-4 rounded-2xl font-bold border border-gray-100 shadow-xl shadow-clinic-trust/5 hover:bg-clinic-primary hover:text-white transition-all group">
+            View All Services
+            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <!-- Service Card 1 -->
+          <div
+            class="bg-white p-12 rounded-[3.5rem] border border-gray-50 shadow-2xl shadow-clinic-trust/5 hover:-translate-y-3 transition-all duration-500 group relative overflow-hidden flex flex-col">
+            <div
+              class="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700">
+            </div>
+            <div
+              class="absolute top-8 right-8 bg-red-50 text-red-600 text-xs font-black px-4 py-1.5 rounded-full border border-red-100 flex items-center gap-2">
+              <span class="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse"></span>
+              ACTIVE 24/7
+            </div>
+            <div
+              class="w-20 h-20 bg-red-50 rounded-[2rem] flex items-center justify-center text-red-600 mb-10 group-hover:bg-red-600 group-hover:text-white transition-all duration-500">
+              <i data-lucide="ambulance" class="w-10 h-10"></i>
+            </div>
+            <h3 class="text-2xl font-black text-clinic-trust mb-4">Emergency Unit</h3>
+            <p class="text-gray-500 leading-relaxed mb-8 text-lg">Rapid response critical care services for urgent
+              medical situations and trauma. Always open for your safety.</p>
+            <a href="services.html"
+              class="text-clinic-primary font-bold inline-flex items-center gap-2 mt-auto group/link">
+              <span>Detailed Services</span>
+              <i data-lucide="chevron-right" class="w-5 h-5 group-hover/link:translate-x-1 transition-transform"></i>
+            </a>
+          </div>
+
+          <!-- Service Card 2 -->
+          <div
+            class="bg-white p-12 rounded-[3.5rem] border border-gray-50 shadow-2xl shadow-clinic-trust/5 hover:-translate-y-3 transition-all duration-500 group relative overflow-hidden flex flex-col">
+            <div
+              class="w-20 h-20 bg-clinic-light rounded-[2rem] flex items-center justify-center text-clinic-primary mb-10 group-hover:bg-clinic-primary group-hover:text-white transition-all duration-500">
+              <i data-lucide="flask-conical" class="w-10 h-10"></i>
+            </div>
+            <h3 class="text-2xl font-black text-clinic-trust mb-4">Diagnostic Lab</h3>
+            <p class="text-gray-500 leading-relaxed mb-8 text-lg">Full-service diagnostic lab providing fast and
+              accurate results. Same-day reports available for most tests.</p>
+            <a href="services.html"
+              class="text-clinic-primary font-bold inline-flex items-center gap-2 mt-auto group/link">
+              <span>View Test Catalog</span>
+              <i data-lucide="chevron-right" class="w-5 h-5 group-hover/link:translate-x-1 transition-transform"></i>
+            </a>
+          </div>
+
+          <!-- Service Card 3 -->
+          <div
+            class="bg-white p-12 rounded-[3.5rem] border border-gray-50 shadow-2xl shadow-clinic-trust/5 hover:-translate-y-3 transition-all duration-500 group relative overflow-hidden flex flex-col text-white"
+            style="background: linear-gradient(135deg, #1E3A8A 0%, #0D9488 100%);">
+            <div class="absolute inset-0 opacity-10"
+              style="background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');"></div>
+            <div
+              class="w-20 h-20 bg-white/10 backdrop-blur-md rounded-[2rem] flex items-center justify-center text-white mb-10">
+              <i data-lucide="activity" class="w-10 h-10"></i>
+            </div>
+            <h3 class="text-2xl font-black mb-4">Radiology Center</h3>
+            <p class="text-blue-50 leading-relaxed mb-8 text-lg">Advanced imaging technology for accurate diagnosis
+              including MRI, CT scans, and 4D Ultrasound.</p>
+            <a href="services.html"
+              class="text-clinic-accent font-bold inline-flex items-center gap-2 mt-auto group/link hover:text-white transition-colors">
+              <span>Imaging Options</span>
+              <i data-lucide="chevron-right" class="w-5 h-5 group-hover/link:translate-x-1 transition-transform"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section (New) -->
+    <section class="py-20 bg-white overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <div class="space-y-8">
+            <div class="text-clinic-primary font-bold tracking-[0.3em] uppercase text-sm">Patient Stories</div>
+            <h2 class="text-4xl lg:text-7xl font-black text-clinic-trust tracking-tight">Trust Built on <br>Results.
+            </h2>
+            <p class="text-gray-500 text-xl leading-relaxed">Don't just take our word for it. Hear from the thousands of
+              families who have trusted us with their well-being.</p>
+            <div class="flex items-center gap-12 pt-4">
+              <div>
+                <div class="text-4xl font-black text-clinic-trust">4.9/5</div>
+                <div class="flex text-yellow-400 mt-2">
+                  <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                  <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                  <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                  <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                  <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                </div>
+                <div class="text-sm font-bold text-gray-400 mt-2 uppercase tracking-widest">Average Rating</div>
+              </div>
+              <div class="h-16 w-px bg-gray-100"></div>
+              <div>
+                <div class="text-4xl font-black text-clinic-trust">2,500+</div>
+                <div class="text-sm font-bold text-gray-400 mt-6 uppercase tracking-widest">Verified Reviews</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative">
+            <!-- Carousel Style Testimonial -->
+            <div class="bg-clinic-mist p-12 lg:p-16 rounded-[4rem] relative z-10 border border-gray-50 shadow-2xl">
+              <i data-lucide="quote" class="w-16 h-16 text-clinic-primary/20 absolute top-8 left-8"></i>
+              <div class="relative z-10 space-y-8">
+                <p class="text-2xl font-medium text-clinic-trust leading-relaxed">
+                  "The level of care I received at PremiumCare was truly exceptional. From the front desk to the
+                  oncology specialists, everyone treated me like family. They didn't just treat my illness; they cared
+                  for my soul."
+                </p>
+                <div class="flex items-center gap-4">
+                  <div class="w-16 h-16 rounded-full bg-clinic-light border-4 border-white shadow-lg overflow-hidden">
+                    <img src="https://i.pravatar.cc/150?u=patient1" alt="Patient" class="w-full h-full object-cover">
+                  </div>
+                  <div>
+                    <div class="font-black text-clinic-trust text-xl">Elizabeth Montgomery</div>
+                    <div class="text-sm font-bold text-clinic-primary uppercase tracking-widest">Recovered Patient</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Decorative back card -->
+            <div
+              class="absolute top-10 right-[-20px] left-[20px] bottom-[-20px] bg-clinic-primary/5 rounded-[4rem] -z-0">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Patient Safety & Standards -->
+    <section class="py-20 bg-clinic-mist relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="flex flex-col lg:flex-row items-center gap-16">
+          <div class="flex-1 space-y-10">
+            <div class="space-y-6">
+              <div
+                class="inline-flex items-center gap-3 px-5 py-2.5 bg-white text-clinic-primary rounded-full text-sm font-black shadow-xl shadow-clinic-trust/5 border border-white">
+                <i data-lucide="shield-check" class="w-5 h-5 text-clinic-accent"></i>
+                <span class="tracking-widest uppercase">Safety First Standards</span>
+              </div>
+              <h2 class="text-4xl lg:text-6xl font-black text-clinic-trust leading-[1.1] tracking-tight">Your Health in
+                <br><span class="text-clinic-primary">Safe Hands.</span>
+              </h2>
+              <p class="text-gray-500 leading-relaxed text-xl max-w-xl">
+                We don't just meet standards; we set them. Our facility operates under the strictest international
+                medical protocols to guarantee your safety.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-4">
+              <div
+                class="group bg-white p-8 rounded-[2.5rem] border border-white shadow-xl shadow-clinic-trust/5 hover:bg-clinic-trust hover:text-white transition-all duration-500">
+                <div
+                  class="w-14 h-14 bg-clinic-light rounded-2xl flex items-center justify-center text-clinic-primary mb-6 group-hover:bg-white/10 group-hover:text-white transition-all">
+                  <i data-lucide="wind" class="w-7 h-7"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-2">Air Quality</h4>
+                <p class="text-gray-500 group-hover:text-blue-100 transition-colors leading-relaxed">Hospital-grade HEPA
+                  14 filtration systems providing 99.97% clean air.</p>
+              </div>
+              <div
+                class="group bg-white p-8 rounded-[2.5rem] border border-white shadow-xl shadow-clinic-trust/5 hover:bg-clinic-trust hover:text-white transition-all duration-500">
+                <div
+                  class="w-14 h-14 bg-clinic-light rounded-2xl flex items-center justify-center text-clinic-primary mb-6 group-hover:bg-white/10 group-hover:text-white transition-all">
+                  <i data-lucide="sparkles" class="w-7 h-7"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-2">Sterilization</h4>
+                <p class="text-gray-500 group-hover:text-blue-100 transition-colors leading-relaxed">Multi-stage UV-C
+                  and chemical sterilization for all surgical equipment.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex-1 w-full relative">
+            <div
+              class="relative z-10 rounded-[4rem] overflow-hidden shadow-2xl border-[16px] border-white -rotate-2 hover:rotate-0 transition-transform duration-700">
+              <img src="./assets/img/hero-doctor.png" alt="Sterile Clinic" class="w-full h-auto scale-110">
+            </div>
+            <!-- Floating Badge -->
+            <div
+              class="absolute -bottom-10 -right-10 z-20 bg-emerald-500 text-white p-10 rounded-full shadow-2xl flex flex-col items-center justify-center animate-bounce-slow">
+              <i data-lucide="check-square" class="w-10 h-10 mb-2"></i>
+              <span class="text-xs font-black uppercase tracking-tighter">Certified safe</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Insurance Partners -->
+    <section class="py-16 bg-white border-y border-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center space-y-4 mb-16">
+          <div class="text-gray-400 font-bold tracking-[0.3em] uppercase text-xs">Seamless Coverage</div>
+          <h2 class="text-3xl font-black text-clinic-trust">Integrated Insurance Partners</h2>
+        </div>
+
+        <div
+          class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-12 items-center opacity-40 hover:opacity-100 transition-opacity duration-700">
+          <div
+            class="flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer">
+            <div class="flex items-center gap-2 group">
+              <div
+                class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                <i data-lucide="shield" class="w-6 h-6"></i>
+              </div>
+              <span class="font-black text-clinic-trust text-xl italic tracking-tighter">BlueShield</span>
+            </div>
+          </div>
+          <div
+            class="flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer">
+            <div class="flex items-center gap-2 group">
+              <div
+                class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-600 group-hover:bg-green-600 group-hover:text-white transition-all">
+                <i data-lucide="plus" class="w-6 h-6 rotate-45"></i>
+              </div>
+              <span class="font-black text-clinic-trust text-xl italic tracking-tighter">HealthFirst</span>
+            </div>
+          </div>
+          <div
+            class="flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer">
+            <div class="flex items-center gap-2 group">
+              <div
+                class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white transition-all">
+                <i data-lucide="heart" class="w-6 h-6"></i>
+              </div>
+              <span class="font-black text-clinic-trust text-xl italic tracking-tighter">CarePlus</span>
+            </div>
+          </div>
+          <div
+            class="flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer">
+            <div class="flex items-center gap-2 group">
+              <div
+                class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-all">
+                <i data-lucide="activity" class="w-6 h-6"></i>
+              </div>
+              <span class="font-black text-clinic-trust text-xl italic tracking-tighter">AetnaCare</span>
+            </div>
+          </div>
+          <div
+            class="flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer">
+            <div class="flex items-center gap-2 group">
+              <div
+                class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center text-teal-600 group-hover:bg-teal-600 group-hover:text-white transition-all">
+                <i data-lucide="award" class="w-6 h-6"></i>
+              </div>
+              <span class="font-black text-clinic-trust text-xl italic tracking-tighter">UnitedMed</span>
+            </div>
+          </div>
+          <div
+            class="flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer">
+            <div class="flex items-center gap-2 group">
+              <div
+                class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-gray-600 group-hover:bg-clinic-trust group-hover:text-white transition-all">
+                <i data-lucide="briefcase" class="w-6 h-6"></i>
+              </div>
+              <span class="font-black text-clinic-trust text-xl italic tracking-tighter">CignaLife</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Doctor Highlight Section -->
+    <section class="py-20 bg-white overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="bg-clinic-trust rounded-[4rem] p-12 lg:p-24 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 shadow-[0_50px_100px_-20px_rgba(30,58,138,0.4)]">
+          <!-- Background Pattern -->
+          <div class="absolute inset-0 opacity-5 pointer-events-none">
+            <div class="absolute top-0 right-0 w-[50%] h-[50%] bg-white rounded-full blur-[150px]"></div>
+          </div>
+
+          <div class="flex-1 space-y-10 relative z-10 text-white w-full">
+            <div class="space-y-6">
+              <div class="text-clinic-accent font-black tracking-[0.4em] uppercase text-sm">Meet Our Visionary</div>
+              <h2 class="text-4xl lg:text-7xl font-black leading-[0.95] tracking-tighter italic">"Care that defines
+                <br><span class="text-clinic-primary not-italic">tomorrow.</span>"
+              </h2>
+              <p class="text-blue-100/80 text-xl leading-relaxed max-w-xl font-medium">
+                We believe healthcare should be as advanced as it is human. Every patient is a partner in our mission to
+                redefine medical excellence.
+              </p>
+            </div>
+
+            <div class="flex items-center gap-6">
+              <div
+                class="w-20 h-20 rounded-3xl border-4 border-white/20 overflow-hidden shadow-2xl p-1 bg-white/10 backdrop-blur-md">
+                <img src="./assets/img/hero-doctor.png" alt="Head Doctor"
+                  class="w-full h-full object-cover rounded-2xl">
+              </div>
+              <div>
+                <div class="text-2xl font-black text-white">Dr. Sarah Johnson</div>
+                <div class="text-clinic-accent font-bold tracking-widest uppercase text-xs mt-1">Founding Surgeon & CEO
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4">
+              <a href="about.html"
+                class="inline-flex items-center gap-3 bg-white text-clinic-trust px-10 py-5 rounded-2xl font-black hover:bg-clinic-light transition-all shadow-2xl hover:scale-105 active:scale-95 group">
+                View Full Clinical History
+                <i data-lucide="external-link"
+                  class="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="flex-1 relative z-10 w-full">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div
+                class="bg-white/5 backdrop-blur-xl p-6 rounded-[3rem] border border-white/10 text-center group hover:bg-white/10 transition-all duration-500 flex flex-col items-center justify-center min-h-[160px]">
+                <div class="text-5xl font-black text-clinic-accent mb-2">25+</div>
+                <div class="text-xs font-bold text-blue-200 uppercase tracking-widest">Global Awards</div>
+              </div>
+              <div
+                class="bg-white/5 backdrop-blur-xl p-6 rounded-[3rem] border border-white/10 text-center group hover:bg-white/10 transition-all duration-500 flex flex-col items-center justify-center min-h-[160px]">
+                <div class="text-5xl font-black text-clinic-accent mb-2">99.8%</div>
+                <div class="text-xs font-bold text-blue-200 uppercase tracking-widest">Survival Rate</div>
+              </div>
+              <div
+                class="bg-white/5 backdrop-blur-xl p-6 rounded-[3rem] border border-white/10 text-center group hover:bg-white/10 transition-all duration-500 flex flex-col items-center justify-center min-h-[160px]">
+                <div class="text-5xl font-black text-clinic-accent mb-2">300+</div>
+                <div class="text-xs font-bold text-blue-200 uppercase tracking-widest">Medical Papers</div>
+              </div>
+              <div
+                class="bg-white/5 backdrop-blur-xl p-6 rounded-[3rem] border border-white/10 text-center group hover:bg-white/10 transition-all duration-500 flex flex-col items-center justify-center min-h-[160px]">
+                <div class="text-5xl font-black text-clinic-accent mb-2">12k+</div>
+                <div class="text-xs font-bold text-blue-200 uppercase tracking-widest">Complex Surgeries</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Patient Journey / Workflow -->
+    <section class="py-20 bg-clinic-mist relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center max-w-3xl mx-auto mb-24 space-y-6">
+          <div class="text-clinic-primary font-bold tracking-[0.3em] uppercase text-sm">Experience the Process</div>
+          <h2 class="text-4xl lg:text-7xl font-black text-clinic-trust tracking-tight leading-none">Your Path to
+            <br>Wellness.
+          </h2>
+          <p class="text-gray-500 text-xl leading-relaxed">We've refined our clinical workflow to ensure you spend less
+            time waiting and more time recovering.</p>
+        </div>
+
+        <div class="relative">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+            <!-- Step 1 -->
+            <div class="relative group h-full">
+              <div
+                class="h-full bg-white p-8 rounded-[3.5rem] shadow-2xl shadow-clinic-trust/5 border border-white hover:-translate-y-4 transition-all duration-500 flex flex-col">
+                <div
+                  class="text-9xl font-black text-clinic-mist absolute top-0 -left-4 z-0 opacity-50 group-hover:text-clinic-light transition-colors">
+                  01</div>
+                <div class="relative z-10 flex-1 flex flex-col">
+                  <div
+                    class="w-16 h-16 bg-clinic-light rounded-3xl flex items-center justify-center text-clinic-primary mb-8 group-hover:bg-clinic-primary group-hover:text-white transition-all shrink-0">
+                    <i data-lucide="calendar-plus" class="w-8 h-8"></i>
+                  </div>
+                  <h3 class="text-2xl font-black text-clinic-trust mb-4">Fast Booking</h3>
+                  <p class="text-gray-500 leading-relaxed font-medium">Schedule online or via app in under 60 seconds
+                    with
+                    instant confirmation.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="relative group h-full">
+              <div
+                class="h-full bg-white p-8 rounded-[3.5rem] shadow-2xl shadow-clinic-trust/5 border border-white hover:-translate-y-4 transition-all duration-500 flex flex-col">
+                <div
+                  class="text-9xl font-black text-clinic-mist absolute top-0 -left-4 z-0 opacity-50 group-hover:text-clinic-light transition-colors">
+                  02</div>
+                <div class="relative z-10 flex-1 flex flex-col">
+                  <div
+                    class="w-16 h-16 bg-clinic-light rounded-3xl flex items-center justify-center text-clinic-primary mb-8 group-hover:bg-clinic-primary group-hover:text-white transition-all shrink-0">
+                    <i data-lucide="user-check" class="w-8 h-8"></i>
+                  </div>
+                  <h3 class="text-2xl font-black text-clinic-trust mb-4">Swift Check-in</h3>
+                  <p class="text-gray-500 leading-relaxed font-medium">Digital concierge system ensures no paperwork and
+                    zero waiting room delays.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="relative group h-full">
+              <div
+                class="h-full bg-white p-8 rounded-[3.5rem] shadow-2xl shadow-clinic-trust/5 border border-white hover:-translate-y-4 transition-all duration-500 flex flex-col">
+                <div
+                  class="text-9xl font-black text-clinic-mist absolute top-0 -left-4 z-0 opacity-50 group-hover:text-clinic-light transition-colors">
+                  03</div>
+                <div class="relative z-10 flex-1 flex flex-col">
+                  <div
+                    class="w-16 h-16 bg-clinic-light rounded-3xl flex items-center justify-center text-clinic-primary mb-8 group-hover:bg-clinic-primary group-hover:text-white transition-all shrink-0">
+                    <i data-lucide="microscope" class="w-8 h-8"></i>
+                  </div>
+                  <h3 class="text-2xl font-black text-clinic-trust mb-4">Expert Review</h3>
+                  <p class="text-gray-500 leading-relaxed font-medium">Deep-dive consultation with specialists using
+                    advanced diagnostic AI.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="relative group h-full">
+              <div
+                class="h-full bg-white p-8 rounded-[3.5rem] shadow-2xl shadow-clinic-trust/5 border border-white hover:-translate-y-4 transition-all duration-500 flex flex-col">
+                <div
+                  class="text-9xl font-black text-clinic-mist absolute top-0 -left-4 z-0 opacity-50 group-hover:text-clinic-light transition-colors">
+                  04</div>
+                <div class="relative z-10 flex-1 flex flex-col">
+                  <div
+                    class="w-16 h-16 bg-clinic-light rounded-3xl flex items-center justify-center text-clinic-primary mb-8 group-hover:bg-clinic-primary group-hover:text-white transition-all shrink-0">
+                    <i data-lucide="heart-pulse" class="w-8 h-8"></i>
+                  </div>
+                  <h3 class="text-2xl font-black text-clinic-trust mb-4">Ongoing Care</h3>
+                  <p class="text-gray-500 leading-relaxed font-medium">Post-visit digital follow-ups and 24/7 dedicated
+                    nursing support line.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer-dark pt-24 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Footer Top: Newsletter -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 pb-20">
+        <div>
+          <h3 class="text-3xl font-black text-white mb-4 tracking-tight">Stay informed with <span
+              class="text-clinic-primary">PremiumCare.</span></h3>
+          <p class="text-slate-400 text-lg">Receive exclusive healthcare tips, clinic updates, and wellness news
+            directly in your inbox.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <input type="email" placeholder="Enter your email address"
+            class="newsletter-input flex-1 px-6 py-4 rounded-2xl">
+          <button
+            class="bg-clinic-primary hover:bg-clinic-dark text-white px-8 py-4 rounded-2xl font-bold transition-all whitespace-nowrap">
+            Subscribe Now
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
+        <!-- Brand & Info -->
+        <div class="space-y-8">
+          <a href="index.html" class="flex items-center gap-2">
+            <img src="./assets/img/logo-white.svg" alt="PremiumCare Logo" class="h-10 w-auto">
+          </a>
+          <p class="text-slate-400 leading-relaxed">
+            Redefining medical excellence through human compassion. We provide world-class healthcare with a personal
+            touch, ensuring every patient feels valued and cared for.
+          </p>
+          <div class="flex items-center gap-4">
+            <a href="#" class="social-icon-btn" aria-label="Facebook">
+              <i data-lucide="facebook" class="w-5 h-5"></i>
+            </a>
+            <a href="#" class="social-icon-btn" aria-label="Twitter">
+              <i data-lucide="twitter" class="w-5 h-5"></i>
+            </a>
+            <a href="#" class="social-icon-btn" aria-label="Instagram">
+              <i data-lucide="instagram" class="w-5 h-5"></i>
+            </a>
+            <a href="#" class="social-icon-btn" aria-label="LinkedIn">
+              <i data-lucide="linkedin" class="w-5 h-5"></i>
+            </a>
+          </div>
+        </div>
+        <!-- Quick Links -->
+        <div>
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="space-y-4">
+            <li><a href="index.html" class="footer-link">Home</a></li>
+            <li><a href="home-2.html" class="footer-link">Home2</a></li>
+            <li><a href="services.html" class="footer-link">Services</a></li>
+            <li><a href="about.html" class="footer-link">About Us</a></li>
+            <li><a href="doctors.html" class="footer-link">Doctors</a></li>
+            <li><a href="contact.html" class="footer-link">Contact</a></li>
+            <li><a href="login.html" class="footer-link">Login</a></li>
+          </ul>
+        </div>
+
+        <!-- Patient Portal -->
+        <div>
+          <h4 class="footer-heading">Patient Portal</h4>
+          <ul class="space-y-4">
+            <li><a href="booking.html" class="footer-link font-bold text-clinic-primary">Book Appointment</a></li>
+            <li><a href="user-dashboard.html" class="footer-link">Patient Dashboard</a></li>
+            <li><a href="admin-dashboard.html" class="footer-link">Admin Dashboard</a></li>
+            <li><a href="signup.html" class="footer-link">Register Account</a></li>
+            <li><a href="faq.html" class="footer-link">Help &amp; FAQ</a></li>
+            <li><a href="doctors.html" class="footer-link">Find a Specialist</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Emergency -->
+        <div class="space-y-8">
+          <div>
+            <h4 class="footer-heading">Emergency Line</h4>
+            <a href="tel:+1234567890" class="flex items-center gap-4 group">
+              <div
+                class="w-12 h-12 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-all">
+                <i data-lucide="phone-call" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <div class="text-[0.65rem] font-black text-red-500 uppercase tracking-[0.2em] mb-0.5">Available 24/7
+                </div>
+                <div class="text-xl font-black text-white">+1 (234) 567 890</div>
+              </div>
+            </a>
+          </div>
+
+          <div class="space-y-4">
+            <h4 class="footer-heading !mb-0">Main Hospital</h4>
+            <div class="flex items-start gap-3">
+              <i data-lucide="map-pin" class="w-5 h-5 text-clinic-primary mt-1 flex-shrink-0"></i>
+              <span class="text-slate-400">123 Medical Drive, Wellness City, <br>HE 45678, United States</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="text-slate-500 text-sm font-medium">
+          © 2026 PremiumCare Health Group. All rights reserved. <span class="hidden md:inline mx-2">•</span> <span
+            class="text-slate-600 italic">Architected for Life.</span>
+        </div>
+        <div class="flex items-center gap-8">
+          <a href="privacy-policy.html"
+            class="text-xs font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest">Privacy
+            Policy</a>
+          <a href="terms-of-use.html"
+            class="text-xs font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest">Legal
+            Terms</a>
+          <a href="#"
+            class="text-xs font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./src/js/api.js"></script>
+  <script src="./src/js/main.js"></script>
+</body>
+
+</html>
